@@ -1,0 +1,54 @@
+<?php
+
+namespace App\Livewire;
+
+use App\Traits\HasSort;
+use Livewire\Attributes\Computed;
+use Livewire\Attributes\Url;
+use Livewire\Component;
+use Livewire\WithPagination;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
+
+class RoleListLive extends Component
+{
+    use HasSort;
+    use WithPagination;
+
+    #[Url(except: '')]
+    public $search = '';
+
+    public function mount()
+    {
+        $this->validateSorting(fields: ['name']);
+    }
+
+    #[Computed]
+    public function rolesCount(): int
+    {
+        return Role::count();
+    }
+
+    #[Computed]
+    public function permissionsCount(): int
+    {
+        return Permission::count();
+    }
+
+    public function render()
+    {
+        $roles = Role::select('id', 'name')
+            ->with('users:id,name,profile_photo_path')
+            ->withCount('users', 'permissions')
+            ->where('name', 'like', '%' . $this->search . '%')
+            ->orderBy($this->sortField, $this->sortDirection)
+            ->paginate(10);
+
+        $allPermissions = Permission::orderBy('id')->pluck('name', 'id')->toArray();
+
+        return view('livewire.role-list-live', [
+            'roles' => $roles,
+            'allPermissions' => $allPermissions,
+        ]);
+    }
+}

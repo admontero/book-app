@@ -46,6 +46,42 @@ class UserFactory extends Factory
     }
 
     /**
+     * Indicate that the model's admin.
+     */
+    public function admin(): static
+    {
+        return $this->state(function (array $attributes) {
+            return [];
+        })->afterCreating(function (User $user) {
+            $user->assignRole('administrador');
+        });
+    }
+
+    /**
+     * Indicate that the model's secretary.
+     */
+    public function secretary(): static
+    {
+        return $this->state(function (array $attributes) {
+            return [];
+        })->afterCreating(function (User $user) {
+            $user->assignRole('secretario');
+        });
+    }
+
+    /**
+     * Indicate that the model's reader.
+     */
+    public function reader(): static
+    {
+        return $this->state(function (array $attributes) {
+            return [];
+        })->afterCreating(function (User $user) {
+            $user->assignRole('lector');
+        });
+    }
+
+    /**
      * Indicate that the user should have a personal team.
      */
     public function withPersonalTeam(callable $callback = null): static

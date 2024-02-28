@@ -1,5 +1,7 @@
 import './bootstrap';
 import { Livewire, Alpine } from '../../vendor/livewire/livewire/dist/livewire.esm';
+import Tooltip from "@ryangjchandler/alpine-tooltip";
+import anchor from '@alpinejs/anchor';
 
 document.addEventListener('alpine:init', () => {
 
@@ -34,5 +36,9 @@ document.addEventListener('alpine:init', () => {
         }
     })
 })
+
+Alpine.plugin(Tooltip);
+
+Alpine.plugin(anchor);
 
 Livewire.start()
