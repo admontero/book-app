@@ -5,7 +5,11 @@
             <div class="ml-3">
                 <h2 class="text-gray-600 dark:text-white">{{ $user->name }}</h2>
                 <p class="text-sm text-gray-400">
-                    {{ App\Enums\RoleEnum::options()[$user->roles->first()?->name] }}
+                    @if ($user->roles->first())
+                        <span>{{ App\Enums\RoleEnum::options()[$user->roles->first()?->name] }}</span>
+                    @else
+                        <span class="italic">Sin rol</span>
+                    @endif
                 </p>
             </div>
         </div>

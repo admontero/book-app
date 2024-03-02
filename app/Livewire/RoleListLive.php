@@ -38,17 +38,14 @@ class RoleListLive extends Component
     public function render()
     {
         $roles = Role::select('id', 'name')
-            ->with('users:id,name,profile_photo_path')
+            ->with('users:id,name,profile_photo_path', 'permissions:id,name')
             ->withCount('users', 'permissions')
             ->where('name', 'like', '%' . $this->search . '%')
             ->orderBy($this->sortField, $this->sortDirection)
             ->paginate(10);
 
-        $allPermissions = Permission::orderBy('id')->pluck('name', 'id')->toArray();
-
         return view('livewire.role-list-live', [
             'roles' => $roles,
-            'allPermissions' => $allPermissions,
         ]);
     }
 }

@@ -7,7 +7,6 @@ use App\Traits\HasSort;
 use Illuminate\Support\Collection;
 use Illuminate\View\View;
 use Livewire\Attributes\Computed;
-use Livewire\Attributes\On;
 use Livewire\Attributes\Url;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -93,11 +92,8 @@ class UserListLive extends Component
                 return $user;
             });
 
-        $allPermissions = Permission::orderBy('id')->pluck('name', 'id')->toArray();
-
         return view('livewire.user-list-live', [
             'users' => $users,
-            'allPermissions' => $allPermissions,
         ]);
     }
 }

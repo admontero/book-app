@@ -110,7 +110,7 @@
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
                                 @foreach ($users as $user)
-                                    <x-users.user-table-item :$user :$allPermissions />
+                                    <x-users.user-table-item :$user />
                                 @endforeach
                             </tbody>
                         </table>

@@ -72,7 +72,7 @@
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
                                 @foreach ($roles as $role)
-                                    <x-roles.role-table-item :$role :$allPermissions />
+                                    <x-roles.role-table-item :$role />
                                 @endforeach
                             </tbody>
                         </table>
