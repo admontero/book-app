@@ -23,14 +23,12 @@
                 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search w-5 h-5 mx-3 text-gray-400 dark:text-gray-600" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" /><path d="M21 21l-6 -6" /></svg>
             </span>
 
-            <input
-                class="block w-full py-1.5 pr-5 text-gray-700 bg-white border border-gray-200 rounded-lg md:w-80 placeholder-gray-400/70
-                    pl-11 rtl:pr-11 rtl:pl-5 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300
-                    focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
+            <x-input
+                class="pl-11"
                 type="search"
-                placeholder="Search"
+                placeholder="Buscar permiso..."
                 wire:model.live.debounce.500ms="search"
-            >
+            />
         </div>
     </div>
 

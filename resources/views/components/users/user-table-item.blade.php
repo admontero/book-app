@@ -76,8 +76,7 @@
                     x-transition:leave-end="transform opacity-0 scale-95"
                     @click.outside="show = false"
                     @keyup.escape="show = false"
-                    class="absolute max-w-72 w-full bg-white dark:bg-gray-800 border border-gray-200
-                        dark:border-gray-700 rounded-md shadow-md z-50 text-left text-sm"
+                    class="absolute max-w-72 w-full bg-white dark:bg-gray-700 rounded-md shadow-md z-50 text-left text-sm border border-gray-200 dark:border-gray-600"
                 >
                     <div class="px-3 pt-3">
                         <x-input x-ref="search" class="w-full" type="search" x-model="search" />
@@ -137,17 +136,14 @@
         <div class="flex justify-center gap-2 items-center">
             <div x-data="{ show: false }">
                 <button
-                    class="p-2 rounded-md"
-                    :class="$store.darkMode.on ? 'bg-gray-700' : 'bg-gray-100'"
+                    class="p-2 rounded-md bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-600 hover:text-gray-900
+                    dark:text-white dark:hover:text-gray-300 border border-gray-200 dark:border-gray-600 shadow"
                     @click="show = ! show"
                     @keyup.escape="show = false"
+                    x-tooltip.raw="Opciones"
                     x-ref="button"
                 >
-                    <svg
-                        class="icon icon-tabler icon-tabler-dots-vertical w-5 h-5 text-gray-500"
-                        :class="$store.darkMode.on ? 'text-white hover:text-gray-300' : 'text-gray-600 hover:text-gray-900'"
-                        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M12 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M12 5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
-                    </svg>
+                    <svg class="icon icon-tabler icon-tabler-dots-vertical w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M12 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M12 5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /></svg>
                 </button>
 
                 <div
@@ -161,8 +157,7 @@
                     x-transition:leave-start="transform opacity-100 scale-100"
                     x-transition:leave-end="transform opacity-0 scale-95"
                     @click.outside="show = false"
-                    class="absolute py-1 max-w-48 w-full bg-white dark:bg-gray-800 border border-gray-200
-                        dark:border-gray-700 rounded-md shadow-md z-50"
+                    class="absolute py-1 max-w-48 w-full bg-white dark:bg-gray-700 rounded-md shadow-md z-50 border border-gray-200 dark:border-gray-600"
                 >
                     <div class="block px-4 py-2 text-xs text-gray-400">
                         Opciones
@@ -170,32 +165,33 @@
 
                     <a
                         href="{{ route('admin.users.roles.assignment', $user) }}"
-                        class="block w-full px-4 py-2 text-start text-sm leading-5 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-800 transition duration-150 ease-in-out"
+                        class="block w-full px-4 py-2 text-start text-sm leading-5 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-600 transition duration-150 ease-in-out"
                         @click="show = false"
+                        wire:navigate
                     >
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user-up inline-flex w-5 h-5 mr-2" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" /><path d="M6 21v-2a4 4 0 0 1 4 -4h4" /><path d="M19 22v-6" /><path d="M22 19l-3 -3l-3 3" /></svg>
                         Asignar rol
                     </a>
                     <a
                         href="{{ route('admin.users.permissions.assignment', $user) }}"
-                        class="block w-full px-4 py-2 text-start text-sm leading-5 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-800 transition duration-150 ease-in-out"
+                        class="block w-full px-4 py-2 text-start text-sm leading-5 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-600 transition duration-150 ease-in-out"
                         @click="show = false"
+                        wire:navigate
                     >
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user-up inline-flex w-5 h-5 mr-2" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" /><path d="M6 21v-2a4 4 0 0 1 4 -4h4" /><path d="M19 22v-6" /><path d="M22 19l-3 -3l-3 3" /></svg>
                         Asignar permisos
                     </a>
                 </div>
             </div>
+
             <a
-                class="p-2 rounded-md"
-                :class="$store.darkMode.on ? 'bg-gray-700' : 'bg-gray-100'"
+                class="p-2 rounded-md bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-600 hover:text-gray-900
+                dark:text-white dark:hover:text-gray-300 border border-gray-200 dark:border-gray-600 shadow"
                 href="{{ route('admin.users.show', $user) }}"
+                x-tooltip.raw="Ver"
+                wire:navigate
             >
-                <svg
-                    class="icon icon-tabler icon-tabler-eye-up w-5 h-5 text-gray-500"
-                    :class="$store.darkMode.on ? 'text-white hover:text-gray-300' : 'text-gray-600 hover:text-gray-900'"
-                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /><path d="M12 18c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.09 .15 -.18 .295 -.27 .439" /><path d="M19 22v-6" /><path d="M22 19l-3 -3l-3 3" />
-                </svg>
+                <svg class="icon icon-tabler icon-tabler-eye-up w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /><path d="M12 18c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.09 .15 -.18 .295 -.27 .439" /><path d="M19 22v-6" /><path d="M22 19l-3 -3l-3 3" /></svg>
             </a>
         </div>
     </td>

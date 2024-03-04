@@ -21,6 +21,7 @@
                 <a
                     class="inline-flex items-center w-full text-start text-sm leading-5 font-semibold text-blue-600 dark:text-blue-300 focus:outline-none"
                     href="{{ route('admin.users.roles.assignment', $user) }}"
+                    wire:navigate
                 >
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user-up w-5 h-5 mr-2" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" /><path d="M6 21v-2a4 4 0 0 1 4 -4h4" /><path d="M19 22v-6" /><path d="M22 19l-3 -3l-3 3" /></svg>
                     Asignar Rol
@@ -30,6 +31,7 @@
                 <a
                     class="inline-flex items-center w-full text-start text-sm leading-5 focus:outline-none"
                     href="{{ route('admin.users.permissions.assignment', $user) }}"
+                    wire:navigate
                 >
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user-up w-5 h-5 mr-2" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" /><path d="M6 21v-2a4 4 0 0 1 4 -4h4" /><path d="M19 22v-6" /><path d="M22 19l-3 -3l-3 3" /></svg>
                     Asignar Permisos
@@ -93,6 +95,7 @@
                     class="btn-sm flex items-center px-4 py-2 font-medium tracking-wide text-gray-600 capitalize
                     transition-colors duration-300 transform bg-white rounded-lg hover:bg-gray-50 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80"
                     href="{{ route('admin.users.show', $user) }}"
+                    wire:navigate
                 >cancelar</a>
 
                 <x-primary-button

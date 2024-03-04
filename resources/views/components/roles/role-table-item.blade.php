@@ -23,6 +23,7 @@
                         rounded-full focus:outline-none focus:border-gray-300"
                     href="{{ route('admin.users.show', $user) }}"
                     wire:key="{{ $user->id }}"
+                    wire:navigate
                 >
                     <img class="w-6 h-6 rounded-full" src="{{ $user->profile_photo_url }}" alt="{{ $user->name }}" />
                 </a>
@@ -34,7 +35,7 @@
                 <div x-data="{
                     search: '',
                     users: {{ Illuminate\Support\Js::from($role->users) }},
-                    usersFiltered() {
+                    get usersFiltered() {
                         if (! this.search.length) return this.users;
 
                         return this.users.filter(user => user.name.toLowerCase().includes(this.search.toLowerCase()) ? true : false)
@@ -61,25 +62,24 @@
                         x-transition:leave-end="transform opacity-0 scale-95"
                         @click.outside="show = false"
                         @keyup.escape="show = false"
-                        class="absolute max-w-72 w-full bg-white dark:bg-gray-800 border border-gray-200
-                            dark:border-gray-700 rounded-md shadow-md z-50"
+                        class="absolute max-w-72 w-full bg-white dark:bg-gray-700 rounded-md shadow-md z-50 border border-gray-200 dark:border-gray-600"
                     >
                         <div class="px-3 pt-3 mb-1">
                             <x-input x-ref="search" class="w-full" type="search" x-model="search" />
                         </div>
 
                         <div class="max-h-52 overflow-y-auto">
-                            <template x-if="usersFiltered().length">
+                            <template x-if="usersFiltered.length">
                                 <p class="text-xs text-gray-400 px-3 mt-2 mb-1">
-                                    <span x-text="usersFiltered().length"></span>
+                                    <span x-text="usersFiltered.length"></span>
                                     usuario(s)
                                 </p>
                             </template>
 
                             <ul>
-                                <template x-for="user in usersFiltered()" :key="user.id">
+                                <template x-for="user in usersFiltered" :key="user.id">
                                     <li class="flex items-center px-5 py-1.5 overflow-x-hidden">
-                                        <a :href="'/admin/users/' + user.id">
+                                        <a :href="'/admin/users/' + user.id" wire:navigate>
                                             <img class="w-7 h-7 rounded-full" :src="user.profile_photo_url" :alt="user.name" />
                                         </a>
 
@@ -87,7 +87,7 @@
                                     </li>
                                 </template>
 
-                                <template x-if="! usersFiltered().length">
+                                <template x-if="! usersFiltered.length">
                                     <li class="text-gray-400 italic text-xs text-center py-3">
                                         No hay coincidencias con su búsqueda.
                                     </li>
@@ -107,7 +107,7 @@
                 show: false,
                 search: '',
                 permissions: {{ Illuminate\Support\Js::from($role->permissions) }},
-                permissionsFiltered() {
+                get permissionsFiltered() {
                     if (! this.search.length) return this.permissions
 
                     return this.permissions.filter(permission => permission.name.toLowerCase().includes(this.search.toLowerCase()) ? true : false)
@@ -142,27 +142,27 @@
                     x-transition:leave-end="transform opacity-0 scale-95"
                     @click.outside="show = false"
                     @keyup.escape="show = false"
-                    class="absolute max-w-72 w-full bg-white dark:bg-gray-800 border border-gray-200
-                        dark:border-gray-700 rounded-md shadow-md z-50 text-left text-sm"
+                    class="absolute max-w-72 w-full bg-white dark:bg-gray-700 rounded-md shadow-md z-50 text-left text-sm
+                        border border-gray-200 dark:border-gray-600"
                 >
                     <div class="px-3 pt-3">
                         <x-input x-ref="search" class="w-full" type="search" x-model="search" />
                     </div>
 
                     <div class="max-h-52 overflow-y-auto">
-                        <template x-if="permissionsFiltered().length">
+                        <template x-if="permissionsFiltered.length">
                             <p class="text-xs text-gray-400 px-3 mt-2 mb-1">
-                                <span x-text="permissionsFiltered().length"></span>
+                                <span x-text="permissionsFiltered.length"></span>
                                 permiso(s)
                             </p>
                         </template>
 
                         <ul>
-                            <template x-for="permission in permissionsFiltered()" :key="permission.id">
+                            <template x-for="permission in permissionsFiltered" :key="permission.id">
                                 <li x-text="permission.name" class="px-5 py-1.5 truncate text-gray-600 dark:text-gray-300 first-letter:uppercase"></li>
                             </template>
 
-                            <template x-if="permissions.length && ! permissionsFiltered().length && search.length">
+                            <template x-if="permissions.length && ! permissionsFiltered.length && search.length">
                                 <li class="text-gray-400 italic text-xs text-center py-3">
                                     No hay coincidencias con su búsqueda.
                                 </li>
@@ -184,17 +184,14 @@
         <div class="flex justify-center items-center gap-2">
             <div x-data="{ show: false }">
                 <button
-                    class="p-2 rounded-md"
-                    :class="$store.darkMode.on ? 'bg-gray-700' : 'bg-gray-100'"
+                    class="p-2 rounded-md bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-600 hover:text-gray-900
+                    dark:text-white dark:hover:text-gray-300 border border-gray-200 dark:border-gray-600 shadow"
                     @click="show = ! show"
                     @keyup.escape="show = false"
+                    x-tooltip.raw="Opciones"
                     x-ref="button"
                 >
-                    <svg
-                        class="icon icon-tabler icon-tabler-dots-vertical w-5 h-5 text-gray-500"
-                        :class="$store.darkMode.on ? 'text-white hover:text-gray-300' : 'text-gray-600 hover:text-gray-900'"
-                        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M12 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M12 5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
-                    </svg>
+                    <svg class="icon icon-tabler icon-tabler-dots-vertical w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M12 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M12 5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /></svg>
                 </button>
 
                 <div
@@ -208,8 +205,7 @@
                     x-transition:leave-start="transform opacity-100 scale-100"
                     x-transition:leave-end="transform opacity-0 scale-95"
                     @click.outside="show = false"
-                    class="absolute py-1 max-w-48 w-full bg-white dark:bg-gray-800 border border-gray-200
-                        dark:border-gray-700 rounded-md shadow-md z-50"
+                    class="absolute py-1 max-w-48 w-full bg-white dark:bg-gray-700 rounded-md shadow-md z-50 border border-gray-200 dark:border-gray-600"
                 >
                     <div class="block px-4 py-2 text-xs text-gray-400">
                         Opciones
@@ -217,24 +213,24 @@
 
                     <a
                         href="{{ route('admin.roles.permissions.assignment', $role) }}"
-                        class="block w-full px-4 py-2 text-start text-sm leading-5 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-800 transition duration-150 ease-in-out"
+                        class="block w-full px-4 py-2 text-start text-sm leading-5 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-600 transition duration-150 ease-in-out"
                         @click="show = false"
+                        wire:navigate
                     >
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user-up inline-flex w-5 h-5 mr-2" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" /><path d="M6 21v-2a4 4 0 0 1 4 -4h4" /><path d="M19 22v-6" /><path d="M22 19l-3 -3l-3 3" /></svg>
                         Asignar permisos
                     </a>
                 </div>
             </div>
+
             <a
-                class="p-2 rounded-md"
-                :class="$store.darkMode.on ? 'bg-gray-700' : 'bg-gray-100'"
+                class="p-2 rounded-md bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-600 hover:text-gray-900
+                dark:text-white dark:hover:text-gray-300 border border-gray-200 dark:border-gray-600 shadow"
                 href="{{ route('admin.roles.show', $role) }}"
+                x-tooltip.raw="Ver"
+                wire:navigate
             >
-                <svg
-                    class="icon icon-tabler icon-tabler-eye-up w-5 h-5 text-gray-500"
-                    :class="$store.darkMode.on ? 'text-white hover:text-gray-300' : 'text-gray-600 hover:text-gray-900'"
-                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /><path d="M12 18c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.09 .15 -.18 .295 -.27 .439" /><path d="M19 22v-6" /><path d="M22 19l-3 -3l-3 3" />
-                </svg>
+                <svg class="icon icon-tabler icon-tabler-eye-up w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /><path d="M12 18c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.09 .15 -.18 .295 -.27 .439" /><path d="M19 22v-6" /><path d="M22 19l-3 -3l-3 3" /></svg>
             </a>
         </div>
     </td>
