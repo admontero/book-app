@@ -6,6 +6,7 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Schema;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
@@ -16,6 +17,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        Schema::disableForeignKeyConstraints();
+
         $admin = User::factory()->create([
             'name' => 'Andrés Montero',
             'email' => 'admin@test.com',
@@ -66,5 +69,11 @@ class DatabaseSeeder extends Seeder
             $deleteRolesPermission,
             $viewPermission,
         ]);
+
+        $this->call(WorldSeeder::class);
+        $this->call(GenreSeeder::class);
+        $this->call(AuthorSeeder::class);
+
+        Schema::enableForeignKeyConstraints();
     }
 }

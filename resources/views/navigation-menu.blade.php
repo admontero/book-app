@@ -124,13 +124,12 @@
                     </x-dropdown>
                 </div>
 
-                 <!-- Toggle Theme -->
-                 <div class="m-3 relative">
+                <!-- Toggle Theme -->
+                <div class="m-3 relative">
                     <div
                         x-data
                         x-cloak
                         x-init="$store.darkMode.switch()"
-                        @keydown.window.tab="$store.darkMode.on = false"
                         class="flex items-center justify-center space-x-2"
                     >
                         <button

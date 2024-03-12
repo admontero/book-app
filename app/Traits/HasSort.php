@@ -8,8 +8,9 @@ trait HasSort
 {
     #[Url(except: 'id')]
     public $sortField = 'id';
+
     #[Url]
-    public $sortDirection = 'asc';
+    public $sortDirection = 'desc';
 
     public function validateSorting(array $fields = [])
     {

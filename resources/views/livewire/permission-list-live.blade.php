@@ -2,7 +2,7 @@
     <div class="sm:flex sm:items-center sm:justify-between">
         <div>
             <div class="flex items-center gap-x-3">
-                <h2 class="text-lg font-medium text-gray-800 dark:text-white">Permisos</h2>
+                <h2 class="text-xl font-medium text-gray-800 dark:text-white">Permisos</h2>
 
                 <span class="px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full dark:bg-gray-800 dark:text-blue-400">{{ $this->permissionsCount }} permisos</span>
             </div>
@@ -70,7 +70,7 @@
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
                                 @foreach ($permissions as $permission)
-                                    <x-permissions.permission-table-item :$permission />
+                                    <x-permissions.table-item :$permission />
                                 @endforeach
                             </tbody>
                         </table>
@@ -94,8 +94,6 @@
             </div>
         </div>
     @endif
-
-    {{-- <livewire:permission-description-edit-live wire:key="permission-edition"/> --}}
 
     {{ $permissions->links('vendor.livewire.custom') }}
 </section>

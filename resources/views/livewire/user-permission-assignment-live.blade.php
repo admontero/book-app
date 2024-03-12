@@ -1,4 +1,4 @@
-<div class="lg:flex lg:items-start lg:gap-4 px-4">
+<div class="max-w-7xl mx-auto lg:flex lg:items-start lg:gap-4 px-4">
     <div class="bg-white dark:bg-gray-800 rounded-md border border-gray-200 dark:border-gray-700 lg:w-4/12 2xl:w-3/12 px-6 py-4">
         <div class="flex items-center">
             <img class="h-10 w-10 rounded-full object-cover" src="{{ $user->profile_photo_url }}" alt="{{ $user->name }}" />

@@ -5,9 +5,23 @@
  */
 
 import axios from 'axios';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { CustomDatepicker } from './customdatepicker';
+
+import 'ckeditor-tailwind-reset/ckeditor-tailwind-reset.css';
+import 'flag-icons/css/flag-icons.min.css';
+
+import DatePickerLocaleES from 'flowbite-datepicker/locales/es';
+
+Object.assign(CustomDatepicker.locales, DatePickerLocaleES);
+
 window.axios = axios;
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+
+window.ClassicEditor = ClassicEditor;
+
+window.CustomDatepicker = CustomDatepicker;
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening

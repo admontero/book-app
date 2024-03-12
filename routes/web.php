@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group(['middleware' => 'auth','prefix' => 'admin', 'as' => 'admin.'], function () {
+Route::group(['middleware' => 'auth', 'prefix' => 'admin', 'as' => 'admin.'], function () {
     Route::resource('roles', App\Http\Controllers\RoleController::class)
         ->except(['create', 'store', 'edit', 'update', 'destroy']);
 
@@ -30,6 +30,20 @@ Route::group(['middleware' => 'auth','prefix' => 'admin', 'as' => 'admin.'], fun
 
     Route::get('roles/{role}/permissions/assignment', App\Livewire\RolePermissionAssignmentLive::class)
         ->name('roles.permissions.assignment');
+
+    Route::resource('genres', App\Http\Controllers\GenreController::class);
+
+    Route::get('authors', [App\Http\Controllers\AuthorController::class, 'index'])
+        ->name('authors.index');
+
+    Route::get('authors/create', App\Livewire\AuthorCreateLive::class)
+        ->name('authors.create');
+
+    Route::get('authors/{author}', App\Livewire\AuthorShowLive::class)
+        ->name('authors.show');
+
+    Route::get('authors/{author}/edit', App\Livewire\AuthorEditLive::class)
+        ->name('authors.edit');
 });
 
 Route::middleware([

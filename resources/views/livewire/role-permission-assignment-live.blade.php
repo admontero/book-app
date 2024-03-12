@@ -1,4 +1,4 @@
-<div class="lg:flex lg:items-start lg:gap-4 px-4">
+<div class="max-w-7xl mx-auto lg:flex lg:items-start lg:gap-4 px-4">
     <div class="bg-white dark:bg-gray-800 rounded-md border border-gray-200 dark:border-gray-700 lg:w-4/12 2xl:w-3/12 px-6 py-4">
         <h2 class="text-gray-600 dark:text-white">{{ App\Enums\RoleEnum::options()[$role->name] }}</h2>
         <p class="text-sm text-gray-400">

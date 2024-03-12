@@ -2,6 +2,8 @@ import './bootstrap';
 import { Livewire, Alpine } from '../../vendor/livewire/livewire/dist/livewire.esm';
 import Tooltip from "@ryangjchandler/alpine-tooltip";
 import anchor from '@alpinejs/anchor';
+import mask from '@alpinejs/mask';
+import focus from '@alpinejs/focus';
 
 document.addEventListener('alpine:init', () => {
 
@@ -41,4 +43,8 @@ Alpine.plugin(Tooltip);
 
 Alpine.plugin(anchor);
 
-Livewire.start()
+Alpine.plugin(mask);
+
+Alpine.plugin(focus);
+
+Livewire.start();

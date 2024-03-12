@@ -2,7 +2,7 @@
     <div class="sm:flex sm:items-center sm:justify-between">
         <div>
             <div class="flex items-center gap-x-3">
-                <h2 class="text-lg font-medium text-gray-800 dark:text-white">Roles</h2>
+                <h2 class="text-xl font-medium text-gray-800 dark:text-white">Roles</h2>
 
                 <span class="px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full dark:bg-gray-800 dark:text-blue-400">{{ $this->rolesCount }} roles</span>
             </div>
@@ -70,7 +70,7 @@
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
                                 @foreach ($roles as $role)
-                                    <x-roles.role-table-item :$role />
+                                    <x-roles.table-item :$role />
                                 @endforeach
                             </tbody>
                         </table>

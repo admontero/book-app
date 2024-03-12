@@ -15,7 +15,7 @@
         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-square-rounded-chevron-right w-5 h-5 text-gray-600 hover:text-gray-900 dark:text-white dark:hover:text-gray-300" :class="$store.sidebar.on ? 'rotate-180' : 'rotate-0'" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M11 9l3 3l-3 3" /><path d="M12 3c7.2 0 9 1.8 9 9s-1.8 9 -9 9s-9 -1.8 -9 -9s1.8 -9 9 -9z" /></svg>
     </button> --}}
 
-    <a href="{{ route('dashboard') }}">
+    <a href="{{ route('dashboard') }}" wire:navigate>
         <img x-show="! $store.darkMode.on" class="mx-auto object-cover max-h-24" src="{{ asset('dist/images/logo.png') }}" alt="application logo">
         <img x-show="$store.darkMode.on" class="mx-auto object-cover max-h-24" src="{{ asset('dist/images/logo-dark.png') }}" alt="application logo">
     </a>
@@ -137,11 +137,12 @@
 
                 <a
                     class="flex items-center px-3 py-2 text-gray-600 transform rounded-lg dark:text-gray-200 hover:bg-gray-100
-                        dark:hover:bg-gray-700 dark:hover:text-gray-200 hover:text-gray-700"
+                        dark:hover:bg-gray-700 dark:hover:text-gray-200 hover:text-gray-700
+                        {{ request()->routeIs('admin.authors.*') ? 'bg-gray-100 dark:bg-gray-700' : '' }}"
                     x-data="{ tooltip: ! $store.sidebar.on ? 'Autores' : false }"
                     x-init="$watch('$store.sidebar.on', value => tooltip = ! value ? 'Autores' : false )"
                     x-tooltip.placement.right.delay.50="tooltip"
-                    href="#"
+                    href="{{ route('admin.authors.index') }}"
                     wire:navigate
                 >
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-writing w-5 h-5" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M20 17v-12c0 -1.121 -.879 -2 -2 -2s-2 .879 -2 2v12l2 2l2 -2z" /><path d="M16 7h4" /><path d="M18 19h-13a2 2 0 1 1 0 -4h4a2 2 0 1 0 0 -4h-3" /></svg>
@@ -151,11 +152,12 @@
 
                 <a
                     class="flex items-center px-3 py-2 text-gray-600 transform rounded-lg dark:text-gray-200 hover:bg-gray-100
-                        dark:hover:bg-gray-700 dark:hover:text-gray-200 hover:text-gray-700"
+                        dark:hover:bg-gray-700 dark:hover:text-gray-200 hover:text-gray-700
+                        {{ request()->routeIs('admin.genres.*') ? 'bg-gray-100 dark:bg-gray-700' : '' }}"
                     x-data="{ tooltip: ! $store.sidebar.on ? 'Géneros' : false }"
                     x-init="$watch('$store.sidebar.on', value => tooltip = ! value ? 'Géneros' : false )"
                     x-tooltip.placement.right.delay.50="tooltip"
-                    href="#"
+                    href="{{ route('admin.genres.index') }}"
                     wire:navigate
                 >
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-category w-5 h-5" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 4h6v6h-6z" /><path d="M14 4h6v6h-6z" /><path d="M4 14h6v6h-6z" /><path d="M17 17m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" /></svg>
