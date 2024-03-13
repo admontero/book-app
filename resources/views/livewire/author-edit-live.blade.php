@@ -200,7 +200,7 @@
                                             <button
                                                 type="button"
                                                 class="w-full text-left px-5 py-2 truncate text-gray-600 dark:text-gray-300 first-letter:uppercase
-                                                    hover:bg-gray-100 dark:hover:bg-gray-600 focus:outline-none focus:bg-gray-100"
+                                                    hover:bg-gray-100 dark:hover:bg-gray-600 focus:outline-none focus:bg-gray-100 focus:dark:bg-gray-600"
                                                 :class="country_birth_id == country.id ? 'bg-gray-100 dark:bg-gray-600' : 'bg-white dark:bg-gray-700'"
                                                 @click="$wire.setCountryBirthId(country.id); show = false; search = '';"
                                                 :id=`country-${country.id}`
@@ -328,7 +328,7 @@
                                                 type="button"
                                                 x-text="state.name"
                                                 class="w-full text-left px-5 py-2 truncate text-gray-600 dark:text-gray-300 first-letter:uppercase
-                                                    hover:bg-gray-100 dark:hover:bg-gray-600 focus:outline-none focus:bg-gray-100"
+                                                    hover:bg-gray-100 dark:hover:bg-gray-600 focus:outline-none focus:bg-gray-100 focus:dark:bg-gray-600"
                                                 :class="state_birth_id == state.id ? 'bg-gray-100 dark:bg-gray-600' : 'bg-white dark:bg-gray-700'"
                                                 @click="$wire.setStateBirthId(state.id); show = false; search = '';"
                                                 :id=`state-${state.id}`
@@ -451,7 +451,7 @@
                                             type="button"
                                             x-text="city.name"
                                             class="w-full text-left px-5 py-2 truncate text-gray-600 dark:text-gray-300 first-letter:uppercase
-                                                hover:bg-gray-100 dark:hover:bg-gray-600 focus:outline-none focus:bg-gray-100"
+                                                hover:bg-gray-100 dark:hover:bg-gray-600 focus:outline-none focus:bg-gray-100 focus:dark:bg-gray-600"
                                             :class="city_birth_id == city.id ? 'bg-gray-100 dark:bg-gray-600' : 'bg-white dark:bg-gray-700'"
                                             @click="$wire.setCityBirthId(city.id); show = false; search = '';"
                                             :id=`city-${city.id}`
@@ -560,7 +560,7 @@
             })
             .then(editor => {
 
-                editor.setData($wire.biography)
+                editor.setData($wire.biography ?? '')
 
                 editor.model.document.on('change:data', () => {
                     $wire.biography = editor.getData();
