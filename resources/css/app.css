@@ -46,3 +46,7 @@
     @apply dark:bg-gray-600 !important
 }
 
+.focused {
+    @apply bg-gray-100 dark:bg-gray-600
+}
+

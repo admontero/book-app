@@ -110,11 +110,17 @@ class AuthorEditLive extends Component
             return ;
         }
 
+        if ($value != $this->country_birth_id) {
+            $this->reset('country_birth_id', 'state_birth_id', 'city_birth_id', 'states', 'cities');
+        }
+
         $this->country_birth_id = $value;
 
         $this->states = State::where('country_id', $value)->orderBy('name')->get(['id', 'name'])->toArray();
 
         $this->reset('state_birth_id', 'city_birth_id');
+
+        $this->dispatch('states_loaded');
     }
 
     public function setStateBirthId(int $value): void
@@ -125,11 +131,17 @@ class AuthorEditLive extends Component
             return ;
         }
 
+        if ($value != $this->state_birth_id) {
+            $this->reset('state_birth_id', 'city_birth_id', 'cities');
+        }
+
         $this->state_birth_id = $value;
 
         $this->cities = City::where('state_id', $value)->get(['id', 'name'])->toArray();
 
         $this->reset('city_birth_id');
+
+        $this->dispatch('cities_loaded');
     }
 
     public function setCityBirthId(int $value): void
