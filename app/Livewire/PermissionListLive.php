@@ -56,6 +56,7 @@ class PermissionListLive extends Component
         ]);
 
         $this->dispatch('close-edit-description-' . $this->permission->id)->self();
+        $this->dispatch('new-alert', message: 'Descripción actualizada con éxito', type: 'success');
     }
 
     public function render()

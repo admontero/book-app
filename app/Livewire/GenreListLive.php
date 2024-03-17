@@ -60,6 +60,7 @@ class GenreListLive extends Component
         ]);
 
         $this->dispatch('close-create-genre');
+        $this->dispatch('new-alert', message: 'Género agregado con éxito', type: 'success');
     }
 
     public function update(): void
@@ -73,6 +74,7 @@ class GenreListLive extends Component
         ]);
 
         $this->dispatch('genre-updated-' . $this->genre->id)->self();
+        $this->dispatch('new-alert', message: 'Género actualizado con éxito', type: 'success');
     }
 
     public function resetValidation($field = null): void

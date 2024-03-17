@@ -28,6 +28,8 @@ class UserRoleAssignmentLive extends Component
         $this->validate();
 
         $this->user->syncRoles($this->roleId);
+
+        $this->dispatch('new-alert', message: 'Rol asignado con éxito', type: 'success');
     }
 
     public function render()
