@@ -40,12 +40,16 @@
                 @endif
 
                 <!-- Page Content -->
-                <main class="my-4">
+                <main class="relative my-4">
+                    <x-alert />
+
                     {{ $slot }}
                 </main>
             </div>
 
         </div>
+
+        @stack('scripts')
 
         @stack('modals')
 

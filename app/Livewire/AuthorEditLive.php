@@ -180,6 +180,8 @@ class AuthorEditLive extends Component
             'photo_path' => isset($path) ? $path : $this->author->photo_path,
         ]);
 
+        $this->dispatch('new-alert', message: 'Autor actualizado con éxito', type: 'success');
+
         return $this->redirect(route('admin.authors.index'), navigate: true);
     }
 

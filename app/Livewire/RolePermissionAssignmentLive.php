@@ -62,6 +62,7 @@ class RolePermissionAssignmentLive extends Component
         );
 
         $this->dispatch('saved')->self();
+        $this->dispatch('new-alert', message: 'Permisos asignados con éxito', type: 'success');
     }
 
     public function render()

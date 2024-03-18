@@ -152,6 +152,8 @@ class AuthorCreateLive extends Component
             'photo_path' => isset($path) ? $path : null,
         ]);
 
+        $this->dispatch('new-alert', message: 'Autor agregado con éxito', type: 'success');
+
         return $this->redirect(route('admin.authors.index'), navigate: true);
     }
 
