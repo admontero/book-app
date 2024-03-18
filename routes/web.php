@@ -14,13 +14,23 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(['middleware' => 'auth', 'prefix' => 'admin', 'as' => 'admin.'], function () {
-    Route::resource('roles', App\Http\Controllers\RoleController::class)
-        ->except(['create', 'store', 'edit', 'update', 'destroy']);
+    Route::get('roles', App\Livewire\RoleListLive::class)
+        ->name('roles.index');
 
-    Route::resource('permissions', App\Http\Controllers\PermissionController::class)
-        ->except(['create', 'store', 'edit', 'update', 'destroy']);
+    Route::get('roles/{role}', App\Livewire\RoleShowLive::class)
+        ->name('roles.show');
 
-    Route::resource('users', App\Http\Controllers\UserController::class);
+    Route::get('roles/{role}/permissions/assignment', App\Livewire\RolePermissionAssignmentLive::class)
+        ->name('roles.permissions.assignment');
+
+    Route::get('permissions', App\Livewire\PermissionListLive::class)
+        ->name('permissions.index');
+
+    Route::get('users', App\Livewire\UserListLive::class)
+        ->name('users.index');
+
+    Route::get('users/{user}', App\Livewire\UserShowLive::class)
+        ->name('users.show');
 
     Route::get('users/{user}/roles/assignment', App\Livewire\UserRoleAssignmentLive::class)
         ->name('users.roles.assignment');
@@ -28,12 +38,10 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin', 'as' => 'admin.'], fu
     Route::get('users/{user}/permissions/assignment', App\Livewire\UserPermissionAssignmentLive::class)
         ->name('users.permissions.assignment');
 
-    Route::get('roles/{role}/permissions/assignment', App\Livewire\RolePermissionAssignmentLive::class)
-        ->name('roles.permissions.assignment');
+    Route::get('genres', App\Livewire\GenreListLive::class)
+        ->name('genres.index');
 
-    Route::resource('genres', App\Http\Controllers\GenreController::class);
-
-    Route::get('authors', [App\Http\Controllers\AuthorController::class, 'index'])
+    Route::get('authors', App\Livewire\AuthorListLive::class)
         ->name('authors.index');
 
     Route::get('authors/create', App\Livewire\AuthorCreateLive::class)
@@ -44,6 +52,15 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin', 'as' => 'admin.'], fu
 
     Route::get('authors/{author}/edit', App\Livewire\AuthorEditLive::class)
         ->name('authors.edit');
+
+    Route::get('books', App\Livewire\BookListLive::class)
+        ->name('books.index');
+
+    Route::get('books/create', App\Livewire\BookCreateLive::class)
+        ->name('books.create');
+
+    Route::get('books/{book}/edit', App\Livewire\BookEditLive::class)
+        ->name('books.edit');
 });
 
 Route::middleware([

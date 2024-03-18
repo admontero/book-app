@@ -33,6 +33,25 @@ class UserListLive extends Component
         $this->validateSorting(fields: ['id', 'name', 'email']);
     }
 
+    public function updatedSearch(): void
+    {
+        $this->resetPage();
+    }
+
+    public function setRoles(string $name): void
+    {
+        $rolesFilterArray = array_filter(explode(',', $this->roles));
+
+        if (in_array($name, $rolesFilterArray)) {
+            $rolesFilterArray = array_diff($rolesFilterArray, [$name]);
+        } else {
+            $rolesFilterArray[] = $name;
+        }
+
+        $this->roles = implode(',', $rolesFilterArray);
+        $this->resetPage();
+    }
+
     #[Computed]
     public function rolesArray(): array
     {
@@ -55,20 +74,6 @@ class UserListLive extends Component
     public function allRoles(): Collection
     {
         return Role::pluck('name', 'id');
-    }
-
-    public function setRoles(string $name): void
-    {
-        $rolesFilterArray = array_filter(explode(',', $this->roles));
-
-        if (in_array($name, $rolesFilterArray)) {
-            $rolesFilterArray = array_diff($rolesFilterArray, [$name]);
-        } else {
-            $rolesFilterArray[] = $name;
-        }
-
-        $this->roles = implode(',', $rolesFilterArray);
-        $this->resetPage();
     }
 
     public function render(): View

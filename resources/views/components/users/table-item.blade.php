@@ -6,7 +6,7 @@
             <dd class="font-normal text-gray-600 dark:text-gray-400 truncate">
                 {{ $user->email }}
             </dd>
-            <dt class="sr-only lg:hidden">Role</dt>
+            <dt class="sr-only lg:hidden">Roles</dt>
             <dd class="font-normal text-gray-600 dark:text-gray-400 truncate lg:hidden">
                 @forelse ($user->roles as $role)
                     <span>

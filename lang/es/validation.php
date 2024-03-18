@@ -206,6 +206,11 @@ return [
         'city_birth_id' => 'ciudad de nacimiento',
         'date_of_death' => 'fecha de defunción',
         'biography' => 'biografía',
+        'title' => 'título',
+        'publication_year' => 'año de publicación',
+        'author_id' => 'autor',
+        'genre_ids' => 'géneros',
+        'synopsis' => 'sinopsis',
     ],
 
 ];

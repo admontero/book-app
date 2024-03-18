@@ -23,6 +23,11 @@ class RoleListLive extends Component
         $this->validateSorting(fields: ['name']);
     }
 
+    public function updatedSearch(): void
+    {
+        $this->resetPage();
+    }
+
     #[Computed]
     public function rolesCount(): int
     {

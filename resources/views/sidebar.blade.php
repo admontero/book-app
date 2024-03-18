@@ -123,11 +123,12 @@
 
                 <a
                     class="flex items-center px-3 py-2 text-gray-600 transform rounded-lg dark:text-gray-200 hover:bg-gray-100
-                        dark:hover:bg-gray-700 dark:hover:text-gray-200 hover:text-gray-700"
+                        dark:hover:bg-gray-700 dark:hover:text-gray-200 hover:text-gray-700
+                        {{ request()->routeIs('admin.books.*') ? 'bg-gray-100 dark:bg-gray-700' : '' }}"
                     x-data="{ tooltip: ! $store.sidebar.on ? 'Libros' : false }"
                     x-init="$watch('$store.sidebar.on', value => tooltip = ! value ? 'Libros' : false )"
                     x-tooltip.placement.right.delay.50="tooltip"
-                    href="#"
+                    href="{{ route('admin.books.index') }}"
                     wire:navigate
                 >
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-book-2 w-5 h-5" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M19 4v16h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12z" /><path d="M19 16h-12a2 2 0 0 0 -2 2" /><path d="M9 8h6" /></svg>

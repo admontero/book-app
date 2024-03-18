@@ -1,9 +1,10 @@
 import './bootstrap';
 import { Livewire, Alpine } from '../../vendor/livewire/livewire/dist/livewire.esm';
-import Tooltip from "@ryangjchandler/alpine-tooltip";
-import anchor from '@alpinejs/anchor';
+import Autosize from '@marcreichel/alpine-autosize';
 import mask from '@alpinejs/mask';
 import focus from '@alpinejs/focus';
+import anchor from '@alpinejs/anchor';
+import Tooltip from "@ryangjchandler/alpine-tooltip";
 
 document.addEventListener('alpine:init', () => {
 
@@ -38,6 +39,8 @@ document.addEventListener('alpine:init', () => {
         }
     })
 })
+
+Alpine.plugin(Autosize);
 
 Alpine.plugin(Tooltip);
 

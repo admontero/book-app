@@ -73,6 +73,7 @@ class DatabaseSeeder extends Seeder
         $this->call(WorldSeeder::class);
         $this->call(GenreSeeder::class);
         $this->call(AuthorSeeder::class);
+        $this->call(BookSeeder::class);
 
         Schema::enableForeignKeyConstraints();
     }

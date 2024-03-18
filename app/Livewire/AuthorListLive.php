@@ -24,6 +24,11 @@ class AuthorListLive extends Component
         $this->validateSorting(fields: ['name', 'countries.name']);
     }
 
+    public function updatedSearch(): void
+    {
+        $this->resetPage();
+    }
+
     #[Computed]
     public function authorsCount(): int
     {

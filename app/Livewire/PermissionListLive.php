@@ -28,6 +28,11 @@ class PermissionListLive extends Component
         $this->validateSorting(fields: ['name']);
     }
 
+    public function updatedSearch(): void
+    {
+        $this->resetPage();
+    }
+
     public function setPermission(Permission $permission)
     {
         $this->permission = $permission;

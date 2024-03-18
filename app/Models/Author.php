@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Storage;
 use Nnjeim\World\Models\City;
 use Nnjeim\World\Models\Country;
@@ -21,6 +22,11 @@ class Author extends Model
         'date_of_birth' => 'date',
         'date_of_death' => 'date',
     ];
+
+    public function books(): HasMany
+    {
+        return $this->hasMany(Book::class);
+    }
 
     public function country_birth(): BelongsTo
     {

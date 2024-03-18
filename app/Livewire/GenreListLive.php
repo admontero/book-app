@@ -28,6 +28,11 @@ class GenreListLive extends Component
         $this->validateSorting(fields: ['name', 'slug']);
     }
 
+    public function updatedSearch(): void
+    {
+        $this->resetPage();
+    }
+
     public function rules(): array
     {
         return [
