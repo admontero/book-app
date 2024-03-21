@@ -61,6 +61,27 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin', 'as' => 'admin.'], fu
 
     Route::get('books/{book}/edit', App\Livewire\BookEditLive::class)
         ->name('books.edit');
+
+    Route::get('editorials', App\Livewire\EditorialListLive::class)
+        ->name('editorials.index');
+
+    Route::get('editions', App\Livewire\EditionListLive::class)
+        ->name('editions.index');
+
+    Route::get('editions/create', App\Livewire\EditionCreateLive::class)
+        ->name('editions.create');
+
+    Route::get('editions/{edition}/edit', App\Livewire\EditionEditLive::class)
+        ->name('editions.edit');
+
+    Route::get('copies', App\Livewire\CopyListLive::class)
+        ->name('copies.index');
+
+    Route::get('copies/create', App\Livewire\CopyCreateLive::class)
+        ->name('copies.create');
+
+    Route::get('copies/{copy}/edit', App\Livewire\CopyEditLive::class)
+        ->name('copies.edit');
 });
 
 Route::middleware([

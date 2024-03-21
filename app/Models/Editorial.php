@@ -6,9 +6,9 @@ use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Genre extends Model
+class Editorial extends Model
 {
     use HasFactory;
     use Sluggable;
@@ -36,8 +36,8 @@ class Genre extends Model
         );
     }
 
-    public function books(): BelongsToMany
+    public function editions(): HasMany
     {
-        return $this->belongsToMany(Book::class, 'book_genre', 'genre_id', 'book_id')->withTimestamps();
+        return $this->hasMany(Edition::class);
     }
 }

@@ -19,7 +19,7 @@ class AuthorFactory extends Factory
      */
     public function definition(): array
     {
-        $country_birth_id = Country::inRandomOrder()->first()->id;
+        $country_birth_id = Country::inRandomOrder()->first()?->id;
 
         $state_birth_id = $country_birth_id
             ? State::where('country_id', $country_birth_id)->inRandomOrder()->first()?->id

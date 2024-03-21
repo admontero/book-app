@@ -71,11 +71,12 @@
 
                 <a
                     class="flex items-center px-3 py-2 text-gray-600 transform rounded-lg dark:text-gray-200 hover:bg-gray-100
-                        dark:hover:bg-gray-700 dark:hover:text-gray-200 hover:text-gray-700"
+                        dark:hover:bg-gray-700 dark:hover:text-gray-200 hover:text-gray-700
+                        {{ request()->routeIs('admin.copies.*') ? 'bg-gray-100 dark:bg-gray-700' : '' }}"
                     x-data="{ tooltip: ! $store.sidebar.on ? 'Copias' : false }"
                     x-init="$watch('$store.sidebar.on', value => tooltip = ! value ? 'Copias' : false )"
                     x-tooltip.placement.right.delay.50="tooltip"
-                    href="#"
+                    href="{{ route('admin.copies.index') }}"
                     wire:navigate
                 >
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-books w-5 h-5" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 4m0 1a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v14a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1z" /><path d="M9 4m0 1a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v14a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1z" /><path d="M5 8h4" /><path d="M9 16h4" /><path d="M13.803 4.56l2.184 -.53c.562 -.135 1.133 .19 1.282 .732l3.695 13.418a1.02 1.02 0 0 1 -.634 1.219l-.133 .041l-2.184 .53c-.562 .135 -1.133 -.19 -1.282 -.732l-3.695 -13.418a1.02 1.02 0 0 1 .634 -1.219l.133 -.041z" /><path d="M14 9l4 -1" /><path d="M16 16l3.923 -.98" /></svg>
@@ -120,6 +121,36 @@
 
             <div class="space-y-3">
                 <label class="px-3 text-xs text-gray-500 uppercase dark:text-gray-400" x-show="$store.sidebar.on">datos</label>
+
+                <a
+                    class="flex items-center px-3 py-2 text-gray-600 transform rounded-lg dark:text-gray-200 hover:bg-gray-100
+                        dark:hover:bg-gray-700 dark:hover:text-gray-200 hover:text-gray-700
+                        {{ request()->routeIs('admin.editions.*') ? 'bg-gray-100 dark:bg-gray-700' : '' }}"
+                    x-data="{ tooltip: ! $store.sidebar.on ? 'Ediciones' : false }"
+                    x-init="$watch('$store.sidebar.on', value => tooltip = ! value ? 'Ediciones' : false )"
+                    x-tooltip.placement.right.delay.50="tooltip"
+                    href="{{ route('admin.editions.index') }}"
+                    wire:navigate
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icons-tabler-outline icon-tabler-book w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 19a9 9 0 0 1 9 0a9 9 0 0 1 9 0" /><path d="M3 6a9 9 0 0 1 9 0a9 9 0 0 1 9 0" /><path d="M3 6l0 13" /><path d="M12 6l0 13" /><path d="M21 6l0 13" /></svg>
+
+                    <span class="mx-2 text-sm font-medium" x-show="$store.sidebar.on">Ediciones</span>
+                </a>
+
+                <a
+                    class="flex items-center px-3 py-2 text-gray-600 transform rounded-lg dark:text-gray-200 hover:bg-gray-100
+                        dark:hover:bg-gray-700 dark:hover:text-gray-200 hover:text-gray-700
+                        {{ request()->routeIs('admin.editorials.*') ? 'bg-gray-100 dark:bg-gray-700' : '' }}"
+                    x-data="{ tooltip: ! $store.sidebar.on ? 'Editoriales' : false }"
+                    x-init="$watch('$store.sidebar.on', value => tooltip = ! value ? 'Editoriales' : false )"
+                    x-tooltip.placement.right.delay.50="tooltip"
+                    href="{{ route('admin.editorials.index') }}"
+                    wire:navigate
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icons-tabler-outline icon-tabler-home-edit w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 21v-6a2 2 0 0 1 2 -2h2c.645 0 1.218 .305 1.584 .78" /><path d="M20 11l-8 -8l-9 9h2v7a2 2 0 0 0 2 2h4" /><path d="M18.42 15.61a2.1 2.1 0 0 1 2.97 2.97l-3.39 3.42h-3v-3l3.42 -3.39z" /></svg>
+
+                    <span class="mx-2 text-sm font-medium" x-show="$store.sidebar.on">Editoriales</span>
+                </a>
 
                 <a
                     class="flex items-center px-3 py-2 text-gray-600 transform rounded-lg dark:text-gray-200 hover:bg-gray-100
