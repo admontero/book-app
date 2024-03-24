@@ -89,47 +89,55 @@
         </div>
 
         <div class="max-h-52 overflow-y-auto" x-ref="{{ $element }}">
-            <ul class="divide-y divide-gray-100 dark:divide-gray-600">
-                <template x-if="search.length && isCreatable && ! isIncluded">
-                    <li
-                        class="flex items-center w-full text-left px-5 py-2 truncate text-gray-600 dark:text-gray-300
-                        hover:bg-gray-100 dark:hover:bg-gray-600 focus:outline-none cursor-pointer"
-                        @click="$dispatch('create')"
-                    >
-                        <span class="first-letter:uppercase">crear:
-                            <span class="text-blue-600 dark:text-blue-400" x-text="search"></span>
-                        </span>
-                    </li>
-                </template>
+            <template x-if="loading">
+                <div class="flex justify-center items-center py-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-loader animate-spin dark:text-white" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 6l0 -3" /><path d="M16.25 7.75l2.15 -2.15" /><path d="M18 12l3 0" /><path d="M16.25 16.25l2.15 2.15" /><path d="M12 18l0 3" /><path d="M7.75 16.25l-2.15 2.15" /><path d="M6 12l-3 0" /><path d="M7.75 7.75l-2.15 -2.15" /></svg>
+                </div>
+            </template>
 
-                <template x-for="item in itemsFiltered" :key="item.value">
-                    <li
-                        class="flex items-center w-full text-left px-5 py-2 truncate text-gray-600 dark:text-gray-300 capitalize
+            <template x-if="! loading">
+                <ul class="divide-y divide-gray-100 dark:divide-gray-600">
+                    <template x-if="search.length && isCreatable && ! isIncluded">
+                        <li
+                            class="flex items-center w-full text-left px-5 py-2 truncate text-gray-600 dark:text-gray-300
                             hover:bg-gray-100 dark:hover:bg-gray-600 focus:outline-none cursor-pointer"
-                        @click="$dispatch('update', { value: item.value }); if (! isMultiple) { show = false; search = ''; }"
-                        :data-value="item.value"
-                    >
-                        {{ $optionContainer ?? false }}
+                            @click="$dispatch('create')"
+                        >
+                            <span class="first-letter:uppercase">crear:
+                                <span class="text-blue-600 dark:text-blue-400" x-text="search"></span>
+                            </span>
+                        </li>
+                    </template>
 
-                        <template x-if="isMultiple">
-                            <div>
-                                <svg x-show="! value.includes(item.value)" class="icon icon-tabler icons-tabler-outline icon-tabler-square w-5 h-5 me-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 3m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z" /></svg>
-                                <svg x-show="value.includes(item.value)" class="icon icon-tabler icons-tabler-outline icon-tabler-square-check w-5 h-5 me-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 3m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z" /><path d="M9 12l2 2l4 -4" /></svg>
-                            </div>
-                        </template>
+                    <template x-for="item in itemsFiltered" :key="item.value">
+                        <li
+                            class="flex items-center w-full text-left px-5 py-2 truncate text-gray-600 dark:text-gray-300 capitalize
+                                hover:bg-gray-100 dark:hover:bg-gray-600 focus:outline-none cursor-pointer"
+                            @click="$dispatch('update', { value: item.value }); if (! isMultiple) { show = false; search = ''; }"
+                            :data-value="item.value"
+                        >
+                            {{ $optionContainer ?? false }}
 
-                        <span x-text="item.label"></span>
-                    </li>
-                </template>
-            </ul>
+                            <template x-if="isMultiple">
+                                <div>
+                                    <svg x-show="! value.includes(item.value)" class="icon icon-tabler icons-tabler-outline icon-tabler-square w-5 h-5 me-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 3m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z" /></svg>
+                                    <svg x-show="value.includes(item.value)" class="icon icon-tabler icons-tabler-outline icon-tabler-square-check w-5 h-5 me-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 3m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z" /><path d="M9 12l2 2l4 -4" /></svg>
+                                </div>
+                            </template>
 
-            <template x-if="items.length && ! itemsFiltered.length && search.length && ! isCreatable">
+                            <span x-text="item.label"></span>
+                        </li>
+                    </template>
+                </ul>
+            </template>
+
+            <template x-if="items.length && ! itemsFiltered.length && search.length && ! isCreatable && ! loading">
                 <div class="text-gray-400 italic text-xs text-center py-3">
                     No hay coincidencias con su búsqueda.
                 </div>
             </template>
 
-            <template x-if="! items.length">
+            <template x-if="! items.length && ! loading">
                 <div class="text-gray-400 italic text-xs text-center py-3">
                     {{ $empty }}
                 </div>
