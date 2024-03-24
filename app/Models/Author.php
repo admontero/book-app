@@ -19,8 +19,8 @@ class Author extends Model
     protected $guarded = ['id'];
 
     protected $casts = [
-        'date_of_birth' => 'date',
-        'date_of_death' => 'date',
+        'date_of_birth' => 'date:Y-m-d',
+        'date_of_death' => 'date:Y-m-d',
     ];
 
     public function books(): HasMany
@@ -46,7 +46,7 @@ class Author extends Model
     protected function name(): Attribute
     {
         return Attribute::make(
-            set: fn (string $value) => strtolower($value),
+            set: fn (string $value) => mb_strtolower($value),
         );
     }
 

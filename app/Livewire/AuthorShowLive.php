@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\Author;
+use Illuminate\View\View;
 use Livewire\Attributes\Computed;
 use Livewire\Component;
 
@@ -22,7 +23,7 @@ class AuthorShowLive extends Component
         return $this->author->date_of_death?->format('d/m/Y');
     }
 
-    public function render()
+    public function render(): View
     {
         return view('livewire.author-show-live');
     }

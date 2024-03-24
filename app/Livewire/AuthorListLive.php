@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Models\Author;
 use App\Traits\HasSort;
+use Illuminate\View\View;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Url;
 use Livewire\Component;
@@ -35,7 +36,7 @@ class AuthorListLive extends Component
         return Author::count();
     }
 
-    public function render()
+    public function render(): View
     {
         $authors = Author::select('authors.id', 'authors.name', 'authors.photo_path', 'authors.country_birth_id')
             ->leftJoin('countries', 'authors.country_birth_id', '=', 'countries.id')

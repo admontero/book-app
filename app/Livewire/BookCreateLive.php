@@ -2,92 +2,47 @@
 
 namespace App\Livewire;
 
-use App\Models\Author;
-use App\Models\Book;
-use App\Models\Genre;
+use App\Livewire\Forms\BookForm;
+use App\Livewire\Forms\GenreForm;
+use Illuminate\View\View;
 use Livewire\Component;
 
 class BookCreateLive extends Component
 {
-    public $title;
+    public BookForm $form;
 
-    public $publication_year;
+    public GenreForm $genreForm;
 
-    public $author_id;
-
-    public $synopsis = '';
-
-    public array $genre_ids = [];
-
-    public function rules(): array
+    public function mount(): void
     {
-        return [
-            'title' => [
-                'required',
-                'min:2',
-                'max:255',
-            ],
-            'publication_year' => [
-                'nullable',
-                'date_format:Y',
-                'before_or_equal:' . now()->format('Y'),
-            ],
-            'author_id' => [
-                'nullable',
-                'exists:authors,id',
-            ],
-            'synopsis' => [
-                'nullable',
-                'max:800',
-            ],
-            'genre_ids' => [
-                'required',
-                'array',
-                'min:1',
-                'exists:genres,id',
-            ],
-        ];
+        $this->form->loadAuthors();
+
+        $this->form->loadGenres();
     }
 
-    public function setGenreIds(int $id): void
+    public function setGenre(int $id): void
     {
-        if (! $id) return ;
+        $this->form->setGenre($id);
 
-        if (in_array($id, $this->genre_ids)) {
-            $this->genre_ids = array_values(array_filter($this->genre_ids, fn ($value) => $value !== $id));
-
-            return ;
-        }
-
-        $this->genre_ids[] = $id;
-        $this->genre_ids = array_values($this->genre_ids);
+        $this->dispatch('reset-search');
     }
 
-    public function save()
+    public function saveGenre(string $name): void
     {
-        $this->validate();
-
-        $book = Book::create([
-            'title' => $this->title,
-            'publication_year' => $this->publication_year,
-            'author_id' => $this->author_id,
-            'synopsis' => $this->synopsis,
-        ]);
-
-        $book->genres()->sync($this->genre_ids);
-
-        return $this->redirect(route('admin.books.index'), navigate: true);
+        $this->form->saveGenre($this->genreForm, $name);
     }
 
-    public function render()
+    public function save(): void
     {
-        $authors = Author::orderBy('name')->get(['id', 'name']);
+        $this->form->save();
 
-        $genres = Genre::orderBy('name')->get(['id','name']);
+        $this->dispatch('new-alert', message: 'Libro creado con éxito', type: 'success');
 
-        return view('livewire.book-create-live', [
-            'authors' => $authors,
-            'genres' => $genres,
-        ]);
+        $this->redirect(route('admin.books.index'), navigate: true);
+    }
+
+    public function render(): View
+    {
+        return view('livewire.book-create-live');
     }
 }

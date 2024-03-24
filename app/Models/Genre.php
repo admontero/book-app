@@ -34,7 +34,7 @@ class Genre extends Model
     public function name(): Attribute
     {
         return Attribute::make(
-            set: fn (string $value) => strtolower($value),
+            set: fn (string $value) => mb_strtolower($value),
         );
     }
 

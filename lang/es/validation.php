@@ -198,14 +198,7 @@ return [
     */
 
     'attributes' => [
-        'name' => 'nombre',
         'description' => 'descripción',
-        'date_of_birth' => 'fecha de nacimiento',
-        'country_birth_id' => 'país de nacimiento',
-        'state_birth_id' => 'estado de nacimiento',
-        'city_birth_id' => 'ciudad de nacimiento',
-        'date_of_death' => 'fecha de defunción',
-        'biography' => 'biografía',
         'title' => 'título',
         'publication_year' => 'año de publicación',
         'author_id' => 'autor',

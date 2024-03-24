@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Livewire\Forms\GenreForm;
 use App\Models\Genre;
 use App\Traits\HasSort;
 use Illuminate\Validation\Rule;
@@ -17,11 +18,11 @@ class GenreListLive extends Component
     use WithPagination;
 
     #[Url(except: '')]
-    public $search = '';
+    public string $search = '';
 
     public ?Genre $genre = null;
 
-    public string $name = '';
+    public GenreForm $form;
 
     public function mount(): void
     {
@@ -33,36 +34,18 @@ class GenreListLive extends Component
         $this->resetPage();
     }
 
-    public function rules(): array
-    {
-        return [
-            'name' => [
-                'required',
-                'min:3',
-                'max:30',
-                Rule::unique('genres', 'name')->ignore($this->genre),
-            ],
-        ];
-    }
-
     public function setGenre(Genre $genre): void
     {
         $this->genre = $genre;
 
-        $this->name = $genre->name;
-
-        $this->resetErrorBag();
+        $this->form->setGenre($genre);
 
         $this->dispatch('show-edit-genre-' . $genre->id)->self();
     }
 
     public function save(): void
     {
-        $this->validate();
-
-        Genre::create([
-            'name' => $this->name,
-        ]);
+        $this->form->save();
 
         $this->dispatch('close-create-genre');
         $this->dispatch('new-alert', message: 'Género agregado con éxito', type: 'success');
@@ -70,23 +53,17 @@ class GenreListLive extends Component
 
     public function update(): void
     {
-        if (! $this->genre) return ;
-
-        $this->validate();
-
-        $this->genre->update([
-            'name' => $this->name,
-        ]);
+        $this->form->save();
 
         $this->dispatch('genre-updated-' . $this->genre->id)->self();
         $this->dispatch('new-alert', message: 'Género actualizado con éxito', type: 'success');
     }
 
-    public function resetValidation($field = null): void
+    public function resetForm(): void
     {
-        parent::resetValidation($field);
+        $this->form->resetForm();
 
-        $this->dispatch('validation-errors-cleared')->self();
+        $this->dispatch('show-create-genre')->self();
     }
 
     #[Computed]
