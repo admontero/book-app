@@ -34,11 +34,11 @@
 
                     <x-input
                         class="w-full mt-1"
-                        wire:model="name"
+                        wire:model="form.name"
                         x-ref="name"
                     />
 
-                    @error('name')
+                    @error('form.name')
                         <p class="text-xs text-red-600 dark:text-red-300 mt-1">
                             {{ $message }}
                         </p>
