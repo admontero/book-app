@@ -15,48 +15,20 @@
             <div
                 @close-create-genre.window="show = false"
                 x-init="
-                    $watch('show', value => { if (value) isLoading = true; $wire.resetForm(); } )
+                    $watch('show', value => { if (value) isLoading = true; $wire.showDialog(); } )
                     $wire.on('show-create-genre', () => { isLoading = false; $nextTick(() => { $refs.name.focus() }); })
                 "
             >
-                <template x-if="! isLoading">
-                    <form wire:submit.prevent="save">
-                        <div class="px-4 py-5">
-                            <x-label value="Nombre" />
-
-                            <x-input
-                                class="w-full mt-1"
-                                wire:model="form.name"
-                                x-ref="name"
-                            />
-
-                            @error('form.name')
-                                <p class="text-xs text-red-600 dark:text-red-300 mt-1">
-                                    {{ $message }}
-                                </p>
-                            @enderror
-                        </div>
-
-                        <div class="flex justify-end gap-4 px-4 py-2">
-                            <x-default-button
-                                class="btn-sm"
-                                @click="show = false;"
-                            >cancelar</x-default-button>
-
-                            <x-primary-button
-                                class="btn-sm"
-                            >guardar</x-primary-button>
-                        </div>
-                    </form>
-                </template>
-
                 <template x-if="isLoading">
                     <div class="flex justify-center items-center gap-2 my-4 dark:text-white">
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-loader animate-spin w-6 h-6" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 6l0 -3" /><path d="M16.25 7.75l2.15 -2.15" /><path d="M18 12l3 0" /><path d="M16.25 16.25l2.15 2.15" /><path d="M12 18l0 3" /><path d="M7.75 16.25l-2.15 2.15" /><path d="M6 12l-3 0" /><path d="M7.75 7.75l-2.15 -2.15" /></svg>
                     </div>
                 </template>
-            </div>
 
+                <template x-if="! isLoading">
+                    <x-genres.form method="save" />
+                </template>
+            </div>
         </x-slot>
     </x-dropdown-floating>
 </div>

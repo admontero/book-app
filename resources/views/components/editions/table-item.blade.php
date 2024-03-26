@@ -1,6 +1,11 @@
 <tr wire:key="edition-{{ $edition->id }}">
     <td class="max-w-48 px-4 py-4 text-sm font-medium whitespace-nowrap">
         <h2 class="font-medium text-gray-800 dark:text-white truncate first-letter:uppercase">{{ $edition->book?->title }}</h2>
+        @if ($edition->year)
+            <span class="hidden lg:block font-normal text-gray-600 dark:text-gray-400 truncate">
+                {{ $edition->year }}
+            </span>
+        @endif
         <dl class="lg:hidden">
             <dt class="sr-only">Editorial</dt>
             <dd class="font-normal text-gray-600 dark:text-gray-400 truncate capitalize">

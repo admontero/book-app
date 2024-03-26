@@ -199,11 +199,6 @@ return [
 
     'attributes' => [
         'description' => 'descripción',
-        'title' => 'título',
-        'publication_year' => 'año de publicación',
-        'author_id' => 'autor',
-        'genre_ids' => 'géneros',
-        'synopsis' => 'sinopsis',
     ],
 
 ];

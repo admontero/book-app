@@ -19,7 +19,10 @@
         isCreatable: {{ Illuminate\Support\Js::from($isCreatable) }},
         property: '{{ $value }}',
     })"
-    x-init="$watch('search', value => currentFocus = '')"
+    x-init="
+        $watch('search', value => currentFocus = '');
+        $watch('show', value => { if (value) $focus.focus($refs.search); });
+    "
     @mousedown.outside="show = false"
     @keyup.esc="show = false"
     @reset-search.window="search = ''"
@@ -48,9 +51,13 @@
             </template>
 
             <template x-if="! isEmpty && ! isMultiple">
-                <div class="flex items-center">
+                <div class="flex items-center capitalize">
                     {{ $selectionContainer ?? null }}
-                    <span class="capitalize" x-text="selected?.label"></span>
+
+                    <div>
+                        <p x-text="selected?.label"></p>
+                        <p class="text-gray-500 dark:text-gray-400 text-sm" x-text="selected?.description"></p>
+                    </div>
                 </div>
             </template>
 
@@ -73,7 +80,6 @@
         class="absolute py-1 start-0 w-96 bg-white dark:bg-gray-700 rounded-md shadow-md border border-gray-200
             dark:border-gray-600 z-50 overflow-x-hidden mt-2"
         x-show="show"
-        x-trap.inert="show"
         x-bind="dialog"
     >
         <div class="px-3 my-3">
@@ -88,7 +94,7 @@
             {{ $validationInput ?? null }}
         </div>
 
-        <div class="max-h-52 overflow-y-auto" x-ref="{{ $element }}">
+        <div class="max-h-72 overflow-y-auto" x-ref="{{ $element }}">
             <template x-if="loading">
                 <div class="flex justify-center items-center py-3">
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-loader animate-spin dark:text-white" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 6l0 -3" /><path d="M16.25 7.75l2.15 -2.15" /><path d="M18 12l3 0" /><path d="M16.25 16.25l2.15 2.15" /><path d="M12 18l0 3" /><path d="M7.75 16.25l-2.15 2.15" /><path d="M6 12l-3 0" /><path d="M7.75 7.75l-2.15 -2.15" /></svg>
@@ -125,7 +131,10 @@
                                 </div>
                             </template>
 
-                            <span x-text="item.label"></span>
+                            <div>
+                                <p x-text="item.label"></p>
+                                <p class="text-gray-500 dark:text-gray-400 text-sm" x-text="item.description"></p>
+                            </div>
                         </li>
                     </template>
                 </ul>
@@ -168,7 +177,7 @@
                 get itemsFiltered() {
                     if (! this.search.length) return this.itemsSorted;
 
-                    return this.itemsSorted.filter(item => item.label.toLowerCase().includes(this.search.toLowerCase()));
+                    return this.itemsSorted.filter(item => this.isContainingTheTerm(item));
                 },
                 get selected() {
                     if (! isMultiple) {
@@ -219,6 +228,16 @@
 
                     schema[properties[len - 1]] = value;
                 },
+                isContainingTheTerm(item) {
+                    if (
+                        item.label.toLowerCase().includes(this.search.toLowerCase()) ||
+                        item.description?.toLowerCase().includes(this.search.toLowerCase())
+                    ) {
+                        return true;
+                    }
+
+                    return false;
+                }
             }
         });
 

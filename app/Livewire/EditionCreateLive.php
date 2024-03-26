@@ -2,10 +2,8 @@
 
 namespace App\Livewire;
 
-use App\Models\Book;
-use App\Models\Edition;
-use App\Models\Editorial;
-use Illuminate\Support\Str;
+use App\Livewire\Forms\EditionForm;
+use Illuminate\View\View;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -13,83 +11,26 @@ class EditionCreateLive extends Component
 {
     use WithFileUploads;
 
-    public $book_id;
+    public EditionForm $form;
 
-    public $editorial_id;
-
-    public $isbn13;
-
-    public $year;
-
-    public $pages;
-
-    public $cover;
-
-    public function rules(): array
+    public function mount(): void
     {
-        return [
-            'book_id' => [
-                'required',
-                'exists:books,id',
-            ],
-            'editorial_id' => [
-                'required',
-                'exists:editorials,id',
-            ],
-            'isbn13' => [
-                'required',
-                'digits:13',
-            ],
-            'year' => [
-                'nullable',
-                'date_format:Y',
-                'before_or_equal:' . now()->format('Y'),
-            ],
-            'pages' => [
-                'nullable',
-                'numeric',
-                'min:1',
-            ],
-            'cover' => [
-                'nullable',
-                'image',
-                'max:1024',
-                'dimensions:min_width=300,min_height=450',
-            ],
-        ];
+        $this->form->loadBooks();
+
+        $this->form->loadEditorials();
     }
 
-    public function save()
+    public function save(): void
     {
-        $this->validate();
+        $this->form->save();
 
-        if ($this->cover) {
-            $name = Str::slug($this->isbn13) . '-' . time() . '.' . $this->cover->extension();
+        $this->dispatch('new-alert', message: 'Edición creada con éxito', type: 'success');
 
-            $path = $this->cover->storeAs('covers', $name, 'public');
-        }
-
-        Edition::create([
-            'book_id' => $this->book_id,
-            'editorial_id' => $this->editorial_id,
-            'isbn13' => $this->isbn13,
-            'year' => $this->year ? $this->year : null,
-            'pages' => is_numeric($this->pages) ? $this->pages : null,
-            'cover_path' => isset($path) ? $path : null,
-        ]);
-
-        return $this->redirect(route('admin.editions.index'), navigate: true);
+        $this->redirect(route('admin.editions.index'), navigate: true);
     }
 
-    public function render()
+    public function render(): View
     {
-        $books = Book::orderBy('title')->get(['id', 'title']);
-
-        $editorials = Editorial::orderBy('name')->get(['id','name']);
-
-        return view('livewire.edition-create-live', [
-            'books' => $books,
-            'editorials' => $editorials,
-        ]);
+        return view('livewire.edition-create-live');
     }
 }

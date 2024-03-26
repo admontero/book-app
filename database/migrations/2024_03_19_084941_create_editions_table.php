@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('editions', function (Blueprint $table) {
             $table->id();
-            $table->string('isbn13')->unique();
+            $table->string('isbn13')->unique()->nullable();
             $table->integer('pages')->nullable();
             $table->year('year')->nullable();
             $table->string('cover_path', 2048)->nullable();

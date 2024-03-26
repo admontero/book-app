@@ -5,7 +5,6 @@ namespace App\Livewire;
 use App\Livewire\Forms\GenreForm;
 use App\Models\Genre;
 use App\Traits\HasSort;
-use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Url;
@@ -59,7 +58,7 @@ class GenreListLive extends Component
         $this->dispatch('new-alert', message: 'Género actualizado con éxito', type: 'success');
     }
 
-    public function resetForm(): void
+    public function showDialog(): void
     {
         $this->form->resetForm();
 

@@ -2,8 +2,10 @@
 
 namespace App\Livewire;
 
+use App\Livewire\Forms\EditorialForm;
 use App\Models\Editorial;
 use App\Traits\HasSort;
+use Illuminate\View\View;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Url;
 use Livewire\Component;
@@ -19,7 +21,7 @@ class EditorialListLive extends Component
 
     public ?Editorial $editorial = null;
 
-    public string $name = '';
+    public EditorialForm $form;
 
     public function mount(): void
     {
@@ -31,35 +33,18 @@ class EditorialListLive extends Component
         $this->resetPage();
     }
 
-    public function rules(): array
-    {
-        return [
-            'name' => [
-                'required',
-                'min:3',
-                'max:50',
-            ],
-        ];
-    }
-
     public function setEditorial(Editorial $editorial): void
     {
         $this->editorial = $editorial;
 
-        $this->name = $editorial->name;
-
-        $this->resetErrorBag();
+        $this->form->setEditorial($editorial);
 
         $this->dispatch('show-edit-editorial-' . $editorial->id)->self();
     }
 
     public function save(): void
     {
-        $this->validate();
-
-        Editorial::create([
-            'name' => $this->name,
-        ]);
+        $this->form->save();
 
         $this->dispatch('close-create-editorial');
         $this->dispatch('new-alert', message: 'Editorial agregada con éxito', type: 'success');
@@ -67,23 +52,17 @@ class EditorialListLive extends Component
 
     public function update(): void
     {
-        if (! $this->editorial) return ;
-
-        $this->validate();
-
-        $this->editorial->update([
-            'name' => $this->name,
-        ]);
+        $this->form->save();
 
         $this->dispatch('editorial-updated-' . $this->editorial->id)->self();
         $this->dispatch('new-alert', message: 'Editorial actualizada con éxito', type: 'success');
     }
 
-    public function resetValidation($field = null): void
+    public function showDialog(): void
     {
-        parent::resetValidation($field);
+        $this->form->resetForm();
 
-        $this->dispatch('validation-errors-cleared')->self();
+        $this->dispatch('show-create-editorial')->self();
     }
 
     #[Computed]
@@ -92,7 +71,7 @@ class EditorialListLive extends Component
         return Editorial::count();
     }
 
-    public function render()
+    public function render(): View
     {
         $editorials = Editorial::select('id', 'name', 'slug')
             ->where(function ($query) {

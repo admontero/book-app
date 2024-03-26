@@ -46,6 +46,10 @@
     @apply dark:bg-gray-600 !important
 }
 
+.ck-editor__editable_inline {
+    min-height: 250px;
+}
+
 .focused {
     @apply bg-gray-100 dark:bg-gray-600
 }
@@ -55,10 +59,9 @@
 }
 
 .copia-ocupada {
-    @apply  dark:text-yellow-300 border border-yellow-300 bg-yellow-100 text-yellow-800
+    @apply dark:text-yellow-300 border border-yellow-300 bg-yellow-100 text-yellow-800
 }
 
 .copia-retirada {
     @apply bg-red-100 text-red-800 dark:text-red-400 border border-red-400
 }
-
