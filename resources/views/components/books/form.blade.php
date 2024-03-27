@@ -1,4 +1,8 @@
-<form wire:submit.prevent="save" @keydown.enter="event.preventDefault()">
+<form
+    x-init="$nextTick(() => $refs.synopsis.dispatchEvent(new Event('autosize')))"
+    @keydown.enter="event.preventDefault()"
+    wire:submit.prevent="save"
+>
     <div>
         <x-label value="Título" />
 
@@ -82,12 +86,10 @@
         <x-label class="w-full lg:w-3/4 flex justify-between">
             <span>Sinopsis</span>
 
-            <template x-if="$wire.form.synopsis">
-                <p class="text-xs text-gray-600 dark:text-gray-300 mt-1" :class="$wire.form.synopsis.length > 800 ? 'text-red-600 dark:text-red-300' : ''">
-                    <span x-text="$wire.form.synopsis.length"></span>
-                    <span>/ 800</span>
-                </p>
-            </template>
+            <p class="text-xs text-gray-600 dark:text-gray-300 mt-1" :class="$wire.form.synopsis?.length > 800 ? 'text-red-600 dark:text-red-300' : ''">
+                <span x-text="$wire.form.synopsis?.length ?? 0"></span>
+                <span>/ 800</span>
+            </p>
         </x-label>
 
         <textarea
@@ -95,9 +97,9 @@
                 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md
                 shadow-sm"
             rows="8"
-            wire:model="form.synopsis"
-            x-data
             x-autosize
+            x-ref="synopsis"
+            wire:model="form.synopsis"
         ></textarea>
 
         <x-input-error for="form.synopsis" />

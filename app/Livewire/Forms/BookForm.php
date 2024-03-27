@@ -56,6 +56,17 @@ class BookForm extends Form
         ];
     }
 
+    public function validationAttributes(): array
+    {
+        return [
+            'title' => 'título',
+            'publication_year' => 'año de publicación',
+            'author_id' => 'autor',
+            'genre_ids' => 'géneros',
+            'synopsis' => 'sinopsis',
+        ];
+    }
+
     public function loadGenres(): void
     {
         $this->genres = Genre::orderBy('name')->get(['id as value', 'name as label'])->toArray();

@@ -19,10 +19,7 @@
         isCreatable: {{ Illuminate\Support\Js::from($isCreatable) }},
         property: '{{ $value }}',
     })"
-    x-init="
-        $watch('search', value => currentFocus = '');
-        $watch('show', value => { if (value) $focus.focus($refs.search); });
-    "
+    x-init="$watch('search', value => currentFocus = '')"
     @mousedown.outside="show = false"
     @keyup.esc="show = false"
     @reset-search.window="search = ''"
@@ -81,6 +78,7 @@
             dark:border-gray-600 z-50 overflow-x-hidden mt-2"
         x-show="show"
         x-bind="dialog"
+        x-trap.noreturn="show"
     >
         <div class="px-3 my-3">
             <x-input

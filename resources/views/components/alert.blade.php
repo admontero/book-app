@@ -3,7 +3,7 @@
     x-persist="alert"
 >
     <div
-        class="absolute right-0 sm:px-4 max-w-[45rem] w-full"
+        class="absolute right-0 sm:px-4 max-w-[45rem] w-full overflow-hidden"
         x-data="{
             alerts: [],
             remove(id) { this.alerts = this.alerts.filter((alert) => alert.id != id) }
