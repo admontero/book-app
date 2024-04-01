@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\RoleEnum;
 use App\Models\Team;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -53,7 +54,7 @@ class UserFactory extends Factory
         return $this->state(function (array $attributes) {
             return [];
         })->afterCreating(function (User $user) {
-            $user->assignRole('administrador');
+            $user->assignRole(RoleEnum::ADMIN->value);
         });
     }
 
@@ -65,7 +66,7 @@ class UserFactory extends Factory
         return $this->state(function (array $attributes) {
             return [];
         })->afterCreating(function (User $user) {
-            $user->assignRole('secretario');
+            $user->assignRole(RoleEnum::SECRETARIO->value);
         });
     }
 
@@ -77,7 +78,7 @@ class UserFactory extends Factory
         return $this->state(function (array $attributes) {
             return [];
         })->afterCreating(function (User $user) {
-            $user->assignRole('lector');
+            $user->assignRole(RoleEnum::LECTOR->value);
         });
     }
 

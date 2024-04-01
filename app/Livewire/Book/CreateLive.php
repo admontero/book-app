@@ -44,7 +44,7 @@ class CreateLive extends Component
 
         $this->dispatch('new-alert', message: 'Libro creado con éxito', type: 'success');
 
-        $this->redirect(route('admin.books.index'), navigate: true);
+        $this->redirect(route('back.books.index'), navigate: true);
     }
 
     public function render(): View

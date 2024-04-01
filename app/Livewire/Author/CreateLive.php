@@ -45,7 +45,7 @@ class CreateLive extends Component
 
         $this->dispatch('new-alert', message: 'Autor agregado con éxito', type: 'success');
 
-        $this->redirect(route('admin.authors.index'), navigate: true);
+        $this->redirect(route('back.authors.index'), navigate: true);
     }
 
     public function render(): View

@@ -8,7 +8,7 @@
     $position = in_array($position, $positionValues) ? $position : 'bottom';
 @endphp
 
-<div x-data="{ show: false }" @mousedown.outside="show = false" @close.stop="show = false" @keyup.escape="show = false">
+<div x-data="{ show: false }" @mousedown.outside="show = false" @close.stop="show = false" @keyup.escape="show = false" wire:ignore>
     <div @click="show = ! show" x-ref="trigger" class="{{ $triggerClasses }}">
         {{ $trigger }}
     </div>

@@ -44,7 +44,7 @@
                     </div>
 
                     <a
-                        href="{{ route('admin.authors.edit', $author) }}"
+                        href="{{ route('back.authors.edit', $author) }}"
                         class="flex w-full px-4 py-2 text-start text-sm leading-5 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600
                             focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-600 transition duration-150 ease-in-out"
                         @click="show = false"
@@ -59,7 +59,7 @@
             <a
                 class="p-2 rounded-md bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-600 hover:text-gray-900
                 dark:text-white dark:hover:text-gray-300 border border-gray-200 dark:border-gray-600 shadow"
-                href="{{ route('admin.authors.show', $author) }}"
+                href="{{ route('back.authors.show', $author) }}"
                 x-tooltip.raw="Ver"
                 wire:navigate
             >

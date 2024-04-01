@@ -43,7 +43,7 @@ class EditLive extends Component
 
         $this->dispatch('new-alert', message: 'Libro actualizado con éxito', type: 'success');
 
-        $this->redirect(route('admin.books.index'), navigate: true);
+        $this->redirect(route('back.books.index'), navigate: true);
     }
 
     public function render(): View

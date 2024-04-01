@@ -33,7 +33,7 @@ class EditLive extends Component
 
         $this->dispatch('new-alert', message: 'Copia actualizada con éxito', type: 'success');
 
-        $this->redirect(route('admin.copies.index'), navigate: true);
+        $this->redirect(route('back.copies.index'), navigate: true);
     }
 
     public function render(): View

@@ -5,15 +5,15 @@ namespace App\Enums;
 enum RoleEnum: string
 {
     case ADMIN = 'administrador';
-    case SECRETARY = 'secretario';
-    case READER = 'lector';
+    case SECRETARIO = 'secretario';
+    case LECTOR = 'lector';
 
     public function label(): string
     {
         return match($this) {
             static::ADMIN => 'Administrador',
-            static::SECRETARY => 'Secretario',
-            static::READER => 'Lector',
+            static::SECRETARIO => 'Secretario',
+            static::LECTOR => 'Lector',
         };
     }
 

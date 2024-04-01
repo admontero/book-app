@@ -5,7 +5,7 @@
             <dt class="sr-only"># Usuarios</dt>
             <dd class="font-normal text-xs text-gray-600 dark:text-gray-400 truncate mt-1">
                 @if ($role->users_count)
-                    <a class="underline underline-offset-2" href="{{ route('admin.users.index', ['roles' => $role->name]) }}">
+                    <a class="underline underline-offset-2" href="{{ route('back.users.index', ['roles' => $role->name]) }}">
                         {{ $role->users_count }} Usuario(s)
                     </a>
                 @else
@@ -21,7 +21,7 @@
                 <a
                     class="object-cover shrink-0 -mx-1.5 flex text-sm border-2 border-white dark:border-gray-600
                         rounded-full focus:outline-none focus:border-gray-300"
-                    href="{{ route('admin.users.show', $user) }}"
+                    href="{{ route('back.users.show', $user) }}"
                     wire:key="{{ $user->id }}"
                     wire:navigate
                 >
@@ -181,7 +181,7 @@
                     </div>
 
                     <a
-                        href="{{ route('admin.roles.permissions.assignment', $role) }}"
+                        href="{{ route('back.roles.permissions.assignment', $role) }}"
                         class="block w-full px-4 py-2 text-start text-sm leading-5 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-600 transition duration-150 ease-in-out"
                         @click="show = false"
                         wire:navigate
@@ -195,7 +195,7 @@
             <a
                 class="p-2 rounded-md bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-600 hover:text-gray-900
                 dark:text-white dark:hover:text-gray-300 border border-gray-200 dark:border-gray-600 shadow"
-                href="{{ route('admin.roles.show', $role) }}"
+                href="{{ route('back.roles.show', $role) }}"
                 x-tooltip.raw="Ver"
                 wire:navigate
             >

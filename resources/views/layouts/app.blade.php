@@ -13,11 +13,11 @@
 
         <link rel="stylesheet" href="https://unpkg.com/tippy.js@6/dist/tippy.css" />
 
-        <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
-
         <!-- Styles -->
         @livewireStyles
+
+        <!-- Scripts -->
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body x-data x-cloak class="font-sans antialiased">
         <x-banner />

@@ -29,7 +29,7 @@ return [
      |
      */
 
-    'middleware' => ['web'],
+    'middleware' => ['web', 'can:access-backoffice'],
 
     'auth_session' => AuthenticateSession::class,
 

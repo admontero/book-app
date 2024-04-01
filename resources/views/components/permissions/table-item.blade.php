@@ -21,7 +21,7 @@
                 <a
                     class="object-cover shrink-0 -mx-1.5 flex text-sm border-2 border-white dark:border-gray-600
                         rounded-full focus:outline-none focus:border-gray-300"
-                    href="{{ route('admin.users.show', $user) }}"
+                    href="{{ route('back.users.show', $user) }}"
                     wire:key="{{ $user->id }}"
                     wire:navigate
                 >

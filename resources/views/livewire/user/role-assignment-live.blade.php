@@ -20,7 +20,7 @@
             <li>
                 <a
                     class="inline-flex items-center w-full text-start text-sm leading-5 font-semibold text-blue-600 dark:text-blue-300 focus:outline-none"
-                    href="{{ route('admin.users.roles.assignment', $user) }}"
+                    href="{{ route('back.users.roles.assignment', $user) }}"
                     wire:navigate
                 >
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user-up w-5 h-5 mr-2" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" /><path d="M6 21v-2a4 4 0 0 1 4 -4h4" /><path d="M19 22v-6" /><path d="M22 19l-3 -3l-3 3" /></svg>
@@ -30,7 +30,7 @@
             <li>
                 <a
                     class="inline-flex items-center w-full text-start text-sm leading-5 focus:outline-none"
-                    href="{{ route('admin.users.permissions.assignment', $user) }}"
+                    href="{{ route('back.users.permissions.assignment', $user) }}"
                     wire:navigate
                 >
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user-up w-5 h-5 mr-2" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" /><path d="M6 21v-2a4 4 0 0 1 4 -4h4" /><path d="M19 22v-6" /><path d="M22 19l-3 -3l-3 3" /></svg>
@@ -69,7 +69,7 @@
                                     <div class="inline-flex">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="inline-block icon icon-tabler icon-tabler-circle-check w-5 h-5 text-green-600 dark:text-green-400 mr-2" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" /><path d="M9 12l2 2l4 -4" /></svg>
                                         <p class="text-gray-700 dark:text-gray-300 font-medium">
-                                            {{  App\Enums\PermissionEnum::options()[$permission->name] }}
+                                            {{ App\Enums\PermissionEnum::options()[$permission->name] }}
                                         </p>
                                     </div>
                                     <p class="block text-gray-500 dark:text-gray-300">
@@ -94,7 +94,7 @@
                 <a
                     class="btn-sm flex items-center px-4 py-2 font-medium tracking-wide text-gray-600 capitalize
                     transition-colors duration-300 transform bg-white rounded-lg hover:bg-gray-50 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80"
-                    href="{{ route('admin.users.show', $user) }}"
+                    href="{{ route('back.users.show', $user) }}"
                     wire:navigate
                 >cancelar</a>
 
