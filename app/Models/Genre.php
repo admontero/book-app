@@ -7,10 +7,12 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Staudenmeir\EloquentHasManyDeep\HasRelationships;
 
 class Genre extends Model
 {
     use HasFactory;
+    use HasRelationships;
     use Sluggable;
 
     protected $guarded = ['id'];
@@ -39,5 +41,10 @@ class Genre extends Model
     public function books(): BelongsToMany
     {
         return $this->belongsToMany(Book::class, 'book_genre', 'genre_id', 'book_id')->withTimestamps();
+    }
+
+    public function editions()
+    {
+        return $this->hasManyDeepFromRelations($this->books(), (new Book())->editions());
     }
 }

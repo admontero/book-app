@@ -4,12 +4,34 @@
 
         <x-input
             class="w-full lg:w-3/4 mt-1"
-            wire:model="form.name"
-            x-ref="name"
+            wire:model="form.firstname"
+            x-ref="firstname"
             x-init="$focus.focus($el)"
         />
 
-        <x-input-error for="form.name" />
+        <x-input-error for="form.firstname" />
+    </div>
+
+    <div class="mt-4">
+        <x-label value="Apellido" />
+
+        <x-input
+            class="w-full lg:w-3/4 mt-1"
+            wire:model="form.lastname"
+        />
+
+        <x-input-error for="form.lastname" />
+    </div>
+
+    <div class="mt-4">
+        <x-label value="Pseudónimo" />
+
+        <x-input
+            class="w-full lg:w-3/4 mt-1"
+            wire:model="form.pseudonym"
+        />
+
+        <x-input-error for="form.pseudonym" />
     </div>
 
     <div

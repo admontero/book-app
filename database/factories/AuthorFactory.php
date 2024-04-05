@@ -29,8 +29,16 @@ class AuthorFactory extends Factory
             ? City::where('state_id', $state_birth_id)->inRandomOrder()->first()?->id
             : null;
 
+        $firstname = $this->faker->firstName;
+
+        $lastname = $this->faker->lastName;
+
+        $pseudonym = $firstname  . ' ' . $lastname;
+
         return [
-            'name' => $this->faker->name,
+            'firstname' => $firstname,
+            'lastname' => $lastname,
+            'pseudonym' => $pseudonym,
             'date_of_birth' => $this->faker->dateTimeThisCentury('-18 years'),
             'country_birth_id' => $country_birth_id,
             'state_birth_id' => $state_birth_id,

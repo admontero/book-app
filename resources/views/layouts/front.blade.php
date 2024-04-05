@@ -22,15 +22,16 @@
     <body x-data x-cloak class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
 
-            @livewire('front.navigation-menu-live' )
+            <livewire:front.navigation-menu-live />
 
             <!-- Page Content -->
-            <main class="relative my-4">
+            <main class="relative">
                 <x-alert />
 
-                {{ $slot }}
+                <div class="py-6">
+                    {{ $slot }}
+                </div>
             </main>
-
         </div>
 
         @stack('scripts')

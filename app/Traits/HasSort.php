@@ -14,12 +14,12 @@ trait HasSort
 
     public function validateSorting(array $fields = [])
     {
-        if (! in_array($this->sortField, array_merge(['id'], $fields))) {
-            $this->sortField = 'name';
+        if (! in_array($this->sortField, $fields)) {
+            $this->reset('sortField');
         }
 
         if (! in_array($this->sortDirection, ['asc', 'desc'])) {
-            $this->sortDirection = 'asc';
+            $this->reset('sortDirection');
         }
     }
 

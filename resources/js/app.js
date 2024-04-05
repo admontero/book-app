@@ -4,6 +4,7 @@ import Autosize from '@marcreichel/alpine-autosize';
 import mask from '@alpinejs/mask';
 import focus from '@alpinejs/focus';
 import anchor from '@alpinejs/anchor';
+import collapse  from '@alpinejs/collapse';
 import Tooltip from "@ryangjchandler/alpine-tooltip";
 
 document.addEventListener('alpine:init', () => {
@@ -49,5 +50,7 @@ Alpine.plugin(anchor);
 Alpine.plugin(mask);
 
 Alpine.plugin(focus);
+
+Alpine.plugin(collapse);
 
 Livewire.start();

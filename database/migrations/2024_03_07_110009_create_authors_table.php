@@ -13,7 +13,10 @@ return new class extends Migration
     {
         Schema::create('authors', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('firstname');
+            $table->string('lastname');
+            $table->string('pseudonym')->nullable();
+            $table->string('slug')->unique();
             $table->date('date_of_birth')->nullable();
             $table->unsignedBigInteger('country_birth_id')->nullable();
             $table->unsignedBigInteger('state_birth_id')->nullable();

@@ -2,11 +2,13 @@
 
 namespace App\Models;
 
+use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Support\Facades\Storage;
 use Nnjeim\World\Models\City;
 use Nnjeim\World\Models\Country;
@@ -15,6 +17,7 @@ use Nnjeim\World\Models\State;
 class Author extends Model
 {
     use HasFactory;
+    use Sluggable;
 
     protected $guarded = ['id'];
 
@@ -23,9 +26,23 @@ class Author extends Model
         'date_of_death' => 'date:Y-m-d',
     ];
 
+    public function sluggable(): array
+    {
+        return [
+            'slug' => [
+                'source' => 'name',
+            ]
+        ];
+    }
+
     public function books(): HasMany
     {
         return $this->hasMany(Book::class);
+    }
+
+    public function editions(): HasManyThrough
+    {
+        return $this->hasManyThrough(Edition::class, Book::class);
     }
 
     public function country_birth(): BelongsTo
@@ -43,11 +60,28 @@ class Author extends Model
         return $this->belongsTo(City::class, 'city_birth_id');
     }
 
+    protected function firstname(): Attribute
+    {
+        return Attribute::set(fn (string $value) => mb_strtolower($value));
+    }
+
+    protected function lastname(): Attribute
+    {
+        return Attribute::set(fn (string $value) => mb_strtolower($value));
+    }
+
+    protected function pseudonym(): Attribute
+    {
+        return Attribute::set(fn (string $value) => mb_strtolower($value));
+    }
+
     protected function name(): Attribute
     {
-        return Attribute::make(
-            set: fn (string $value) => mb_strtolower($value),
-        );
+        return Attribute::get(function() {
+            if (! empty($this->pseudonym)) return $this->pseudonym;
+
+            return $this->firstname . ' ' . $this->lastname;
+        });
     }
 
     public function photoUrl(): Attribute

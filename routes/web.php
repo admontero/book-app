@@ -15,7 +15,11 @@ use Illuminate\Support\Facades\Route;
 
 require_once __DIR__ . '/jetstream.php';
 
-Route::group(['middleware' => ['auth', 'can:access-backoffice'], 'prefix' => 'back', 'as' => 'back.'], function () {
+Route::group([
+    'middleware' => ['auth', config('jetstream.auth_session'), 'can:access-backoffice'],
+    'prefix' => 'back',
+    'as' => 'back.'
+], function () {
 
     Route::get('', function () {
         return view('dashboard');
@@ -114,9 +118,13 @@ Route::group(['middleware' => ['auth', 'can:access-backoffice'], 'prefix' => 'ba
         ->name('copies.edit');
 });
 
-Route::group(['middleware' => ['auth', 'can:access-frontoffice'], 'as' => 'front.'], function () {
+Route::group([
+    'middleware' => ['auth', config('jetstream.auth_session'), 'can:access-frontoffice'],
+    'as' => 'front.'
+], function () {
 
-    Route::get('/', App\Livewire\Front\DashboardLive::class)
-        ->name('dashboard');
+
 });
+
+Route::get('/', App\Livewire\Front\DashboardLive::class)->name('front.dashboard');
 

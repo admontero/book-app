@@ -25,7 +25,7 @@ class ListLive extends Component
 
     public function mount(): void
     {
-        $this->validateSorting(fields: ['name', 'slug']);
+        $this->validateSorting(fields: ['id', 'name', 'slug']);
     }
 
     public function updatedSearch(): void

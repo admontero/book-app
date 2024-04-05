@@ -16,7 +16,11 @@ class AuthorForm extends Form
 {
     public ?Author $author = null;
 
-    public $name;
+    public $firstname;
+
+    public $lastname;
+
+    public $pseudonym;
 
     public $photo;
 
@@ -41,10 +45,17 @@ class AuthorForm extends Form
     public function rules(): array
     {
         return [
-            'name' => [
+            'firstname' => [
                 'required',
-                'min:3',
-                'max:100',
+                'max:60',
+            ],
+            'lastname' => [
+                'required',
+                'max:60',
+            ],
+            'pseudonym' => [
+                'nullable',
+                'max:60',
             ],
             'date_of_birth' => [
                 'nullable',
@@ -83,7 +94,9 @@ class AuthorForm extends Form
     public function validationAttributes(): array
     {
         return [
-            'name' => 'nombre',
+            'firstname' => 'nombre',
+            'lastname' => 'apellido',
+            'pseudonym' => 'seudónimo',
             'date_of_birth' => 'fecha de nacimiento',
             'country_birth_id' => 'país de nacimiento',
             'state_birth_id' => 'estado de nacimiento',
@@ -187,7 +200,7 @@ class AuthorForm extends Form
         $this->validate();
 
         if ($this->photo) {
-            $name = Str::slug($this->name) . '-' . time() . '.' . $this->photo->extension();
+            $name = Str::random(10) . '-' . time() . $this->photo->extension();
 
             $path = $this->photo->storeAs('authors', $name, 'public');
 
@@ -199,14 +212,36 @@ class AuthorForm extends Form
         $this->date_of_birth = $this->date_of_birth ? Carbon::createFromFormat('d/m/Y', $this->date_of_birth) : null;
         $this->date_of_death = $this->date_of_death ? Carbon::createFromFormat('d/m/Y', $this->date_of_death) : null;
 
+        $this->pseudonym = $this->pseudonym ?: null;
+
         if ($this->author) {
             $this->author->update([
-                ...$this->only(['name', 'date_of_birth', 'country_birth_id', 'state_birth_id', 'city_birth_id', 'date_of_death', 'biography']),
+                ...$this->only([
+                    'firstname',
+                    'lastname',
+                    'pseudonym',
+                    'date_of_birth',
+                    'country_birth_id',
+                    'state_birth_id',
+                    'city_birth_id',
+                    'date_of_death',
+                    'biography'
+                ]),
                 'photo_path' => isset($path) ? $path : $this->author->photo_path,
             ]);
         } else {
             Author::create([
-                ...$this->only(['name', 'date_of_birth', 'country_birth_id', 'state_birth_id', 'city_birth_id', 'date_of_death', 'biography']),
+                ...$this->only([
+                    'firstname',
+                    'lastname',
+                    'pseudonym',
+                    'date_of_birth',
+                    'country_birth_id',
+                    'state_birth_id',
+                    'city_birth_id',
+                    'date_of_death',
+                    'biography'
+                ]),
                 'photo_path' => isset($path) ? $path : null,
             ]);
         }

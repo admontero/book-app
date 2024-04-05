@@ -4,6 +4,7 @@ namespace App\Livewire\Book;
 
 use App\Models\Book;
 use App\Traits\HasSort;
+use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Url;
@@ -20,7 +21,7 @@ class ListLive extends Component
 
     public function mount(): void
     {
-        $this->validateSorting(fields: ['id', 'title', 'authors.name']);
+        $this->validateSorting(fields: ['id', 'title', 'author_name']);
     }
 
     public function updatedSearch(): void
@@ -36,13 +37,21 @@ class ListLive extends Component
 
     public function render(): View
     {
-        $books = Book::select('books.id', 'books.title', 'books.publication_year', 'books.author_id')
+        $books = Book::select([
+            'books.id',
+            'books.title',
+            'books.publication_year',
+            'books.author_id',
+            DB::raw('IF(authors.pseudonym, authors.pseudonym, CONCAT_WS(" ", authors.firstname, authors.lastname)) as author_name')
+        ])
             ->leftJoin('authors', 'books.author_id', '=', 'authors.id')
-            ->with('author:id,name', 'genres:id,name,slug')
+            ->with('author:id,firstname,lastname,pseudonym,slug', 'genres:id,name,slug')
             ->where(function ($query) {
                 $query->where('books.title', 'like', '%' . $this->search . '%')
                     ->orWhere('books.publication_year', 'like', '%' . $this->search . '%')
-                    ->orWhereRelation('author', 'name', 'like', '%' . $this->search . '%');
+                    ->orWhereRelation('author', 'firstname', 'like', '%' . $this->search . '%')
+                    ->orWhereRelation('author', 'lastname', 'like', '%' . $this->search . '%')
+                    ->orWhereRelation('author', 'pseudonym', 'like', '%' . $this->search . '%');
             })
             ->orderBy($this->sortField, $this->sortDirection)
             ->paginate(10);

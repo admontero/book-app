@@ -29,17 +29,19 @@
     <div class="mt-6 md:flex md:flex-wrap md:gap-4 md:items-center md:justify-between">
         <div></div>
 
-        <div class="relative flex items-center mt-4 md:mt-0">
-            <span class="absolute">
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search w-5 h-5 mx-3 text-gray-400 dark:text-gray-600" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" /><path d="M21 21l-6 -6" /></svg>
-            </span>
+        <div class="flex-1 flex justify-end items-center mt-4 md:mt-0">
+            <div class="relative max-w-96 w-full">
+                <span class="absolute top-2.5">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search w-5 h-5 mx-3 text-gray-400 dark:text-gray-600" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" /><path d="M21 21l-6 -6" /></svg>
+                </span>
 
-            <x-input
-                class="pl-11"
-                type="search"
-                placeholder="Buscar libro..."
-                wire:model.live.debounce.500ms="search"
-            />
+                <x-input
+                    class="pl-11 w-full"
+                    type="search"
+                    placeholder="Buscar libro..."
+                    wire:model.live.debounce.500ms="search"
+                />
+            </div>
         </div>
     </div>
 
@@ -69,13 +71,13 @@
 
                                     <th scope="col" class="hidden lg:table-cell py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                                         <button
-                                            class="flex items-center gap-x-3 focus:outline-none @if ($sortField == 'authors.name') font-medium text-gray-800 dark:text-white @endif"
+                                            class="flex items-center gap-x-3 focus:outline-none @if ($sortField == 'author_name') font-medium text-gray-800 dark:text-white @endif"
                                             type="button"
-                                            wire:click="sortBy('authors.name')"
+                                            wire:click="sortBy('author_name')"
                                         >
                                             <span>Autor</span>
 
-                                            @if ($sortField == 'authors.name' && $sortDirection === 'desc')
+                                            @if ($sortField == 'author_name' && $sortDirection === 'desc')
                                                 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-sort-descending-letters w-5 h-5" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 21v-5c0 -1.38 .62 -2 2 -2s2 .62 2 2v5m0 -3h-4" /><path d="M19 10h-4l4 -7h-4" /><path d="M4 15l3 3l3 -3" /><path d="M7 6v12" /></svg>
                                             @else
                                                 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-sort-ascending-letters w-5 h-5" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 10v-5c0 -1.38 .62 -2 2 -2s2 .62 2 2v5m0 -3h-4" /><path d="M19 21h-4l4 -7h-4" /><path d="M4 15l3 3l3 -3" /><path d="M7 6v12" /></svg>

@@ -35,19 +35,32 @@ class ListLive extends Component
 
     public function render()
     {
-        $copies = Copy::select('copies.id', 'copies.edition_id', 'copies.identifier', 'copies.is_loanable', 'copies.status')
+        $copies = Copy::select([
+                'copies.id',
+                'copies.edition_id',
+                'copies.identifier',
+                'copies.is_loanable',
+                'copies.status'
+            ])
             ->leftJoin('editions', 'copies.edition_id', '=', 'editions.id')
             ->leftJoin('books', 'editions.book_id', '=', 'books.id')
             ->leftJoin('editorials', 'editions.editorial_id', '=', 'editorials.id')
             ->leftJoin('authors', 'books.author_id', '=', 'authors.id')
-            ->with('edition:id,book_id,editorial_id', 'edition.book:id,title,author_id', 'edition.editorial:id,name', 'edition.book.author:id,name')
+            ->with([
+                'edition:id,book_id,editorial_id',
+                'edition.book:id,title,author_id',
+                'edition.editorial:id,name',
+                'edition.book.author:id,firstname,lastname,pseudonym'
+            ])
             ->where(function ($query) {
                 $query->where('copies.identifier', 'like', '%' . $this->search . '%')
                     ->orWhereHas('edition', function ($query) {
                         $query->whereRelation('book', 'books.title', 'like', '%' . $this->search . '%')
                             ->orWhereRelation('editorial', 'editorials.name', 'like', '%' . $this->search . '%')
                             ->orWhereHas('book', function ($query) {
-                                $query->whereRelation('author', 'authors.name', 'like', '%' . $this->search . '%');
+                                $query->whereRelation('author', 'firstname', 'like', '%' . $this->search . '%')
+                                    ->orWhereRelation('author', 'lastname', 'like', '%' . $this->search . '%')
+                                    ->orWhereRelation('author', 'pseudonym', 'like', '%' . $this->search . '%');
                             });
                     });
             })

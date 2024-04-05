@@ -7,6 +7,7 @@
     },
     "devDependencies": {
         "@alpinejs/anchor": "^3.13.5",
+        "@alpinejs/collapse": "^3.13.8",
         "@alpinejs/focus": "^3.13.7",
         "@alpinejs/mask": "^3.13.7",
         "@ckeditor/ckeditor5-build-classic": "^41.2.0",
