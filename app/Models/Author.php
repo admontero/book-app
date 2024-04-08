@@ -72,7 +72,7 @@ class Author extends Model
 
     protected function pseudonym(): Attribute
     {
-        return Attribute::set(fn (string $value) => mb_strtolower($value));
+        return Attribute::set(fn (?string $value) => mb_strtolower($value));
     }
 
     protected function name(): Attribute

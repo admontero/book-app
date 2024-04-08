@@ -1,7 +1,8 @@
 <x-guest-layout>
     <x-authentication-card>
         <x-slot name="logo">
-            <img class="mx-auto object-cover max-h-36" src="{{ asset('dist/images/logo.png') }}" alt="application logo">
+            <img x-show="! $store.darkMode.on" class="mx-auto object-cover max-h-36" src="{{ asset('dist/images/logo.png') }}" alt="application logo">
+            <img x-show="$store.darkMode.on" class="mx-auto object-cover max-h-36" src="{{ asset('dist/images/logo-dark.png') }}" alt="application logo">
         </x-slot>
 
         <x-validation-errors class="mb-4" />

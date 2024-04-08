@@ -19,9 +19,10 @@ class EditorialFilterLive extends Component
 
     public function editorial(int $id): ?Editorial
     {
-        return $this->allEditorials()->firstWhere('id', $id);
+        return $this->allEditorials->firstWhere('id', $id);
     }
 
+    #[Computed(cache: true, key: 'editorials-filter')]
     public function allEditorials(): Collection
     {
         return Editorial::select(['id', 'name', 'slug'])->get();

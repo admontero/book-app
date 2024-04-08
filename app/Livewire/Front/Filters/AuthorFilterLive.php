@@ -20,9 +20,10 @@ class AuthorFilterLive extends Component
 
     public function author(int $id): ?Author
     {
-        return $this->allAuthors()->firstWhere('id', $id);
+        return $this->allAuthors->firstWhere('id', $id);
     }
 
+    #[Computed(cache: true, key: 'authors-filter')]
     public function allAuthors(): Collection
     {
         return Author::select(['id', 'firstname', 'lastname', 'pseudonym'])->get();

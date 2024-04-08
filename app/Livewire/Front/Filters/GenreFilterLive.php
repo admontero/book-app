@@ -19,9 +19,10 @@ class GenreFilterLive extends Component
 
     public function genre(int $id): ?Genre
     {
-        return $this->allGenres()->firstWhere('id', $id);
+        return $this->allGenres->firstWhere('id', $id);
     }
 
+    #[Computed(cache: true, key: 'genres-filter')]
     public function allGenres(): Collection
     {
         return Genre::select(['id', 'name', 'slug'])->get();
