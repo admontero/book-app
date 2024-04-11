@@ -50,12 +50,13 @@
                         <div class="place-self-center max-w-[200px]">
                             <img src="{{ asset($edition->cover_url) }}" class="h-[300px] mx-auto object-cover object-center block rounded">
                             <div class="mt-4">
-                                <h3 class="text-gray-500 text-xs tracking-widest truncate capitalize mb-1 dark:text-gray-400">
+                                <p class="text-gray-500 text-xs tracking-widest truncate capitalize mb-1 dark:text-gray-400">
                                     {{ implode(', ', $edition->book?->genres?->pluck('name')->toArray()) }}
-                                </h3>
-                                <h2 class="text-gray-900 text-sm font-semibold capitalize dark:text-white">
+                                </p>
+
+                                <h3 class="text-gray-900 text-sm font-semibold capitalize dark:text-white">
                                     {{ $edition->book?->title }}
-                                </h2>
+                                </h3>
                             </div>
                         </div>
                     @endforeach

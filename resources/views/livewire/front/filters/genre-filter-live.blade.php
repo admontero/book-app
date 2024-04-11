@@ -3,12 +3,16 @@
         <div class="flex">
             <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white">Géneros</h5>
             @if (count($value))
-                <button wire:click="$parent.resetFilter('genres', [])" class="ms-2 text-sm font-medium text-blue-600 hover:underline dark:text-blue-500">
+                <button
+                    class="ms-2 text-sm font-medium text-blue-600 hover:underline dark:text-blue-500"
+                    wire:click="$parent.resetFilter('genres', [])"
+                    @click="$wire.search = ''"
+                >
                     Limpiar todos
                 </button>
             @endif
         </div>
-        
+
         <button @click="expanded = ! expanded">
             <svg
                 class="icon icon-tabler icons-tabler-outline icon-tabler-chevron-down w-5 h-5 font-semibold text-blue-600 dark:text-blue-500

@@ -123,7 +123,7 @@ Route::group([
     'as' => 'front.'
 ], function () {
 
-
+    Route::get('profile', App\Livewire\Front\Profile\ShowLive::class)->name('profile.show');
 });
 
 Route::get('/', App\Livewire\Front\DashboardLive::class)->name('front.dashboard');

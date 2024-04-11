@@ -197,6 +197,9 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'password' => 'contraseña',
+        'current_password' => 'contraseña actual',
+    ],
 
 ];

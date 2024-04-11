@@ -3,7 +3,11 @@
         <div class="flex">
             <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white">Autores</h5>
             @if (count($value))
-                <button wire:click="$parent.resetFilter('authors', [])" class="ms-2 text-sm font-medium text-blue-600 hover:underline dark:text-blue-500">
+                <button
+                    class="ms-2 text-sm font-medium text-blue-600 hover:underline dark:text-blue-500"
+                    wire:click="$parent.resetFilter('authors', [])"
+                    @click="$wire.search = ''"
+                >
                     Limpiar todos
                 </button>
             @endif

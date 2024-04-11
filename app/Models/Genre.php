@@ -7,7 +7,11 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Support\Facades\Cache;
+use Staudenmeir\EloquentHasManyDeep\HasManyDeep;
 use Staudenmeir\EloquentHasManyDeep\HasRelationships;
+
+use function Illuminate\Events\queueable;
 
 class Genre extends Model
 {
@@ -16,6 +20,21 @@ class Genre extends Model
     use Sluggable;
 
     protected $guarded = ['id'];
+
+    protected static function booted(): void
+    {
+        static::created(queueable(function (Genre $genre) {
+            Cache::tags('genres')->flush();
+        }));
+
+        static::updated(queueable(function (Genre $genre) {
+            Cache::tags('genres')->flush();
+        }));
+
+        static::deleted(queueable(function (Genre $genre) {
+            Cache::tags('genres')->flush();
+        }));
+    }
 
     public function sluggable(): array
     {
@@ -43,7 +62,7 @@ class Genre extends Model
         return $this->belongsToMany(Book::class, 'book_genre', 'genre_id', 'book_id')->withTimestamps();
     }
 
-    public function editions()
+    public function editions(): HasManyDeep
     {
         return $this->hasManyDeepFromRelations($this->books(), (new Book())->editions());
     }

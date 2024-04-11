@@ -22,7 +22,7 @@ class EditorialFilterLive extends Component
         return $this->allEditorials->firstWhere('id', $id);
     }
 
-    #[Computed(cache: true, key: 'editorials-filter')]
+    #[Computed(cache: true, key: 'editorials-filter', tags: 'editorials')]
     public function allEditorials(): Collection
     {
         return Editorial::select(['id', 'name', 'slug'])->get();
@@ -31,14 +31,15 @@ class EditorialFilterLive extends Component
     #[Computed]
     public function editorials(): Collection
     {
-        return Cache::remember('editorials-filter:' . $this->search, 3600, function() {
-            return Editorial::select('id', 'name', 'slug')
-                ->withCount(['editions' => function ($query) {
-                    $query->whereHas('copies', fn ($query) => $query->whereIn('status', [CopyStatusEnum::DISPONIBLE->value, CopyStatusEnum::OCUPADA->value]));
-                }])
-                ->where('name', 'like', '%' . $this->search . '%')
-                ->orderBy('name')
-                ->get();
-        });
+        return Cache::tags(['editorials'])
+            ->remember('editorials-filter:' . $this->search, 3600, function() {
+                return Editorial::select('id', 'name', 'slug')
+                    ->withCount(['editions' => function ($query) {
+                        $query->has('enabledCopies');
+                    }])
+                    ->where('name', 'like', '%' . $this->search . '%')
+                    ->orderBy('name')
+                    ->get();
+            });
     }
 }

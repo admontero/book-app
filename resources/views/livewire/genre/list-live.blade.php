@@ -37,7 +37,7 @@
         </div>
     </div>
 
-    @if ($genres->count())
+    @if ($this->genres->count())
         <div class="flex flex-col mt-4" wire:key="genre-list">
             <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-2 lg:-mx-4">
                 <div class="inline-block min-w-full py-2 align-middle md:px-2 lg:px-4">
@@ -83,7 +83,7 @@
                                 </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
-                                @foreach ($genres as $genre)
+                                @foreach ($this->genres as $genre)
                                     <x-genres.table-item :$genre />
                                 @endforeach
                             </tbody>
@@ -96,6 +96,6 @@
         <x-table-empty title="Ningún género encontrado" />
     @endif
 
-    {{ $genres->links('vendor.livewire.custom') }}
+    {{ $this->genres->links('vendor.livewire.custom') }}
 </section>
 

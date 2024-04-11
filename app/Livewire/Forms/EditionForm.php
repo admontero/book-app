@@ -88,7 +88,7 @@ class EditionForm extends Form
                 'books.id as value',
                 'books.title as label',
                 'books.author_id',
-                DB::raw('CONCAT_WS(" • ", IF(books.author_id, authors.name, "desconocido"), books.publication_year) as description')
+                DB::raw('CONCAT_WS(" • ", IF(books.author_id, IF(authors.pseudonym, authors.pseudonym, CONCAT_WS(" ", authors.firstname, authors.lastname)), "desconocido"), books.publication_year) as description')
             )
             ->leftJoin('authors', 'books.author_id', '=', 'authors.id')
             ->orderBy('books.title')
@@ -98,7 +98,10 @@ class EditionForm extends Form
 
     public function loadEditorials(): void
     {
-        $this->editorials = Editorial::orderBy('name')->get(['id as value','name as label'])->toArray();
+        $this->editorials = Editorial::select(['id as value','name as label'])
+            ->orderBy('name')
+            ->get()
+            ->toArray();
     }
 
     public function isThereAnOldCover(): bool

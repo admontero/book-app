@@ -23,7 +23,7 @@ class AuthorFilterLive extends Component
         return $this->allAuthors->firstWhere('id', $id);
     }
 
-    #[Computed(cache: true, key: 'authors-filter')]
+    #[Computed(cache: true, key: 'authors-filter', tags: 'authors')]
     public function allAuthors(): Collection
     {
         return Author::select(['id', 'firstname', 'lastname', 'pseudonym'])->get();
@@ -32,24 +32,25 @@ class AuthorFilterLive extends Component
     #[Computed]
     public function authors(): Collection
     {
-        return Cache::remember('authors-filter:' . $this->search, 3600, function() {
-            return Author::select([
-                    'id',
-                    'firstname',
-                    'lastname',
-                    'pseudonym',
-                    DB::raw('IF(authors.pseudonym, authors.pseudonym, CONCAT_WS(" ", authors.firstname, authors.lastname)) as name'),
-                ])
-                ->withCount(['editions' => function ($query) {
-                    $query->whereHas('copies', fn ($query) => $query->whereIn('status', [CopyStatusEnum::DISPONIBLE->value, CopyStatusEnum::OCUPADA->value]));
-                }])
-                ->where(function ($query) {
-                    $query->where('firstname', 'like', '%' . $this->search . '%')
-                        ->orWhere('lastname', 'like', '%' . $this->search . '%')
-                        ->orWhere('pseudonym', 'like', '%' . $this->search . '%');
-                })
-                ->orderBy('name')
-                ->get();
-        });
+        return Cache::tags(['authors'])
+            ->remember('authors-filter:' . $this->search, 3600, function() {
+                return Author::select([
+                        'id',
+                        'firstname',
+                        'lastname',
+                        'pseudonym',
+                        DB::raw('IF(authors.pseudonym, authors.pseudonym, CONCAT_WS(" ", authors.firstname, authors.lastname)) as name'),
+                    ])
+                    ->withCount(['editions' => function ($query) {
+                        $query->has('enabledCopies');
+                    }])
+                    ->where(function ($query) {
+                        $query->where('firstname', 'like', '%' . $this->search . '%')
+                            ->orWhere('lastname', 'like', '%' . $this->search . '%')
+                            ->orWhere('pseudonym', 'like', '%' . $this->search . '%');
+                    })
+                    ->orderBy('name')
+                    ->get();
+            });
     }
 }

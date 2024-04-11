@@ -9,7 +9,7 @@
 >
     <div
         x-show="show"
-        x-anchor.left-start.offset.5="$refs.genre{{ $genre->id }}.firstElementChild"
+        x-anchor.left-start.offset.5="$refs.genre_{{ $genre->id }}"
         x-transition:enter="transition ease-out duration-200"
         x-transition:enter-start="transform opacity-0 scale-95"
         x-transition:enter-end="transform opacity-100 scale-100"

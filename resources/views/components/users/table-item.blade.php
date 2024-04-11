@@ -31,21 +31,22 @@
         @endif
     </td>
 
-    <td
-        class="px-4 py-4 text-sm whitespace-nowrap"
-        x-data="{
-            show: false,
-            search: '',
-            directPermissions: {{ Illuminate\Support\Js::from($user->getDirectPermissions()) }},
-            indirectPermissions: {{ Illuminate\Support\Js::from($user->getPermissionsViaRoles()) }},
-            permissionsFiltered(permissions) {
-                if (! this.search.length) return permissions
+    <td class="px-4 py-4 text-sm whitespace-nowrap">
+        <div
+            class="flex flex-col items-center md:items-start"
+            x-data="{
+                show: false,
+                search: '',
+                directPermissions: {{ Illuminate\Support\Js::from($user->getDirectPermissions()) }},
+                indirectPermissions: {{ Illuminate\Support\Js::from($user->getPermissionsViaRoles()) }},
+                permissionsFiltered(permissions) {
+                    if (! this.search.length) return permissions
 
-                return permissions.filter(permission => permission.name.toLowerCase().includes(this.search.toLowerCase()) ? true : false)
-            },
-        }"
-    >
-        <div class="flex flex-col items-center md:items-start">
+                    return permissions.filter(permission => permission.name.toLowerCase().includes(this.search.toLowerCase()) ? true : false)
+                },
+            }"
+            wire:ignore
+        >
             <div class="w-full sm:w-48 text-xs">
                 <div class="h-1.5 relative rounded-full overflow-hidden">
                     <div class="w-full h-full bg-blue-200 absolute"></div>
@@ -68,7 +69,7 @@
 
                     <x-slot name="content">
                         <div class="px-3 pt-3">
-                            <x-input x-ref="search" class="w-full" type="search" x-model="search" />
+                            <x-input class="w-full" type="search" x-model="search" x-ref="search" />
                         </div>
 
                         <div class="max-h-52 overflow-y-auto">
@@ -78,9 +79,13 @@
                                         <span x-text="permissionsFiltered(directPermissions).length"></span>
                                         permiso(s) directo(s)
                                     </p>
+
                                     <ul>
                                         <template x-for="permission in permissionsFiltered(directPermissions)" :key="permission.id">
-                                            <li x-text="permission.name" class="px-5 py-1.5 truncate text-gray-600 dark:text-gray-300 first-letter:uppercase"></li>
+                                            <li
+                                                class="px-5 py-1.5 truncate text-gray-600 dark:text-gray-300 first-letter:uppercase"
+                                                x-text="permission.name"
+                                            ></li>
                                         </template>
 
                                         <template x-if="directPermissions.length && ! permissionsFiltered(directPermissions).length && search.length">
@@ -91,15 +96,20 @@
                                     </ul>
                                 </div>
                             </template>
+
                             <template x-if="indirectPermissions.length">
                                 <div>
                                     <p class="text-xs text-gray-400 px-3 mt-2 mb-1">
                                         <span x-text="permissionsFiltered(indirectPermissions).length"></span>
                                         permiso(s) indirecto(s)
                                     </p>
+
                                     <ul>
                                         <template x-for="permission in permissionsFiltered(indirectPermissions)" :key="permission.id">
-                                            <li x-text="permission.name" class="px-5 py-1.5 truncate text-gray-600 dark:text-gray-300 first-letter:uppercase"></li>
+                                            <li
+                                                class="px-5 py-1.5 truncate text-gray-600 dark:text-gray-300 first-letter:uppercase"
+                                                x-text="permission.name"
+                                            ></li>
                                         </template>
 
                                         <template x-if="indirectPermissions.length && ! permissionsFiltered(indirectPermissions).length && search.length">
@@ -110,6 +120,7 @@
                                     </ul>
                                 </div>
                             </template>
+
                             <template x-if="! directPermissions.length && ! indirectPermissions.length">
                                 <p class="text-gray-400 italic text-xs text-center py-3">
                                     No hay permisos asignados.
@@ -124,7 +135,7 @@
 
     <td class="px-4 py-4 text-sm whitespace-nowrap">
         <div class="flex justify-center gap-2 items-center">
-            <x-dropdown-floating position="left-start">
+            <x-dropdown-floating position="left-start" wire:ignore>
                 <x-slot name="trigger">
                     <button
                         class="p-2 rounded-md bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-600 hover:text-gray-900
@@ -149,6 +160,7 @@
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user-up inline-flex w-5 h-5 mr-2" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" /><path d="M6 21v-2a4 4 0 0 1 4 -4h4" /><path d="M19 22v-6" /><path d="M22 19l-3 -3l-3 3" /></svg>
                         Asignar rol
                     </a>
+
                     <a
                         href="{{ route('back.users.permissions.assignment', $user) }}"
                         class="block w-full px-4 py-2 text-start text-sm leading-5 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-600 transition duration-150 ease-in-out"

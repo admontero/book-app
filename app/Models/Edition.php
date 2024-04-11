@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Enums\CopyStatusEnum;
+use App\Filters\FilterBuilder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -30,6 +32,12 @@ class Edition extends Model
         return $this->hasMany(Copy::class);
     }
 
+    public function enabledCopies(): HasMany
+    {
+        return $this->hasMany(Copy::class)
+            ->whereIn('status', [CopyStatusEnum::DISPONIBLE->value, CopyStatusEnum::OCUPADA->value]);
+    }
+
     public function coverUrl(): Attribute
     {
         return Attribute::get(function (): string {
@@ -37,5 +45,14 @@ class Edition extends Model
                     ? asset(Storage::url($this->cover_path))
                     : asset('dist/images/default-edition.svg');
         });
+    }
+
+    public function scopeFilterBy($query, $filters)
+    {
+        $namespace = 'App\Filters\EditionFilters';
+
+        $filter = new FilterBuilder($query, $filters, $namespace);
+
+        return $filter->apply();
     }
 }

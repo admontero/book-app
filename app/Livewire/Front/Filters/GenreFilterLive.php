@@ -22,7 +22,7 @@ class GenreFilterLive extends Component
         return $this->allGenres->firstWhere('id', $id);
     }
 
-    #[Computed(cache: true, key: 'genres-filter')]
+    #[Computed(cache: true, key: 'genres-filter', tags: 'authors')]
     public function allGenres(): Collection
     {
         return Genre::select(['id', 'name', 'slug'])->get();
@@ -31,14 +31,15 @@ class GenreFilterLive extends Component
     #[Computed]
     public function genres(): Collection
     {
-        return Cache::remember('genres-filter:' . $this->search, 3600, function() {
-            return Genre::select(['id', 'name', 'slug'])
-                ->withCount(['editions' => function ($query) {
-                    $query->whereHas('copies', fn ($query) => $query->whereIn('status', [CopyStatusEnum::DISPONIBLE->value, CopyStatusEnum::OCUPADA->value]));
-                }])
-                ->where('name', 'like', '%' . $this->search . '%')
-                ->orderBy('name')
-                ->get();
-        });
+        return Cache::tags(['genres'])
+            ->remember('genres-filter:' . $this->search, 3600, function() {
+                return Genre::select(['id', 'name', 'slug'])
+                    ->withCount(['editions' => function ($query) {
+                        $query->has('enabledCopies');
+                    }])
+                    ->where('name', 'like', '%' . $this->search . '%')
+                    ->orderBy('name')
+                    ->get();
+            });
     }
 }

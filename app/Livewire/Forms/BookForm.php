@@ -6,6 +6,7 @@ use App\Models\Author;
 use App\Models\Book;
 use App\Models\Genre;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use Livewire\Form;
 
 class BookForm extends Form
@@ -69,12 +70,21 @@ class BookForm extends Form
 
     public function loadGenres(): void
     {
-        $this->genres = Genre::orderBy('name')->get(['id as value', 'name as label'])->toArray();
+        $this->genres = Genre::select(['id as value', 'name as label'])
+            ->orderBy('name')
+            ->get()
+            ->toArray();
     }
 
     public function loadAuthors(): void
     {
-        $this->authors = Author::orderBy('name')->get(['id as value', 'name as label'])->toArray();
+        $this->authors = Author::select([
+            'id as value',
+            DB::raw('IF(pseudonym, pseudonym, CONCAT_WS(" ", firstname, lastname)) as label')
+        ])
+            ->orderBy('label')
+            ->get()
+            ->toArray();
     }
 
     public function setBook(Book $book): void

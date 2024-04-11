@@ -5,7 +5,7 @@ namespace App\Livewire\Genre;
 use App\Livewire\Forms\GenreForm;
 use App\Models\Genre;
 use App\Traits\HasSort;
-use Illuminate\View\View;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Url;
 use Livewire\Component;
@@ -33,8 +33,12 @@ class ListLive extends Component
         $this->resetPage();
     }
 
-    public function setGenre(Genre $genre): void
+    public function setGenre(string $id): void
     {
+        $genre = $this->genres->firstWhere('id', $id);
+
+        if (! $genre) abort(404);
+
         $this->genre = $genre;
 
         $this->form->setGenre($genre);
@@ -66,23 +70,20 @@ class ListLive extends Component
     }
 
     #[Computed]
-    public function genresCount(): int
+    public function genres(): LengthAwarePaginator
     {
-        return Genre::count();
-    }
-
-    public function render(): View
-    {
-        $genres = Genre::select('id', 'name', 'slug')
+        return Genre::select('id', 'name', 'slug')
             ->where(function ($query) {
                 $query->where('name', 'like', '%' . $this->search . '%')
                     ->orWhere('slug', 'like', '%' . $this->search . '%');
             })
             ->orderBy($this->sortField, $this->sortDirection)
             ->paginate(10);
+    }
 
-        return view('livewire.genre.list-live', [
-            'genres' => $genres,
-        ]);
+    #[Computed]
+    public function genresCount(): int
+    {
+        return Genre::count();
     }
 }

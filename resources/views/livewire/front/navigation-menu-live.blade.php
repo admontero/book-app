@@ -13,7 +13,11 @@
                         <x-dropdown align="right" width="48">
                             <x-slot name="trigger">
                                 @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
-                                    <button class="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition">
+                                    <button
+                                        class="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition"
+                                        x-data
+                                        x-on:refresh-photo.window="$wire.$refresh()"
+                                    >
                                         <img class="h-8 w-8 rounded-full object-cover" src="{{ Auth::user()->profile_photo_url }}" alt="{{ Auth::user()->name }}" />
                                     </button>
                                 @else
@@ -35,9 +39,9 @@
                                     {{ __('Manage Account') }}
                                 </div>
 
-                                {{-- <x-dropdown-link href="{{ route('profile.show') }}" wire:navigate>
+                                <x-dropdown-link href="{{ route('front.profile.show') }}" wire:navigate>
                                     {{ __('Profile') }}
-                                </x-dropdown-link> --}}
+                                </x-dropdown-link>
 
                                 <div class="border-t border-gray-200 dark:border-gray-600"></div>
 

@@ -5,7 +5,7 @@ namespace App\Livewire\Editorial;
 use App\Livewire\Forms\EditorialForm;
 use App\Models\Editorial;
 use App\Traits\HasSort;
-use Illuminate\View\View;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Url;
 use Livewire\Component;
@@ -33,8 +33,12 @@ class ListLive extends Component
         $this->resetPage();
     }
 
-    public function setEditorial(Editorial $editorial): void
+    public function setEditorial(string $id): void
     {
+        $editorial = $this->editorials->firstWhere('id', $id);
+
+        if (! $editorial) abort(404);
+
         $this->editorial = $editorial;
 
         $this->form->setEditorial($editorial);
@@ -66,23 +70,20 @@ class ListLive extends Component
     }
 
     #[Computed]
-    public function editorialsCount(): int
+    public function editorials(): LengthAwarePaginator
     {
-        return Editorial::count();
-    }
-
-    public function render(): View
-    {
-        $editorials = Editorial::select('id', 'name', 'slug')
+        return  Editorial::select('id', 'name', 'slug')
             ->where(function ($query) {
                 $query->where('name', 'like', '%' . $this->search . '%')
                     ->orWhere('slug', 'like', '%' . $this->search . '%');
             })
             ->orderBy($this->sortField, $this->sortDirection)
             ->paginate(10);
+    }
 
-        return view('livewire.editorial.list-live', [
-            'editorials' => $editorials,
-        ]);
+    #[Computed]
+    public function editorialsCount(): int
+    {
+        return Editorial::count();
     }
 }
