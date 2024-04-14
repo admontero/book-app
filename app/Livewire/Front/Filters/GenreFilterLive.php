@@ -22,7 +22,7 @@ class GenreFilterLive extends Component
         return $this->allGenres->firstWhere('id', $id);
     }
 
-    #[Computed(cache: true, key: 'genres-filter', tags: 'authors')]
+    #[Computed(cache: true, key: 'genres-filter', tags: 'genres')]
     public function allGenres(): Collection
     {
         return Genre::select(['id', 'name', 'slug'])->get();

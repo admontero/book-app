@@ -128,3 +128,5 @@ Route::group([
 
 Route::get('/', App\Livewire\Front\DashboardLive::class)->name('front.dashboard');
 
+Route::get('/books/{edition:slug}', App\Livewire\Front\EditionShowLive::class)->name('front.edition.show');
+

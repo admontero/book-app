@@ -9,13 +9,10 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 use Nnjeim\World\Models\City;
 use Nnjeim\World\Models\Country;
 use Nnjeim\World\Models\State;
-
-use function Illuminate\Events\queueable;
 
 class Author extends Model
 {
@@ -28,21 +25,6 @@ class Author extends Model
         'date_of_birth' => 'date:Y-m-d',
         'date_of_death' => 'date:Y-m-d',
     ];
-
-    protected static function booted(): void
-    {
-        static::created(queueable(function (Author $author) {
-            Cache::tags('authors')->flush();
-        }));
-
-        static::updated(queueable(function (Author $author) {
-            Cache::tags('authors')->flush();
-        }));
-
-        static::deleted(queueable(function (Author $author) {
-            Cache::tags('authors')->flush();
-        }));
-    }
 
     public function sluggable(): array
     {

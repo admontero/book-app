@@ -73,7 +73,7 @@ class DashboardLive extends Component
 
     public function render(): View
     {
-        $editions = Cache::tags(['editions', 'copies', 'editorials', 'books', 'genres'])
+        $editions = Cache::tags(['copies', 'editions', 'editorials', 'books', 'authors', 'genres'])
             ->remember($this->cacheKey(), 3600, function () {
                 return Edition::with('copies:id,edition_id,status', 'book:id,title,slug', 'book.genres:id,name,slug')
                     ->has('enabledCopies')

@@ -1,4 +1,4 @@
-<form wire:submit.prevent="save" @keydown.enter="event.preventDefault()">
+<form wire:submit.prevent="save">
     <div class="relative">
         <x-label value="Edición" />
 

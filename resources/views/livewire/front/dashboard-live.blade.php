@@ -47,15 +47,20 @@
             <div>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4 mt-4">
                     @foreach ($editions as $edition)
-                        <div class="place-self-center max-w-[200px]">
+                        <div class="place-self-center max-w-[200px] cursor-pointer" @click="$refs.edition_{{ $edition->id }}_link.click()">
                             <img src="{{ asset($edition->cover_url) }}" class="h-[300px] mx-auto object-cover object-center block rounded">
+                            
                             <div class="mt-4">
                                 <p class="text-gray-500 text-xs tracking-widest truncate capitalize mb-1 dark:text-gray-400">
                                     {{ implode(', ', $edition->book?->genres?->pluck('name')->toArray()) }}
                                 </p>
 
                                 <h3 class="text-gray-900 text-sm font-semibold capitalize dark:text-white">
-                                    {{ $edition->book?->title }}
+                                   <a
+                                        href="{{ route('front.edition.show', $edition->slug) }}"
+                                        x-ref="edition_{{ $edition->id }}_link"
+                                        wire:navigate
+                                    >{{ $edition->book?->title }}</a>
                                 </h3>
                             </div>
                         </div>

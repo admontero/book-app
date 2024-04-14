@@ -4,6 +4,7 @@ namespace App\Livewire\Forms;
 
 use App\Models\Author;
 use Carbon\Carbon;
+use DOMDocument;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
@@ -210,9 +211,12 @@ class AuthorForm extends Form
         }
 
         $this->date_of_birth = $this->date_of_birth ? Carbon::createFromFormat('d/m/Y', $this->date_of_birth) : null;
+
         $this->date_of_death = $this->date_of_death ? Carbon::createFromFormat('d/m/Y', $this->date_of_death) : null;
 
         $this->pseudonym = $this->pseudonym ?: null;
+
+        $this->formatBiography();
 
         if ($this->author) {
             $this->author->update([
@@ -245,7 +249,12 @@ class AuthorForm extends Form
                 'photo_path' => isset($path) ? $path : null,
             ]);
         }
-
     }
 
+    protected function formatBiography(): void
+    {
+        $classes = 'text-gray-700 dark:text-gray-400';
+
+        $this->biography = preg_replace('/<(\w+)/', '<$1 class="' . $classes . '"', $this->biography);
+    }
 }

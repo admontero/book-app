@@ -1,8 +1,4 @@
-<form
-    x-init="$nextTick(() => $refs.synopsis.dispatchEvent(new Event('autosize')))"
-    @keydown.enter="event.preventDefault()"
-    wire:submit.prevent="save"
->
+<form x-init="$nextTick(() => $refs.synopsis.dispatchEvent(new Event('autosize')))" wire:submit.prevent="save">
     <div>
         <x-label value="Título" />
 

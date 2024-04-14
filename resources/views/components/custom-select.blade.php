@@ -26,6 +26,7 @@
     @foreach ($listeners as $key => $value)
         {{ '@' . $key }}="{{ $value }}"
     @endforeach
+    @keydown.enter="event.preventDefault()"
 >
     <button
         class="w-full mt-1 py-2 px-3 border text-left border-gray-300 dark:border-gray-700 dark:bg-gray-900
@@ -44,7 +45,7 @@
             </template>
 
             <template x-if="! isEmpty && isMultiple">
-                <span x-text="selected?.map(item => item.label.charAt(0).toUpperCase() + item.label.slice(1)).join(', ')"></span>
+                <span class="capitalize" x-text="selected?.map(item => item.label.charAt(0).toUpperCase() + item.label.slice(1)).join(', ')"></span>
             </template>
 
             <template x-if="! isEmpty && ! isMultiple">

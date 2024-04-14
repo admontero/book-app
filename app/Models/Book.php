@@ -14,9 +14,7 @@ class Book extends Model
     use HasFactory;
     use Sluggable;
 
-    protected $guarded = [
-        'id'
-    ];
+    protected $guarded = ['id'];
 
     public function sluggable(): array
     {
