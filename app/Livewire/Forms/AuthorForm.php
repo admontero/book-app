@@ -216,7 +216,7 @@ class AuthorForm extends Form
 
         $this->pseudonym = $this->pseudonym ?: null;
 
-        $this->formatBiography();
+        $this->biography = $this->biography ?: null;
 
         if ($this->author) {
             $this->author->update([
@@ -249,12 +249,5 @@ class AuthorForm extends Form
                 'photo_path' => isset($path) ? $path : null,
             ]);
         }
-    }
-
-    protected function formatBiography(): void
-    {
-        $classes = 'text-gray-700 dark:text-gray-400';
-
-        $this->biography = preg_replace('/<(\w+)/', '<$1 class="' . $classes . '"', $this->biography);
     }
 }

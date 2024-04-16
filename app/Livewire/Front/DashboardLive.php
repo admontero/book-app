@@ -4,6 +4,7 @@ namespace App\Livewire\Front;
 
 use App\Models\Edition;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Layout;
@@ -81,6 +82,8 @@ class DashboardLive extends Component
                     ->latest('id')
                     ->paginate($this->perPage);
                 });
+
+        Session::put('page', $this->getPage());
 
         return view('livewire.front.dashboard-live', [
             'editions' => $editions,

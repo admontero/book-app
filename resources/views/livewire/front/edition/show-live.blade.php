@@ -1,7 +1,16 @@
 <div>
     <div class="max-w-7xl mx-auto py-4">
         <div class="md:flex md:justify-between md:gap-4 px-2 md:px-6">
-            <div class="hidden md:block w-96"></div>
+            <div class="w-96">
+                <a
+                    class="underline underline-offset-2 text-sm font-medium text-blue-600 hover:underline dark:text-blue-500"
+                    href="{{ $back_url }}"
+                    wire:navigate
+                >
+                    Volver
+                </a>
+            </div>
+
             <div class="flex-1">
                 <h2 class="text-2xl capitalize font-medium dark:text-white">{{ $edition->book->title }}</h2>
             </div>
@@ -9,7 +18,7 @@
 
         <div class="md:flex md:justify-between md:gap-4 mt-4">
             <div class="w-full md:w-96">
-                <img src="{{ asset($edition->cover_url) }}" class="h-[300px] mx-auto object-cover object-center block rounded">
+                <img src="{{ asset($edition->cover_url) }}" class="h-[450px] mx-auto object-cover object-center block rounded">
             </div>
 
             <div class="w-full md:flex-1 space-y-2 px-2 md:px-6 mt-4 md:mt-0">
@@ -82,30 +91,38 @@
 
                 @if ($edition->book->author_id)
                     <div x-data="{ expanded: false }">
-                        <div class="mt-10" x-show="expanded" x-collapse.min.137px>
+                        <div class="flex gap-4 justify-between mt-10" x-show="expanded" x-collapse.min.170px>
                             <img
-                                class="float-left mr-4 w-32 h-32 rounded-lg object-cover"
+                                class="w-32 h-32 rounded-lg object-cover"
                                 src="{{ $edition->book->author->photo_url }}"
                                 alt="foto de {{ $edition->book->author->name }}"
                             />
 
-                            <div class="space-y-2">
+                            <div class="space-y-2" :class="expanded || 'bottom-overflow-fade'">
                                 <h5 class="text-lg font-medium text-gray-800 dark:text-gray-200 capitalize">
                                     {{ $edition->book->author->name }}
-
-                                    @if ($edition->book->author->biography)
-                                        <button
-                                            class="underline underline-offset-2 ms-2 text-sm font-medium text-blue-600 hover:underline dark:text-blue-500"
-                                            @click="expanded = ! expanded"
-                                        >
-                                            <span><span x-text="expanded ? 'Ocultar' : 'Mostrar'"></span> biografía completa</span>
-                                        </button>
-                                    @endif
                                 </h5>
 
-                                <p>
-                                    {!! $edition->book->author->biography !!}
-                                </p>
+                                @if ($edition->book->author->biography)
+                                    <p>
+                                        {!! $edition->book->author->biography !!}
+                                    </p>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="flex gap-4 justify-between">
+                            <div class="w-32"></div>
+
+                            <div class="flex-1">
+                                @if ($edition->book->author->biography)
+                                    <button
+                                        class="underline underline-offset-2 text-sm font-medium text-blue-600 hover:underline dark:text-blue-500"
+                                        @click="expanded = ! expanded"
+                                    >
+                                        <span>Ver <span x-text="expanded ? 'menos' : 'más'"></span></span>
+                                    </button>
+                                @endif
                             </div>
                         </div>
                     </div>

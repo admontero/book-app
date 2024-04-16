@@ -46,7 +46,7 @@ class Handler extends ExceptionHandler
             }
         }
 
-        if (auth()->user()?->hasRole(RoleEnum::LECTOR->value)) {
+        if (auth()->user()?->hasRole(RoleEnum::LECTOR->value) || auth()->guest()) {
             if (view()->exists($frontErrorView)) {
                 return $frontErrorView;
             }

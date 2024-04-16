@@ -35,6 +35,14 @@ class AuthorFactory extends Factory
 
         $pseudonym = $firstname  . ' ' . $lastname;
 
+        $biography = '';
+
+        $paragraphs = $this->faker->paragraphs(rand(4, 8));
+
+        foreach ($paragraphs as $paragraph) {
+            $biography .= "<p>{$paragraph}</p>";
+        }
+
         return [
             'firstname' => $firstname,
             'lastname' => $lastname,
@@ -43,7 +51,7 @@ class AuthorFactory extends Factory
             'country_birth_id' => $country_birth_id,
             'state_birth_id' => $state_birth_id,
             'city_birth_id' => $city_birth_id,
-            'biography' => $this->faker->text(3000),
+            'biography' => $biography,
         ];
     }
 }

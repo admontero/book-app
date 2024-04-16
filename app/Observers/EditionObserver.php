@@ -27,6 +27,12 @@ class EditionObserver
         collect(config('cache.tags'))
             ->filter(fn($tag) => in_array($this->tag, $tag))
             ->each(fn ($tag) => Cache::tags($tag)->flush());
+
+        if (isset($edition->getChanges()['slug'])) {
+            Cache::tags(["{$this->tag}-{$edition->getOriginal('slug')}"])->flush();
+        }
+
+        Cache::tags(["{$this->tag}-{$edition->slug}"])->flush();
     }
 
     /**

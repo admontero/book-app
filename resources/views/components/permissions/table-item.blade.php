@@ -68,7 +68,7 @@
                                 <ul>
                                     <template x-for="user in usersFiltered" :key="user.id">
                                         <li class="flex items-center px-5 py-1.5 overflow-x-hidden">
-                                            <a :href="'/admin/users/' + user.id" wire:navigate>
+                                            <a :href="'/back/users/' + user.id" wire:navigate>
                                                 <img class="w-7 h-7 rounded-full" :src="user.profile_photo_url" :alt="user.name" />
                                             </a>
 

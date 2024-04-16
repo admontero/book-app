@@ -34,9 +34,9 @@ class EditLive extends Component
     {
         $this->fill($this->user);
 
-        $this->document_type_id = $this->user->profile->document_type_id;
-        $this->document_number = $this->user->profile->document_number;
-        $this->phone = $this->user->profile->phone;
+        $this->document_type_id = $this->user->profile?->document_type_id;
+        $this->document_number = $this->user->profile?->document_number;
+        $this->phone = $this->user->profile?->phone;
     }
 
     public function validationAttributes(): array

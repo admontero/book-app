@@ -26,6 +26,13 @@ class Author extends Model
         'date_of_death' => 'date:Y-m-d',
     ];
 
+    protected static function booted(): void
+    {
+        static::saving(function (Author $author) {
+            $author->biography = add_classes_to_tags($author->biography, 'text-gray-700 dark:text-gray-400');
+        });
+    }
+
     public function sluggable(): array
     {
         return [

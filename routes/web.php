@@ -128,5 +128,9 @@ Route::group([
 
 Route::get('/', App\Livewire\Front\DashboardLive::class)->name('front.dashboard');
 
-Route::get('/books/{edition:slug}', App\Livewire\Front\EditionShowLive::class)->name('front.edition.show');
+Route::get('/books/{slug}', App\Livewire\Front\Edition\ShowLive::class)->name('front.edition.show');
+
+Route::fallback(function () {
+    return abort(404);
+});
 
