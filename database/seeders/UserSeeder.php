@@ -8,7 +8,6 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
-use Spatie\Permission\Models\Role;
 
 class UserSeeder extends Seeder
 {
@@ -58,6 +57,11 @@ class UserSeeder extends Seeder
         User::factory()
             ->secretary()
             ->count(4)
+            ->create();
+
+        User::factory()
+            ->reader()
+            ->count(50)
             ->create();
     }
 }

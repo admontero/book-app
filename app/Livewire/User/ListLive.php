@@ -30,7 +30,7 @@ class ListLive extends Component
 
     public function mount(): void
     {
-        $this->validateSorting(fields: ['id', 'name', 'email']);
+        $this->validateSorting(fields: ['id', 'name', 'email', 'roles.name']);
     }
 
     public function updatedSearch(): void
@@ -78,7 +78,12 @@ class ListLive extends Component
 
     public function render(): View
     {
-        $users = tap(User::select('id', 'name', 'email')
+        $users = tap(User::select('users.id', 'users.name', 'users.email')
+            ->leftJoin('model_has_roles', function ($join) {
+                $join->on('users.id', '=', 'model_has_roles.model_id')
+                    ->where('model_has_roles.model_type', '=', 'App\Models\User');
+            })
+            ->leftJoin('roles', 'roles.id', '=', 'model_has_roles.role_id')
             ->with('roles:id,name', 'permissions:id,name', 'roles.permissions:id,name')
             ->when($this->rolesArray, function ($query) {
                 $query->whereHas('roles', function ($query) {
@@ -86,8 +91,8 @@ class ListLive extends Component
                 });
             })
             ->where(function ($query) {
-                $query->where('name', 'like', '%' . $this->search . '%')
-                    ->orWhere('email', 'like', '%' . $this->search . '%');
+                $query->where('users.name', 'like', '%' . $this->search . '%')
+                    ->orWhere('users.email', 'like', '%' . $this->search . '%');
             })
             ->orderBy($this->sortField, $this->sortDirection)
             ->paginate(10))

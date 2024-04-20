@@ -6,14 +6,19 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Profile extends Model
+class Fine extends Model
 {
     use HasFactory;
 
     protected $guarded = ['id'];
 
-    public function document_type(): BelongsTo
+    public function user(): BelongsTo
     {
-        return $this->BelongsTo(DocumentType::class, 'document_type_id');
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function loan(): BelongsTo
+    {
+        return $this->belongsTo(Loan::class, 'loan_id');
     }
 }

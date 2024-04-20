@@ -254,7 +254,7 @@
                     if (! this.currentFocus) {
                         this.currentFocus = this.element.getElementsByTagName('li')[0];
 
-                        this.currentFocus?.classList.add('focused');
+                        this.currentFocus?.classList.add('cs-focused');
 
                         return ;
                     }
@@ -266,20 +266,20 @@
                     }
 
                     if (previous) {
-                        this.currentFocus.classList.remove('focused');
+                        this.currentFocus.classList.remove('cs-focused');
 
                         this.currentFocus = previous;
 
                         this.currentFocus.scrollIntoView();
 
-                        this.currentFocus.classList.add('focused');
+                        this.currentFocus.classList.add('cs-focused');
                     }
                 },
                 ['@keydown.down']() {
                     if (! this.currentFocus) {
                         this.currentFocus = this.element.getElementsByTagName('li')[0];
 
-                        this.currentFocus?.classList.add('focused');
+                        this.currentFocus?.classList.add('cs-focused');
 
                         return ;
                     }
@@ -291,13 +291,13 @@
                     }
 
                     if (next) {
-                        this.currentFocus.classList.remove('focused');
+                        this.currentFocus.classList.remove('cs-focused');
 
                         this.currentFocus = next;
 
                         this.currentFocus.scrollIntoView();
 
-                        this.currentFocus.classList.add('focused');
+                        this.currentFocus.classList.add('cs-focused');
                     }
                 },
                 ['@keyup.enter']() {
@@ -325,10 +325,10 @@
                 ['x-init']() {
                     this.$watch('show', (value) => {
                         if (! value) {
-                            items = this.element.getElementsByClassName('focused');
+                            items = this.element.getElementsByClassName('cs-focused');
 
                             for (i = 0; i < items.length; i++) {
-                                items[i].classList.remove('focused');
+                                items[i].classList.remove('cs-focused');
                             }
 
                             return ;
@@ -346,7 +346,7 @@
 
                         this.currentFocus = option;
 
-                        this.currentFocus.classList.add('focused');
+                        this.currentFocus.classList.add('cs-focused');
 
                         this.$nextTick(() => this.currentFocus.scrollIntoView());
                     })

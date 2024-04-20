@@ -25,6 +25,7 @@ class DatabaseSeeder extends Seeder
             EditorialSeeder::class,
             EditionSeeder::class,
             CopySeeder::class,
+            LoanSeeder::class,
         ]);
     }
 }

@@ -30,6 +30,9 @@ enum PermissionEnum: string
     case VER_COPIAS = 'ver copias';
     case CREAR_COPIAS = 'crear copias';
     case EDITAR_COPIAS = 'editar copias';
+    case VER_PRESTAMOS = 'ver prestamos';
+    case CREAR_PRESTAMOS = 'crear prestamos';
+    case EDITAR_PRESTAMOS = 'editar prestamos';
 
     public function label(): string
     {
@@ -60,6 +63,9 @@ enum PermissionEnum: string
             static::VER_COPIAS => 'Ver copias',
             static::CREAR_COPIAS => 'Crear copias',
             static::EDITAR_COPIAS => 'Editar copias',
+            static::VER_PRESTAMOS => 'Ver prestamos',
+            static::CREAR_PRESTAMOS => 'Crear prestamos',
+            static::EDITAR_PRESTAMOS => 'Editar prestamos',
         };
     }
 

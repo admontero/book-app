@@ -18,7 +18,7 @@
 
         <div class="md:flex md:justify-between md:gap-4 mt-4">
             <div class="w-full md:w-96">
-                <img src="{{ asset($edition->cover_url) }}" class="h-[450px] mx-auto object-cover object-center block rounded">
+                <img src="{{ $edition->cover_url }}" class="h-[450px] mx-auto object-cover object-center block rounded">
             </div>
 
             <div class="w-full md:flex-1 space-y-2 px-2 md:px-6 mt-4 md:mt-0">
@@ -91,7 +91,7 @@
 
                 @if ($edition->book->author_id)
                     <div x-data="{ expanded: false }">
-                        <div class="flex gap-4 justify-between mt-10" x-show="expanded" x-collapse.min.170px>
+                        <div class="flex gap-4 mt-10" x-show="expanded" x-collapse.min.170px>
                             <img
                                 class="w-32 h-32 rounded-lg object-cover"
                                 src="{{ $edition->book->author->photo_url }}"

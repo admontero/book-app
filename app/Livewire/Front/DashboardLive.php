@@ -42,6 +42,8 @@ class DashboardLive extends Component
         if (! isset($this->filters[$property])) return ;
 
         $this->filters[$property] = $value;
+
+        $this->resetPage();
     }
 
     public function remove(string $property, int $id): void

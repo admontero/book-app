@@ -8,7 +8,7 @@
                     wire:click="$parent.resetFilter('editorials', [])"
                     @click="$wire.search = ''"
                 >
-                    Limpiar todos
+                    &times; Limpiar todos
                 </button>
             @endif
         </div>

@@ -116,6 +116,14 @@ Route::group([
     Route::get('copies/{copy}/edit', App\Livewire\Copy\EditLive::class)
         ->middleware('can:update,copy')
         ->name('copies.edit');
+
+    Route::get('loans', App\Livewire\Loan\ListLive::class)
+        ->middleware('can:viewAny,App\Models\Loan')
+        ->name('loans.index');
+
+    Route::get('loans/create', App\Livewire\Loan\CreateLive::class)
+        ->middleware('can:create,App\Models\Loan')
+        ->name('loans.create');
 });
 
 Route::group([

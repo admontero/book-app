@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use App\Enums\RoleEnum;
+use App\Events\LoanCreated;
+use App\Listeners\UpdateCopyStatus;
 use App\Models\Author;
 use App\Models\Book;
 use App\Models\Copy;
@@ -18,6 +20,7 @@ use App\Observers\EditorialObserver;
 use App\Observers\GenreObserver;
 use App\Policies\PermissionPolicy;
 use App\Policies\RolePolicy;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 use Spatie\Permission\Models\Permission;
@@ -55,5 +58,7 @@ class AppServiceProvider extends ServiceProvider
         Book::observe(BookObserver::class);
         Edition::observe(EditionObserver::class);
         Copy::observe(CopyObserver::class);
+
+        Event::listen(LoanCreated::class, UpdateCopyStatus::class);
     }
 }

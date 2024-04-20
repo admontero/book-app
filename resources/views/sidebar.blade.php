@@ -40,11 +40,12 @@
 
                 <a
                     class="flex items-center px-3 py-2 text-gray-600 transform rounded-lg dark:text-gray-200 hover:bg-gray-100
-                        dark:hover:bg-gray-700 dark:hover:text-gray-200 hover:text-gray-700"
+                        dark:hover:bg-gray-700 dark:hover:text-gray-200 hover:text-gray-700
+                        {{ request()->routeIs('back.loans.*') ? 'bg-gray-100 dark:bg-gray-700' : '' }}"
                     x-data="{ tooltip: ! $store.sidebar.on ? 'Préstamos' : false }"
                     x-init="$watch('$store.sidebar.on', value => tooltip = ! value ? 'Préstamos' : false )"
                     x-tooltip.placement.right.delay.50="tooltip"
-                    href="#"
+                    href="{{ route('back.loans.index') }}"
                     wire:navigate
                 >
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-receipt w-5 h-5" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 21v-16a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v16l-3 -2l-2 2l-2 -2l-2 2l-2 -2l-3 2m4 -14h6m-6 4h6m-2 4h2" /></svg>
