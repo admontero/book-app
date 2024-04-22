@@ -32,7 +32,7 @@ class AuthorFilterLive extends Component
     #[Computed]
     public function authors(): Collection
     {
-        return Cache::tags(['authors'])
+        return Cache::tags(config('cache.tags.front_filters_authors_filter_live.name'))
             ->remember('authors-filter:' . $this->search, 3600, function() {
                 return Author::select([
                         'id',

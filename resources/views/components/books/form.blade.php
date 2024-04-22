@@ -113,6 +113,7 @@
 
         <x-primary-button
             class="btn-sm"
-        >guardar</x-primary-button>
+            type="submit"
+        >Guardar</x-primary-button>
     </div>
 </form>

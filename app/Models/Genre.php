@@ -32,20 +32,22 @@ class Genre extends Model
         return 'slug';
     }
 
-    public function name(): Attribute
-    {
-        return Attribute::make(
-            set: fn (string $value) => mb_strtolower($value),
-        );
-    }
-
     public function books(): BelongsToMany
     {
-        return $this->belongsToMany(Book::class, 'book_genre', 'genre_id', 'book_id')->withTimestamps();
+        return $this->belongsToMany(Book::class, 'book_genre', 'genre_id', 'book_id')
+            ->using(BookGenre::class)
+            ->withTimestamps();
     }
 
     public function editions(): HasManyDeep
     {
         return $this->hasManyDeepFromRelations($this->books(), (new Book())->editions());
+    }
+
+    public function name(): Attribute
+    {
+        return Attribute::make(
+            set: fn (string $value) => mb_strtolower($value),
+        );
     }
 }

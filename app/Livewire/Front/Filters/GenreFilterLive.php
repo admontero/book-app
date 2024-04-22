@@ -31,7 +31,7 @@ class GenreFilterLive extends Component
     #[Computed]
     public function genres(): Collection
     {
-        return Cache::tags(['genres'])
+        return Cache::tags(config('cache.tags.front_filters_genres_filter_live.name'))
             ->remember('genres-filter:' . $this->search, 3600, function() {
                 return Genre::select(['id', 'name', 'slug'])
                     ->withCount(['editions' => function ($query) {

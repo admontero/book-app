@@ -3,20 +3,16 @@
 namespace App\Observers;
 
 use App\Models\Book;
-use Illuminate\Support\Facades\Cache;
+use App\Utilities\CleanCache\BookCleanCache;
 
 class BookObserver
 {
-    protected $tag = 'books';
-
     /**
      * Handle the Book "created" event.
      */
     public function created(Book $book): void
     {
-        collect(config('cache.tags'))
-            ->filter(fn($tag) => in_array($this->tag, $tag))
-            ->each(fn ($tag) => Cache::tags($tag)->flush());
+        (new BookCleanCache($book))->handle();
     }
 
     /**
@@ -24,9 +20,7 @@ class BookObserver
      */
     public function updated(Book $book): void
     {
-        collect(config('cache.tags'))
-            ->filter(fn($tag) => in_array($this->tag, $tag))
-            ->each(fn ($tag) => Cache::tags($tag)->flush());
+        (new BookCleanCache($book))->handle();
     }
 
     /**
@@ -34,9 +28,7 @@ class BookObserver
      */
     public function deleted(Book $book): void
     {
-        collect(config('cache.tags'))
-            ->filter(fn($tag) => in_array($this->tag, $tag))
-            ->each(fn ($tag) => Cache::tags($tag)->flush());
+        (new BookCleanCache($book))->handle();
     }
 
     /**
@@ -44,9 +36,7 @@ class BookObserver
      */
     public function restored(Book $book): void
     {
-        collect(config('cache.tags'))
-            ->filter(fn($tag) => in_array($this->tag, $tag))
-            ->each(fn ($tag) => Cache::tags($tag)->flush());
+        (new BookCleanCache($book))->handle();
     }
 
     /**
@@ -54,8 +44,6 @@ class BookObserver
      */
     public function forceDeleted(Book $book): void
     {
-        collect(config('cache.tags'))
-            ->filter(fn($tag) => in_array($this->tag, $tag))
-            ->each(fn ($tag) => Cache::tags($tag)->flush());
+        (new BookCleanCache($book))->handle();
     }
 }

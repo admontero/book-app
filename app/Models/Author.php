@@ -29,7 +29,7 @@ class Author extends Model
     protected static function booted(): void
     {
         static::saving(function (Author $author) {
-            $author->biography = add_classes_to_tags($author->biography, 'text-gray-700 dark:text-gray-400');
+            $author->biography = add_classes_to_html_content($author->biography, 'text-gray-700 dark:text-gray-400');
         });
     }
 

@@ -3,20 +3,16 @@
 namespace App\Observers;
 
 use App\Models\Edition;
-use Illuminate\Support\Facades\Cache;
+use App\Utilities\CleanCache\EditionCleanCache;
 
 class EditionObserver
 {
-    protected $tag = 'editions';
-
     /**
      * Handle the Edition "created" event.
      */
     public function created(Edition $edition): void
     {
-        collect(config('cache.tags'))
-            ->filter(fn($tag) => in_array($this->tag, $tag))
-            ->each(fn ($tag) => Cache::tags($tag)->flush());
+        (new EditionCleanCache($edition))->handle();
     }
 
     /**
@@ -24,15 +20,7 @@ class EditionObserver
      */
     public function updated(Edition $edition): void
     {
-        collect(config('cache.tags'))
-            ->filter(fn($tag) => in_array($this->tag, $tag))
-            ->each(fn ($tag) => Cache::tags($tag)->flush());
-
-        if (isset($edition->getChanges()['slug'])) {
-            Cache::tags(["{$this->tag}-{$edition->getOriginal('slug')}"])->flush();
-        }
-
-        Cache::tags(["{$this->tag}-{$edition->slug}"])->flush();
+        (new EditionCleanCache($edition))->handle();
     }
 
     /**
@@ -40,9 +28,7 @@ class EditionObserver
      */
     public function deleted(Edition $edition): void
     {
-        collect(config('cache.tags'))
-            ->filter(fn($tag) => in_array($this->tag, $tag))
-            ->each(fn ($tag) => Cache::tags($tag)->flush());
+        (new EditionCleanCache($edition))->handle();
     }
 
     /**
@@ -50,9 +36,7 @@ class EditionObserver
      */
     public function restored(Edition $edition): void
     {
-        collect(config('cache.tags'))
-            ->filter(fn($tag) => in_array($this->tag, $tag))
-            ->each(fn ($tag) => Cache::tags($tag)->flush());
+        (new EditionCleanCache($edition))->handle();
     }
 
     /**
@@ -60,8 +44,6 @@ class EditionObserver
      */
     public function forceDeleted(Edition $edition): void
     {
-        collect(config('cache.tags'))
-            ->filter(fn($tag) => in_array($this->tag, $tag))
-            ->each(fn ($tag) => Cache::tags($tag)->flush());
+        (new EditionCleanCache($edition))->handle();
     }
 }

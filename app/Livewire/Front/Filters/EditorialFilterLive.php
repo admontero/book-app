@@ -31,7 +31,7 @@ class EditorialFilterLive extends Component
     #[Computed]
     public function editorials(): Collection
     {
-        return Cache::tags(['editorials'])
+        return Cache::tags(config('cache.tags.front_filters_editorials_filter_live.name'))
             ->remember('editorials-filter:' . $this->search, 3600, function() {
                 return Editorial::select('id', 'name', 'slug')
                     ->withCount(['editions' => function ($query) {

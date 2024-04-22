@@ -3,20 +3,16 @@
 namespace App\Observers;
 
 use App\Models\Genre;
-use Illuminate\Support\Facades\Cache;
+use App\Utilities\CleanCache\GenreCleanCache;
 
 class GenreObserver
 {
-    protected $tag = 'genres';
-
     /**
      * Handle the Genre "created" event.
      */
     public function created(Genre $genre): void
     {
-        collect(config('cache.tags'))
-            ->filter(fn($tag) => in_array($this->tag, $tag))
-            ->each(fn ($tag) => Cache::tags($tag)->flush());
+        (new GenreCleanCache($genre))->handle();
     }
 
     /**
@@ -24,9 +20,7 @@ class GenreObserver
      */
     public function updated(Genre $genre): void
     {
-        collect(config('cache.tags'))
-            ->filter(fn($tag) => in_array($this->tag, $tag))
-            ->each(fn ($tag) => Cache::tags($tag)->flush());
+        (new GenreCleanCache($genre))->handle();
     }
 
     /**
@@ -34,9 +28,7 @@ class GenreObserver
      */
     public function deleted(Genre $genre): void
     {
-        collect(config('cache.tags'))
-            ->filter(fn($tag) => in_array($this->tag, $tag))
-            ->each(fn ($tag) => Cache::tags($tag)->flush());
+        (new GenreCleanCache($genre))->handle();
     }
 
     /**
@@ -44,9 +36,7 @@ class GenreObserver
      */
     public function restored(Genre $genre): void
     {
-        collect(config('cache.tags'))
-            ->filter(fn($tag) => in_array($this->tag, $tag))
-            ->each(fn ($tag) => Cache::tags($tag)->flush());
+        (new GenreCleanCache($genre))->handle();
     }
 
     /**
@@ -54,8 +44,6 @@ class GenreObserver
      */
     public function forceDeleted(Genre $genre): void
     {
-        collect(config('cache.tags'))
-            ->filter(fn($tag) => in_array($this->tag, $tag))
-            ->each(fn ($tag) => Cache::tags($tag)->flush());
+        (new GenreCleanCache($genre))->handle();
     }
 }

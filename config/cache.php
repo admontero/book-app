@@ -109,13 +109,22 @@ return [
     'prefix' => env('CACHE_PREFIX', Str::slug(env('APP_NAME', 'laravel'), '_').'_cache_'),
 
     'tags' => [
-        ['genres'],
-        ['authors'],
-        ['books'],
-        ['editorials'],
-        ['editions'],
-        ['copies'],
-        ['copies', 'editions', 'editorials', 'books', 'authors', 'genres'],
+        'front_dashboard_live' => [
+            'name' => 'front_dashboard_live_editions',
+            'models' => ['author', 'book', 'copy', 'edition', 'editorial', 'genre'],
+        ],
+        'front_filters_authors_filter_live' => [
+            'name' => 'front_filters_authors_filter_live',
+            'models' => ['author', 'book', 'copy', 'edition'],
+        ],
+        'front_filters_genres_filter_live' => [
+            'name' => 'front_filters_genres_filter',
+            'models' => ['book', 'copy', 'edition', 'genre'],
+        ],
+        'front_filters_editorials_filter_live' => [
+            'name' => 'front_filters_editorials_filter_live',
+            'models' => ['copy', 'edition', 'editorial'],
+        ],
     ]
 ];
 

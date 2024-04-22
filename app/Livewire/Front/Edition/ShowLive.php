@@ -15,7 +15,7 @@ class ShowLive extends Component
 
     public function render()
     {
-        $edition = Cache::tags(['editions-' . $this->slug])
+        $edition = Cache::tags(['edition-' . $this->slug])
             ->remember("{$this->getName()}-{$this->slug}", 3600, function() {
                 return Edition::with([
                     'book:id,title,slug,synopsis,publication_year,author_id',

@@ -401,7 +401,7 @@
                                         </p>
                                     </li>
 
-                                    @if ($this->fine_amount)
+                                    @if ($is_fineable)
                                         <li class="py-2 sm:flex sm:justify-between sm:gap-4">
                                             <p class="font-medium sm:w-48">
                                                 Monto de Multa (Diario)

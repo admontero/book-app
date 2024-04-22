@@ -1,7 +1,7 @@
 <?php
 
-if (! function_exists('add_classes_to_tags')) {
-    function add_classes_to_tags(string $html = null, string $classes = ''): ?string
+if (! function_exists('add_classes_to_html_content')) {
+    function add_classes_to_html_content(string $html = null, string $classes = ''): ?string
     {
         if (! $html) return null;
 
@@ -15,4 +15,3 @@ if (! function_exists('get_route_name_by_url')) {
         return app('router')->getRoutes()->match(request()->create($url))->getName();
     }
 }
-
