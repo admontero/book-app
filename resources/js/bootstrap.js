@@ -7,6 +7,7 @@
 import axios from 'axios';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { CustomDatepicker } from './customdatepicker';
+import latinize from 'latinize';
 
 import 'ckeditor-tailwind-reset/ckeditor-tailwind-reset.css';
 import 'flag-icons/css/flag-icons.min.css';
@@ -22,6 +23,8 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 window.ClassicEditor = ClassicEditor;
 
 window.CustomDatepicker = CustomDatepicker;
+
+window.latinize = latinize;
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening

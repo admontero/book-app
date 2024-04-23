@@ -164,6 +164,66 @@
             <x-responsive-nav-link href="{{ route('back.dashboard') }}" :active="request()->routeIs('back.dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
+
+            @can('viewAny', App\Models\Loan::class)
+                <x-responsive-nav-link href="{{ route('back.loans.index') }}" :active="request()->routeIs('back.loans.*')">
+                    Préstamos
+                </x-responsive-nav-link>
+            @endcan
+
+            @can('viewAny', App\Models\User::class)
+                <x-responsive-nav-link href="{{ route('back.users.index') }}" :active="request()->routeIs('back.users.*')">
+                    Usuarios
+                </x-responsive-nav-link>
+            @endcan
+
+            @can('viewAny', App\Models\Copy::class)
+                <x-responsive-nav-link href="{{ route('back.copies.index') }}" :active="request()->routeIs('back.copies.*')">
+                    Copias
+                </x-responsive-nav-link>
+            @endcan
+
+            @can('viewAny', Spatie\Permission\Models\Role::class)
+                <x-responsive-nav-link href="{{ route('back.roles.index') }}" :active="request()->routeIs('back.roles.*')">
+                    Roles
+                </x-responsive-nav-link>
+            @endcan
+
+            @can('viewAny', Spatie\Permission\Models\Permission::class)
+                <x-responsive-nav-link href="{{ route('back.permissions.index') }}" :active="request()->routeIs('back.permissions.*')">
+                    Permisos
+                </x-responsive-nav-link>
+            @endcan
+
+            @can('viewAny', App\Models\Edition::class)
+                <x-responsive-nav-link href="{{ route('back.editions.index') }}" :active="request()->routeIs('back.editions.*')">
+                    Ediciones
+                </x-responsive-nav-link>
+            @endcan
+
+            @can('viewAny', App\Models\Editorial::class)
+                <x-responsive-nav-link href="{{ route('back.editorials.index') }}" :active="request()->routeIs('back.editorials.*')">
+                    Editoriales
+                </x-responsive-nav-link>
+            @endcan
+
+            @can('viewAny', App\Models\Book::class)
+                <x-responsive-nav-link href="{{ route('back.books.index') }}" :active="request()->routeIs('back.books.*')">
+                    Libros
+                </x-responsive-nav-link>
+            @endcan
+
+            @can('viewAny', App\Models\Author::class)
+                <x-responsive-nav-link href="{{ route('back.authors.index') }}" :active="request()->routeIs('back.authors.*')">
+                    Autores
+                </x-responsive-nav-link>
+            @endcan
+
+            @can('viewAny', App\Models\Genre::class)
+                <x-responsive-nav-link href="{{ route('back.genres.index') }}" :active="request()->routeIs('back.genres.*')">
+                    Géneros
+                </x-responsive-nav-link>
+            @endcan
         </div>
 
         <!-- Responsive Settings Options -->

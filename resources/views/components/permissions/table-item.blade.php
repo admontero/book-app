@@ -38,7 +38,7 @@
                     get usersFiltered() {
                         if (! this.search.length) return this.users;
 
-                        return this.users.filter(user => user.name.toLowerCase().includes(this.search.toLowerCase()) ? true : false)
+                        return this.users.filter(user => latinize(user.name.toLowerCase()).includes(latinize(this.search.toLowerCase())))
                     }
                 }">
                     <x-dropdown-floating width="w-72">
@@ -107,7 +107,7 @@
                     get rolesFiltered() {
                         if (! this.search.length) return this.roles;
 
-                        return this.roles.filter(role => role.name.toLowerCase().includes(this.search.toLowerCase()) ? true : false)
+                        return this.roles.filter(role => latinize(role.name.toLowerCase()).includes(latinize(this.search.toLowerCase())))
                     }
                 }">
                     <x-dropdown-floating width="w-72">

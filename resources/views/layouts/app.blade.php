@@ -19,15 +19,13 @@
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body x-data x-cloak class="font-sans antialiased">
+    <body class="font-sans antialiased">
         <x-banner />
 
-        <div class="flex min-h-screen bg-gray-100 dark:bg-gray-900">
-            <div>
-                @include('sidebar')
-            </div>
+        <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
+            @include('sidebar')
 
-            <div class="flex-1">
+            <div class="sm:ml-[5.5rem] xl:ml-64">
                 @livewire('navigation-menu')
 
                 <!-- Page Heading -->
@@ -40,7 +38,7 @@
                 @endif
 
                 <!-- Page Content -->
-                <main class="relative my-4">
+                <main class="relative py-4">
                     <x-alert />
 
                     {{ $slot }}

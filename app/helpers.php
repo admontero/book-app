@@ -1,5 +1,10 @@
 <?php
 
+if (! class_exists('Memcached'))
+{
+    include ("memcached.php");
+}
+
 if (! function_exists('add_classes_to_html_content')) {
     function add_classes_to_html_content(string $html = null, string $classes = ''): ?string
     {

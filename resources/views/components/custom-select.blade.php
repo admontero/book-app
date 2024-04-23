@@ -229,8 +229,8 @@
                 },
                 isContainingTheTerm(item) {
                     if (
-                        item.label.toLowerCase().includes(this.search.toLowerCase()) ||
-                        item.description?.toLowerCase().includes(this.search.toLowerCase())
+                        latinize(item.label.toLowerCase()).includes(latinize(this.search.toLowerCase())) ||
+                        latinize((item.description ?? '').toLowerCase()).includes(latinize(this.search.toLowerCase()))
                     ) {
                         return true;
                     }
@@ -305,6 +305,8 @@
 
                     if (! this.currentFocus.dataset.value && this.isCreatable) {
                         this.$dispatch('create');
+
+                        this.currentFocus = '';
 
                         return ;
                     }

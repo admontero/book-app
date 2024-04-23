@@ -2,12 +2,18 @@
     <td class="max-w-48 px-4 py-4 text-sm font-medium whitespace-nowrap">
         <h2 class="font-medium text-gray-800 dark:text-white truncate first-letter:uppercase">{{ $copy->edition?->book?->title }}</h2>
         <dl>
+            <dt class="sr-only lg:hidden">Id</dt>
+            <dd class="font-normal text-gray-600 dark:text-gray-400 truncate lg:hidden">
+                @if ($copy->identifier)
+                    {{ $copy->identifier }}
+                @endif
+            </dd>
             <dt class="sr-only">Autor</dt>
             <dd class="font-normal text-gray-600 dark:text-gray-400 truncate capitalize">
                 @if ($copy->edition?->book?->author_id)
                     {{ $copy->edition?->book?->author?->name }}
                 @else
-                    <span class="italic text-xs">author desconocido</span>
+                    <span class="italic text-xs">autor desconocido</span>
                 @endif
             </dd>
             <dt class="sr-only">Editorial</dt>
@@ -16,12 +22,6 @@
                     {{ $copy->edition?->editorial?->name }}
                 @else
                     <span class="italic text-xs">editorial desconocida</span>
-                @endif
-            </dd>
-            <dt class="sr-only lg:hidden">Id</dt>
-            <dd class="font-normal text-gray-600 dark:text-gray-400 truncate lg:hidden">
-                @if ($copy->identifier)
-                    {{ $copy->identifier }}
                 @endif
             </dd>
         </dl>

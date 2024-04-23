@@ -42,7 +42,7 @@
                 permissionsFiltered(permissions) {
                     if (! this.search.length) return permissions
 
-                    return permissions.filter(permission => permission.name.toLowerCase().includes(this.search.toLowerCase()) ? true : false)
+                    return permissions.filter(permission => latinize(permission.name.toLowerCase()).includes(latinize(this.search.toLowerCase())))
                 },
             }"
             wire:ignore

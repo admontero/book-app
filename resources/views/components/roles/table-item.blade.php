@@ -38,7 +38,7 @@
                     get usersFiltered() {
                         if (! this.search.length) return this.users;
 
-                        return this.users.filter(user => user.name.toLowerCase().includes(this.search.toLowerCase()) ? true : false)
+                        return this.users.filter(user => latinize(user.name.toLowerCase()).includes(latinize(this.search.toLowerCase())))
                     }
                 }">
 
@@ -101,7 +101,7 @@
                 get permissionsFiltered() {
                     if (! this.search.length) return this.permissions
 
-                    return this.permissions.filter(permission => permission.name.toLowerCase().includes(this.search.toLowerCase()) ? true : false)
+                    return this.permissions.filter(permission => latinize(permission.name.toLowerCase()).includes(latinize(this.search.toLowerCase())))
                 },
             }"
         >

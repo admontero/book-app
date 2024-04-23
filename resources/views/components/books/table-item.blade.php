@@ -36,7 +36,7 @@
             get genresFiltered() {
                 if (! this.search.length) return this.genres
 
-                return this.genres.filter(genre => genre.name.toLowerCase().includes(this.search.toLowerCase()) ? true : false)
+                return this.genres.filter(genre => latinize(genre.name.toLowerCase()).includes(latinize(this.search.toLowerCase())))
             },
         }"
     >
