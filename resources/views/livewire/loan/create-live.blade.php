@@ -151,7 +151,7 @@
                                     {{ $this->users->links('vendor.livewire.custom') }}
                                 </div>
                             @else
-                                <x-loans.user-data />
+                                <x-loans.user-data :user="$this->userSelected" />
                             @endif
 
                             <hr class="my-4 -mx-6 dark:border-gray-700">
@@ -259,7 +259,7 @@
                                     {{ $this->copies->links('vendor.livewire.custom') }}
                                 </div>
                             @else
-                                <x-loans.copy-data />
+                                <x-loans.copy-data :copy="$this->copySelected" />
                             @endif
 
                             <hr class="my-4 -mx-6 dark:border-gray-700">
@@ -371,9 +371,9 @@
 
                             <hr class="my-4 -mx-6 dark:border-gray-700">
 
-                            <x-loans.user-data />
+                            <x-loans.user-data :user="$this->userSelected" />
 
-                            <x-loans.copy-data />
+                            <x-loans.copy-data :copy="$this->copySelected" />
 
                             <div>
                                 <h4 class="text-sm md:text-base mb-2 text-gray-700 dark:text-gray-400">Información complementaria:</h4>
@@ -397,7 +397,7 @@
                                         </p>
 
                                         <p class="sm:flex-1 capitalize">
-                                            {{ $this->is_fineable ? 'SI' : 'NO' }}
+                                            {{ $is_fineable ? 'SI' : 'NO' }}
                                         </p>
                                     </li>
 

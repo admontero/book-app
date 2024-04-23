@@ -3,6 +3,7 @@
 namespace App\Policies;
 
 use App\Enums\PermissionEnum;
+use App\Enums\RoleEnum;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
 
@@ -13,7 +14,7 @@ class UserPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->hasRole('admin') || $user->hasPermissionTo(PermissionEnum::VER_USUARIOS->value);
+        return $user->hasRole(RoleEnum::ADMIN->value) || $user->hasPermissionTo(PermissionEnum::VER_USUARIOS->value);
     }
 
     /**
@@ -21,7 +22,7 @@ class UserPolicy
      */
     public function view(User $user, User $model): bool
     {
-        return $user->hasRole('admin') || $user->hasPermissionTo(PermissionEnum::VER_USUARIOS->value);
+        return $user->hasRole(RoleEnum::ADMIN->value) || $user->hasPermissionTo(PermissionEnum::VER_USUARIOS->value);
     }
 
     /**
@@ -69,7 +70,7 @@ class UserPolicy
      */
     public function assignRole(User $user): bool
     {
-        return $user->hasRole('admin') || $user->hasPermissionTo(PermissionEnum::ASIGNAR_ROLES_A_USUARIOS->value);
+        return $user->hasRole(RoleEnum::ADMIN->value) || $user->hasPermissionTo(PermissionEnum::ASIGNAR_ROLES_A_USUARIOS->value);
     }
 
     /**
@@ -77,6 +78,6 @@ class UserPolicy
      */
     public function assignPermission(User $user): bool
     {
-        return $user->hasRole('admin') || $user->hasPermissionTo(PermissionEnum::ASIGNAR_PERMISOS_A_USUARIOS->value);
+        return $user->hasRole(RoleEnum::ADMIN->value) || $user->hasPermissionTo(PermissionEnum::ASIGNAR_PERMISOS_A_USUARIOS->value);
     }
 }

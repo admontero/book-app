@@ -2,7 +2,9 @@
 
 namespace App\Policies;
 
+use App\Enums\LoanStatusEnum;
 use App\Enums\PermissionEnum;
+use App\Enums\RoleEnum;
 use App\Models\Loan;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
@@ -14,7 +16,7 @@ class LoanPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->hasRole('admin') || $user->hasPermissionTo(PermissionEnum::VER_PRESTAMOS->value);
+        return $user->hasRole(RoleEnum::ADMIN->value) || $user->hasPermissionTo(PermissionEnum::VER_PRESTAMOS->value);
     }
 
     /**
@@ -22,7 +24,7 @@ class LoanPolicy
      */
     public function view(User $user, Loan $loan): bool
     {
-        return $user->hasRole('admin') || $user->hasPermissionTo(PermissionEnum::VER_PRESTAMOS->value);
+        return $user->hasRole(RoleEnum::ADMIN->value) || $user->hasPermissionTo(PermissionEnum::VER_PRESTAMOS->value);
     }
 
     /**
@@ -30,7 +32,7 @@ class LoanPolicy
      */
     public function create(User $user): bool
     {
-        return $user->hasRole('admin') || $user->hasPermissionTo(PermissionEnum::CREAR_PRESTAMOS->value);
+        return $user->hasRole(RoleEnum::ADMIN->value) || $user->hasPermissionTo(PermissionEnum::CREAR_PRESTAMOS->value);
     }
 
     /**
@@ -38,7 +40,7 @@ class LoanPolicy
      */
     public function update(User $user, Loan $loan): bool
     {
-        return $user->hasRole('admin') || $user->hasPermissionTo(PermissionEnum::EDITAR_PRESTAMOS->value);
+        return $user->hasRole(RoleEnum::ADMIN->value) || $user->hasPermissionTo(PermissionEnum::EDITAR_PRESTAMOS->value);
     }
 
     /**
@@ -63,5 +65,14 @@ class LoanPolicy
     public function forceDelete(User $user, Loan $loan): bool
     {
         return false;
+    }
+
+    /**
+     * Determine whether the user can update the status.
+     */
+    public function updateStatus(User $user, Loan $loan): bool
+    {
+        return ($user->hasRole(RoleEnum::ADMIN->value) || $user->hasPermissionTo(PermissionEnum::EDITAR_ESTADO_PRESTAMOS->value)) &&
+            $loan->status === LoanStatusEnum::EN_CURSO->value;
     }
 }

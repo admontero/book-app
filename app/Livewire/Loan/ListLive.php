@@ -5,6 +5,7 @@ namespace App\Livewire\Loan;
 use App\Enums\LoanStatusEnum;
 use App\Models\Loan;
 use Livewire\Attributes\Computed;
+use Livewire\Attributes\Locked;
 use Livewire\Attributes\Url;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -18,6 +19,20 @@ class ListLive extends Component
 
     #[Url(except: '')]
     public $statuses = '';
+
+    #[Locked]
+    public $loan_id;
+
+    public $loan_status;
+
+    public $devolution_date;
+
+    public $copy_status;
+
+    public function mount(): void
+    {
+        $this->devolution_date = now()->format('d/m/Y');
+    }
 
     public function updatedSearch(): void
     {
@@ -38,6 +53,13 @@ class ListLive extends Component
         $this->resetPage();
     }
 
+    public function setLoan(string $id): void
+    {
+        $this->loan_id = $id;
+
+        $this->dispatch('show-edit-status-' . $id)->self();
+    }
+
     #[Computed]
     public function statusesArray(): array
     {
@@ -48,6 +70,12 @@ class ListLive extends Component
     public function loansCount(): int
     {
         return Loan::count();
+    }
+
+    #[Computed]
+    public function Loan(): Loan
+    {
+        return Loan::find($this->loan_id);
     }
 
     public function render()

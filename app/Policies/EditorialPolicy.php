@@ -3,6 +3,7 @@
 namespace App\Policies;
 
 use App\Enums\PermissionEnum;
+use App\Enums\RoleEnum;
 use App\Models\Editorial;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
@@ -14,7 +15,7 @@ class EditorialPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->hasRole('admin') || $user->hasPermissionTo(PermissionEnum::VER_EDITORIALES->value);
+        return $user->hasRole(RoleEnum::ADMIN->value) || $user->hasPermissionTo(PermissionEnum::VER_EDITORIALES->value);
     }
 
     /**

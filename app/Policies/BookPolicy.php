@@ -3,6 +3,7 @@
 namespace App\Policies;
 
 use App\Enums\PermissionEnum;
+use App\Enums\RoleEnum;
 use App\Models\Book;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
@@ -14,7 +15,7 @@ class BookPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->hasRole('admin') || $user->hasPermissionTo(PermissionEnum::VER_LIBROS->value);
+        return $user->hasRole(RoleEnum::ADMIN->value) || $user->hasPermissionTo(PermissionEnum::VER_LIBROS->value);
     }
 
     /**
@@ -22,7 +23,7 @@ class BookPolicy
      */
     public function view(User $user, Book $book): bool
     {
-        return $user->hasRole('admin') || $user->hasPermissionTo(PermissionEnum::VER_LIBROS->value);
+        return $user->hasRole(RoleEnum::ADMIN->value) || $user->hasPermissionTo(PermissionEnum::VER_LIBROS->value);
     }
 
     /**
@@ -30,7 +31,7 @@ class BookPolicy
      */
     public function create(User $user): bool
     {
-        return $user->hasRole('admin') || $user->hasPermissionTo(PermissionEnum::CREAR_LIBROS->value);
+        return $user->hasRole(RoleEnum::ADMIN->value) || $user->hasPermissionTo(PermissionEnum::CREAR_LIBROS->value);
     }
 
     /**
@@ -38,7 +39,7 @@ class BookPolicy
      */
     public function update(User $user, Book $book): bool
     {
-        return $user->hasRole('admin') || $user->hasPermissionTo(PermissionEnum::EDITAR_LIBROS->value);
+        return $user->hasRole(RoleEnum::ADMIN->value) || $user->hasPermissionTo(PermissionEnum::EDITAR_LIBROS->value);
     }
 
     /**

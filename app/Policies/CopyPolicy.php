@@ -3,6 +3,7 @@
 namespace App\Policies;
 
 use App\Enums\PermissionEnum;
+use App\Enums\RoleEnum;
 use App\Models\Copy;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
@@ -14,7 +15,7 @@ class CopyPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->hasRole('admin') || $user->hasPermissionTo(PermissionEnum::VER_COPIAS->value);
+        return $user->hasRole(RoleEnum::ADMIN->value) || $user->hasPermissionTo(PermissionEnum::VER_COPIAS->value);
     }
 
     /**
@@ -22,7 +23,7 @@ class CopyPolicy
      */
     public function view(User $user, Copy $copy): bool
     {
-        return $user->hasRole('admin') || $user->hasPermissionTo(PermissionEnum::VER_COPIAS->value);
+        return $user->hasRole(RoleEnum::ADMIN->value) || $user->hasPermissionTo(PermissionEnum::VER_COPIAS->value);
     }
 
     /**
@@ -30,7 +31,7 @@ class CopyPolicy
      */
     public function create(User $user): bool
     {
-        return $user->hasRole('admin') || $user->hasPermissionTo(PermissionEnum::CREAR_COPIAS->value);
+        return $user->hasRole(RoleEnum::ADMIN->value) || $user->hasPermissionTo(PermissionEnum::CREAR_COPIAS->value);
     }
 
     /**
@@ -38,7 +39,7 @@ class CopyPolicy
      */
     public function update(User $user, Copy $copy): bool
     {
-        return $user->hasRole('admin') || $user->hasPermissionTo(PermissionEnum::EDITAR_COPIAS->value);
+        return $user->hasRole(RoleEnum::ADMIN->value) || $user->hasPermissionTo(PermissionEnum::EDITAR_COPIAS->value);
     }
 
     /**

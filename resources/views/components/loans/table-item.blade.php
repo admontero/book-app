@@ -76,24 +76,38 @@
 
     <td class="px-4 py-4 text-sm whitespace-nowrap">
         <div class="flex justify-center gap-2 items-center">
-            <x-dropdown-floating position="left-start" wire:ignore>
-                <x-slot name="trigger">
-                    <button
-                        class="p-2 rounded-md bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-600 hover:text-gray-900
-                        dark:text-white dark:hover:text-gray-300 border border-gray-200 dark:border-gray-600 focus:outline-none shadow"
-                        x-tooltip.raw="Opciones"
-                    >
-                        <svg class="icon icon-tabler icon-tabler-dots-vertical w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M12 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M12 5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /></svg>
-                    </button>
-                </x-slot>
+            <div x-ref="loan_{{ $loan->id }}">
+                <x-dropdown-floating position="left-start" wire:ignore>
+                    <x-slot name="trigger">
+                        <button
+                            class="p-2 rounded-md bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-600 hover:text-gray-900
+                            dark:text-white dark:hover:text-gray-300 border border-gray-200 dark:border-gray-600 focus:outline-none shadow"
+                            x-tooltip.raw="Opciones"
+                        >
+                            <svg class="icon icon-tabler icon-tabler-dots-vertical w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M12 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M12 5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /></svg>
+                        </button>
+                    </x-slot>
 
-                <x-slot name="content">
-                    <div class="block px-4 py-2 text-xs text-gray-400">
-                        Opciones
-                    </div>
+                    <x-slot name="content">
+                        <div class="block px-4 py-2 text-xs text-gray-400">
+                            Opciones
+                        </div>
 
-                </x-slot>
-            </x-dropdown-floating>
+                        @can('updateStatus', $loan)
+                            <a
+                                class="flex w-full px-4 py-2 text-start text-sm leading-5 text-gray-700 dark:text-gray-300 hover:bg-gray-100
+                                    dark:hover:bg-gray-600 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-600 transition duration-150 ease-in-out"
+                                href="{{ route('back.loans.edit.status', $loan) }}"
+                                wire:navigate
+                            >
+                                <x-icons.refresh class="w-5 h-5 me-2" />
+
+                                Actualizar estado
+                            </a>
+                        @endcan
+                    </x-slot>
+                </x-dropdown-floating>
+            </div>
 
             @can('view', $loan)
                 <a
