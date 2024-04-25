@@ -1,4 +1,4 @@
-<form wire:submit.prevent="save">
+<div>
     <div>
         <x-label value="Nombre" />
 
@@ -87,9 +87,9 @@
                     title: 'Fecha de Nacimiento',
                 });
 
-                datebirthpicker.setDate($wire.form.date_of_birth ?? null)
+                datebirthpicker.setDate($wire.form.date_of_birth ? $wire.form.date_of_birth.replace(/^(\d{4})-(\d\d)-(\d\d)$/, '$3/$2/$1') : null)
 
-                $el.addEventListener('changeDate', (event) => $wire.form.date_of_birth = event.detail.date ? event.detail.date.toLocaleDateString('en-GB') : null);
+                $el.addEventListener('changeDate', (event) => $wire.form.date_of_birth = datebirthpicker.getDate('yyyy-mm-dd') || '');
             "
             x-mask="99/99/9999"
         />
@@ -200,9 +200,9 @@
                     title: 'Fecha de Defunción',
                 });
 
-                datedeathpicker.setDate($wire.form.date_of_death ?? null)
+                datedeathpicker.setDate($wire.form.date_of_death ? $wire.form.date_of_death.replace(/^(\d{4})-(\d\d)-(\d\d)$/, '$3/$2/$1') : null)
 
-                $el.addEventListener('changeDate', (event) => $wire.form.date_of_death = event.detail.date ? event.detail.date.toLocaleDateString('en-GB') : null);
+                $el.addEventListener('changeDate', (event) => $wire.form.date_of_death = datedeathpicker.getDate('yyyy-mm-dd') || '');
             "
             x-mask="99/99/9999"
         />
@@ -235,7 +235,7 @@
             type="submit"
         >Guardar</x-primary-button>
     </div>
-</form>
+</div>
 
 @script
     <script>

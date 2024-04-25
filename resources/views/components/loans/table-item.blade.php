@@ -1,5 +1,9 @@
 <tr wire:key="loan-{{ $loan->id }}">
     <td class="px-4 py-4 text-sm font-medium whitespace-nowrap">
+        <div class="text-gray-800 dark:text-white">{{ $loan->serial ?? '---' }}</div>
+    </td>
+
+    <td class="px-4 py-4 text-sm font-medium whitespace-nowrap">
         <h2 class="font-medium text-gray-800 dark:text-white truncate first-letter:uppercase">{{ $loan->copy->edition?->book?->title }}</h2>
         <dl>
             <dt class="sr-only">Id</dt>

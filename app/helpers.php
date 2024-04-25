@@ -20,3 +20,10 @@ if (! function_exists('get_route_name_by_url')) {
         return app('router')->getRoutes()->match(request()->create($url))->getName();
     }
 }
+
+if (! function_exists('get_digit_from_a_number')) {
+    function get_digit_from_a_number(int $number): string
+    {
+        return $number !== 0 ? floor(log10($number) + 1) : 1;
+    }
+}

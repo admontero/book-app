@@ -295,18 +295,18 @@
                                 <x-input
                                     class="w-full md:w-2/4 mt-1"
                                     x-init="
-                                        const datebirthpicker = new CustomDatepicker($el, {
+                                        const limitdatepicker = new CustomDatepicker($el, {
                                             format: 'dd/mm/yyyy',
                                             autohide: true,
                                             language: 'es',
                                             clearBtn: true,
                                             todayBtn: true,
-                                            title: 'Fecha de Nacimiento',
+                                            title: 'Fecha Límite de Devolución',
                                         });
 
-                                        datebirthpicker.setDate($wire.limit_date ?? null)
+                                        limitdatepicker.setDate($wire.limit_date ? $wire.limit_date.replace(/^(\d{4})-(\d\d)-(\d\d)$/, '$3/$2/$1') : null)
 
-                                        $el.addEventListener('changeDate', (event) => $wire.limit_date = event.detail.date ? event.detail.date.toLocaleDateString('en-GB') : null);
+                                        $el.addEventListener('changeDate', (event) => $wire.limit_date = limitdatepicker.getDate('yyyy-mm-dd') || '');
                                     "
                                     x-mask="99/99/9999"
                                 />

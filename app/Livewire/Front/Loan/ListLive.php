@@ -1,14 +1,16 @@
 <?php
 
-namespace App\Livewire\Loan;
+namespace App\Livewire\Front\Loan;
 
 use App\Enums\LoanStatusEnum;
 use App\Models\Loan;
 use Livewire\Attributes\Computed;
+use Livewire\Attributes\Layout;
 use Livewire\Attributes\Url;
 use Livewire\Component;
 use Livewire\WithPagination;
 
+#[Layout('layouts.front')]
 class ListLive extends Component
 {
     use WithPagination;
@@ -44,34 +46,18 @@ class ListLive extends Component
         return array_filter(explode(',', $this->statuses));
     }
 
-    #[Computed]
-    public function loansCount(): int
-    {
-        return Loan::count();
-    }
-
-    #[Computed]
-    public function Loan(): Loan
-    {
-        return Loan::find($this->loan_id);
-    }
-
     public function render()
     {
         $loans = Loan::select('id', 'copy_id', 'user_id', 'serial', 'start_date', 'limit_date', 'devolution_date', 'is_fineable', 'fine_amount', 'status')
             ->with([
+                'fine',
                 'copy:id,edition_id,identifier,is_loanable,status',
                 'copy.edition:id,book_id,editorial_id',
                 'copy.edition.book:id,title,author_id',
                 'copy.edition.editorial:id,name',
                 'copy.edition.book.author:id,firstname,lastname,pseudonym',
-                'user:id,name,email',
-                'user.profile:id,user_id,document_type_id,document_number,phone',
-                'user.profile.document_type:id,name,abbreviation',
             ])
-            ->when($this->statusesArray, function ($query) {
-                $query->whereIn('status', $this->statusesArray);
-            })
+            ->where('user_id', auth()->id())
             ->where(function ($query) {
                 $query->where('serial', 'like', '%' . $this->search . '%')
                     ->orWhereHas('copy', function ($query) {
@@ -85,10 +71,10 @@ class ListLive extends Component
                                             ->orWhereRelation('author', 'pseudonym', 'like', '%' . $this->search . '%');
                                     });
                             });
-                    })->orWhereHas('user', function ($query) {
-                        $query->where('users.name', 'like', '%' . $this->search . '%')
-                            ->orWhere('users.email', 'like', '%' . $this->search . '%');
                     });
+            })
+            ->when($this->statusesArray, function ($query) {
+                $query->whereIn('status', $this->statusesArray);
             })
             ->orderByRaw("
                 CASE
@@ -102,7 +88,7 @@ class ListLive extends Component
             ->orderBy('id', 'desc')
             ->paginate(10);
 
-        return view('livewire.loan.list-live', [
+        return view('livewire.front.loan.list-live', [
             'loans' => $loans,
         ]);
     }

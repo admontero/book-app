@@ -9,8 +9,8 @@
                 <li>
                     <span class="font-semibold">Nacimiento: </span>
 
-                    @if ($this->date_of_birth)
-                        {{ $this->date_of_birth }}
+                    @if ($author->date_of_birth)
+                        {{ $author->date_of_birth->format('d/m/Y') }}
                     @else
                         <span class="italic">Desconocido</span>
                     @endif
@@ -23,8 +23,8 @@
                 <li>
                     <span class="font-semibold">Fallecimiento: </span>
 
-                    @if ($this->date_of_death)
-                        {{ $this->date_of_death }}
+                    @if ($author->date_of_death)
+                        {{ $author->date_of_death->format('d/m/Y') }}
                     @else
                         <span class="italic">Desconocido</span>
                     @endif

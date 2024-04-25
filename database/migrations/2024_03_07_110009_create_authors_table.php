@@ -13,14 +13,14 @@ return new class extends Migration
     {
         Schema::create('authors', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('country_birth_id')->nullable();
+            $table->unsignedBigInteger('state_birth_id')->nullable();
+            $table->unsignedBigInteger('city_birth_id')->nullable();
             $table->string('firstname');
             $table->string('lastname');
             $table->string('pseudonym')->nullable();
             $table->string('slug')->unique();
             $table->date('date_of_birth')->nullable();
-            $table->unsignedBigInteger('country_birth_id')->nullable();
-            $table->unsignedBigInteger('state_birth_id')->nullable();
-            $table->unsignedBigInteger('city_birth_id')->nullable();
             $table->date('date_of_death')->nullable();
             $table->longText('biography')->nullable();
             $table->string('photo_path', 2048)->nullable();

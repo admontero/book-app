@@ -1,4 +1,4 @@
-<form x-init="$nextTick(() => $refs.synopsis.dispatchEvent(new Event('autosize')))" wire:submit.prevent="save">
+<div x-init="$nextTick(() => $refs.synopsis.dispatchEvent(new Event('autosize')))">
     <div>
         <x-label value="Título" />
 
@@ -116,4 +116,4 @@
             type="submit"
         >Guardar</x-primary-button>
     </div>
-</form>
+</div>

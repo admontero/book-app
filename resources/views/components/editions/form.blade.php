@@ -1,4 +1,4 @@
-<form wire:submit.prevent="save">
+<div>
     <div class="relative">
         <x-label value="Libro" />
 
@@ -135,4 +135,4 @@
             type="submit"
         >Guardar</x-primary-button>
     </div>
-</form>
+</div>

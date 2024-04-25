@@ -75,16 +75,20 @@
     @apply bg-gray-100 dark:bg-gray-600
 }
 
-.copia-disponible, .prestamo-completado {
+.copia-disponible, .prestamo-completado, .multa-pagada {
     @apply bg-green-100 text-green-800 dark:text-green-400 border border-green-400
 }
 
-.copia-ocupada, .prestamo-en-curso {
+.copia-ocupada, .prestamo-en-curso, .multa-pendiente {
     @apply dark:text-yellow-300 border border-yellow-300 bg-yellow-100 text-yellow-800
 }
 
 .copia-retirada, .prestamo-cancelado {
     @apply bg-red-100 text-red-800 dark:text-red-400 border border-red-400
+}
+
+.multa-desestimada {
+    @apply bg-gray-100 text-gray-800 dark:text-gray-400 border border-gray-400
 }
 
 .bottom-overflow-fade {

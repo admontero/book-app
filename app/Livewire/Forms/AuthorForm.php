@@ -3,8 +3,6 @@
 namespace App\Livewire\Forms;
 
 use App\Models\Author;
-use Carbon\Carbon;
-use DOMDocument;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
@@ -60,8 +58,8 @@ class AuthorForm extends Form
             ],
             'date_of_birth' => [
                 'nullable',
-                'date_format:d/m/Y',
-                'before:' . now()->addDay()->format('d/m/Y'),
+                'date',
+                'before:' . now()->addDay(),
             ],
             'country_birth_id' => [
                 'nullable',
@@ -79,9 +77,9 @@ class AuthorForm extends Form
             ],
             'date_of_death' => [
                 'nullable',
-                'date_format:d/m/Y',
+                'date',
                 'after:date_of_birth',
-                'before:' . now()->addDay()->format('d/m/Y'),
+                'before:' . now()->addDay(),
             ],
             'photo' => [
                 'nullable',
@@ -107,15 +105,18 @@ class AuthorForm extends Form
         ];
     }
 
+    public function messages(): array
+    {
+        return [
+            'date_of_death.before' => 'La :attribute debe ser una fecha anterior al ' .now()->addDay()->format('d/m/Y'),
+        ];
+    }
+
     public function setAuthor(Author $author): void
     {
         $this->author = $author;
 
         $this->fill($author);
-
-        $this->date_of_birth = $author->date_of_birth ? Carbon::parse($author->date_of_birth)->format('d/m/Y') : null;
-
-        $this->date_of_death = $author->date_of_death ? Carbon::parse($author->date_of_death)->format('d/m/Y') : null;
 
         if (! $author->country_birth_id) return ;
 
@@ -210,9 +211,9 @@ class AuthorForm extends Form
             }
         }
 
-        $this->date_of_birth = $this->date_of_birth ? Carbon::createFromFormat('d/m/Y', $this->date_of_birth) : null;
+        $this->date_of_birth = $this->date_of_birth ?: null;
 
-        $this->date_of_death = $this->date_of_death ? Carbon::createFromFormat('d/m/Y', $this->date_of_death) : null;
+        $this->date_of_death = $this->date_of_death ?: null;
 
         $this->pseudonym = $this->pseudonym ?: null;
 

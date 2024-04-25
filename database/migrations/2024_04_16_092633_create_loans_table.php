@@ -21,6 +21,8 @@ return new class extends Migration
             $table->boolean('is_fineable')->default(true);
             $table->decimal('fine_amount')->nullable();
             $table->string('status')->default('en curso');
+            $table->string('serial')->unique()->nullable();
+            $table->unsignedBigInteger('serial_number')->unique()->nullable();
 
             $table->foreign('copy_id')->references('id')->on('copies')->cascadeOnDelete();
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();

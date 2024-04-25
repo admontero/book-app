@@ -136,6 +136,12 @@ Route::group([
 ], function () {
 
     Route::get('profile', App\Livewire\Front\Profile\ShowLive::class)->name('profile.show');
+
+    Route::get('loans', App\Livewire\Front\Loan\ListLive::class)
+        ->name('loans.index');
+
+    Route::get('fines', App\Livewire\Front\Fine\ListLive::class)
+        ->name('fines.index');
 });
 
 Route::get('/', App\Livewire\Front\DashboardLive::class)->name('front.dashboard');

@@ -42,7 +42,7 @@ class CreateLive extends Component
         return [
             'user_id' => 'required|exists:users,id',
             'copy_id' => 'required|exists:copies,id',
-            'limit_date' => 'date_format:d/m/Y|after:today',
+            'limit_date' => 'required|date|after:today',
             'is_fineable' => 'required|boolean',
             'fine_amount' => [
                 'nullable',
@@ -157,8 +157,6 @@ class CreateLive extends Component
 
             return ;
         }
-
-        $this->limit_date = $this->limit_date ? Carbon::createFromFormat('d/m/Y', $this->limit_date) : null;
 
         $loan = Loan::create([
             'user_id' => $this->user_id,

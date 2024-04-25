@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('copies', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('edition_id');
             $table->string('identifier')->unique();
             $table->boolean('is_loanable')->default(true);
-            $table->unsignedBigInteger('edition_id');
             $table->string('status')->default('disponible');
 
             $table->foreign('edition_id')->references('id')->on('editions')->onDelete('cascade');

@@ -1,4 +1,4 @@
-<form wire:submit.prevent="save">
+<div>
     <div class="relative">
         <x-label value="Edición" />
 
@@ -85,4 +85,4 @@
             type="submit"
         >Guardar</x-primary-button>
     </div>
-</form>
+</div>

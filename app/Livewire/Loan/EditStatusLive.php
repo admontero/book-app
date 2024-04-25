@@ -3,6 +3,7 @@
 namespace App\Livewire\Loan;
 
 use App\Enums\CopyStatusEnum;
+use App\Enums\FineStatusEnum;
 use App\Enums\LoanStatusEnum;
 use App\Models\Loan;
 use Carbon\Carbon;
@@ -17,11 +18,13 @@ class EditStatusLive extends Component
 
     public $loan_status;
 
-    public $devolution_date;
-
     public $copy_status;
 
+    public $fine_status;
+
     public $is_copy_status_enabled = false;
+
+    public $is_handling_fine = false;
 
     public function rules(): array
     {
@@ -30,16 +33,15 @@ class EditStatusLive extends Component
                 'required',
                 Rule::enum(LoanStatusEnum::class),
             ],
-            'devolution_date' => [
-                'nullable',
-                'date_format:d/m/Y',
-                'after:' . $this->loan->start_date,
-                Rule::requiredIf(fn() => $this->loan_status == LoanStatusEnum::COMPLETADO->value),
-            ],
             'copy_status' => [
                 'nullable',
                 Rule::requiredIf(fn() => $this->is_copy_status_enabled),
                 Rule::enum(CopyStatusEnum::class),
+            ],
+            'fine_status' => [
+                'nullable',
+                Rule::requiredIf(fn() => $this->loan->is_overdue && $this->is_handling_fine),
+                Rule::enum(FineStatusEnum::class),
             ]
         ];
     }
@@ -48,14 +50,15 @@ class EditStatusLive extends Component
     {
         return [
             'loan_status' => 'estado del préstamo',
-            'devolution_date' => 'fecha de devolución',
             'copy_status' => 'estado de la copia',
+            'fine_status' => 'estado de la multa',
         ];
     }
 
     public function mount(): void
     {
         $this->loan->load([
+            'fine',
             'user',
             'user.profile',
             'user.profile.document_type',
@@ -68,23 +71,14 @@ class EditStatusLive extends Component
         ]);
     }
 
-    public function updatedLoanStatus($value): void
-    {
-        if ($value == LoanStatusEnum::COMPLETADO->value) {
-            $this->devolution_date = today()->format('d/m/Y');
-
-            return ;
-        }
-    }
-
     public function save(): void
     {
         $this->validate();
 
-        $this->devolution_date = $this->devolution_date ? Carbon::createFromFormat('d/m/Y', $this->devolution_date) : null;
+        $devolution_date = $this->loan_status == LoanStatusEnum::COMPLETADO->value ? today() : null;
 
         $this->loan->update([
-            'devolution_date' => $this->devolution_date,
+            'devolution_date' => $devolution_date,
             'status' => $this->loan_status,
         ]);
 
@@ -92,7 +86,13 @@ class EditStatusLive extends Component
             'status' => $this->is_copy_status_enabled ? $this->copy_status : CopyStatusEnum::DISPONIBLE->value,
         ]);
 
-        $this->redirect(route('back.loans.index'), navigate: true);
+        if ($this->loan->is_overdue && $this->is_handling_fine) {
+            $this->loan->fine()?->update(['status' => $this->fine_status]);
+        }
+
+        $this->dispatch('new-alert', message: 'Estado del préstamo actualizado con éxito', type: 'success');
+
+        $this->dispatch('redirect');
     }
 
     public function render(): View
@@ -101,9 +101,12 @@ class EditStatusLive extends Component
 
         $copy_statuses = Arr::except(CopyStatusEnum::options(), CopyStatusEnum::OCUPADA->value);
 
+        $fine_statuses = Arr::except(FineStatusEnum::options(), FineStatusEnum::PENDIENTE->value);
+
         return view('livewire.loan.edit-status-live', [
             'loan_statuses' => $loan_statuses,
             'copy_statuses' => $copy_statuses,
+            'fine_statuses' => $fine_statuses,
         ]);
     }
 }
