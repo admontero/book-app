@@ -6,7 +6,6 @@ use App\Enums\PermissionEnum;
 use App\Enums\RoleEnum;
 use App\Models\Copy;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
 
 class CopyPolicy
 {
@@ -39,7 +38,7 @@ class CopyPolicy
      */
     public function update(User $user, Copy $copy): bool
     {
-        return $user->hasRole(RoleEnum::ADMIN->value) || $user->hasPermissionTo(PermissionEnum::EDITAR_COPIAS->value);
+        return ($user->hasRole(RoleEnum::ADMIN->value) || $user->hasPermissionTo(PermissionEnum::EDITAR_COPIAS->value)) && ! $copy->hasInProgressLoan();
     }
 
     /**

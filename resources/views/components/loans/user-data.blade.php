@@ -1,61 +1,58 @@
-<div>
-    <h4 class="text-sm md:text-base mb-2 text-gray-700 dark:text-gray-400">Información del usuario seleccionado:</h4>
+<dl>
+    <div class="px-4 py-3 bg-gray-50 dark:bg-gray-900 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-6">
+        <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">
+            Nombre
+        </dt>
 
-    <ul class="text-sm md:text-base ms-4 text-gray-700 dark:text-gray-400 dark:divide-gray-600">
-        @if ($user?->name)
-            <li class="py-2 sm:flex sm:justify-between sm:gap-4">
-                <p class="font-medium sm:w-48">
-                    Nombre
-                </p>
-                <p class="sm:flex-1 capitalize">
-                    {{ $user?->name }}
-                </p>
-            </li>
-        @endif
+        <dd class="mt-1 text-sm text-gray-900 dark:text-gray-100 sm:mt-0 sm:col-span-3">
+            {{ $user->name }}
+        </dd>
+    </div>
 
-        @if ($user?->email)
-            <li class="py-2 sm:flex sm:justify-between sm:gap-4">
-                <p class="font-medium sm:w-48">
-                    Email
-                </p>
-                <p class="sm:flex-1">
-                    {{ $user?->email }}
-                </p>
-            </li>
-        @endif
+    <div class="px-4 py-3 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-6">
+        <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">
+            Email
+        </dt>
 
-        @if ($user?->profile?->document_type_id)
-            <li class="py-2 sm:flex sm:justify-between sm:gap-4">
-                <p class="font-medium sm:w-48">
-                    Tipo Documento
-                </p>
-                <p class="sm:flex-1 capitalize">
-                    {{ $user?->profile?->document_type->name }}
-                    ({{ $user?->profile?->document_type->abbreviation }})
-                </p>
-            </li>
-        @endif
+        <dd class="mt-1 text-sm text-gray-900 dark:text-gray-100 sm:mt-0 sm:col-span-3">
+            {{ $user->email }}
+        </dd>
+    </div>
 
-        @if ($user?->profile?->document_number)
-            <li class="py-2 sm:flex sm:justify-between sm:gap-4">
-                <p class="font-medium sm:w-48">
-                    Número Documento
-                </p>
-                <p class="sm:flex-1 capitalize">
-                    {{ number_format($user?->profile?->document_number, 0, ',', '.') }}
-                </p>
-            </li>
-        @endif
+    @if ($user?->profile?->document_type_id)
+        <div class="px-4 py-3 bg-gray-50 dark:bg-gray-900 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-6">
+            <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">
+                Tipo Documento
+            </dt>
 
-        @if ($user?->profile?->phone)
-            <li class="py-2 sm:flex sm:justify-between sm:gap-4">
-                <p class="font-medium sm:w-48">
-                    Teléfono
-                </p>
-                <p class="sm:flex-1 capitalize">
-                    {{ $user?->profile?->phone }}
-                </p>
-            </li>
-        @endif
-    </ul>
-</div>
+            <dd class="mt-1 text-sm text-gray-900 dark:text-gray-100 sm:mt-0 sm:col-span-3">
+                {{ $user?->profile?->document_type->name }}
+                ({{ $user?->profile?->document_type->abbreviation }})
+            </dd>
+        </div>
+    @endif
+
+    @if ($user?->profile?->document_number)
+        <div class="px-4 py-3 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-6">
+            <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">
+                Número Documento
+            </dt>
+
+            <dd class="mt-1 text-sm text-gray-900 dark:text-gray-100 sm:mt-0 sm:col-span-3">
+                {{ $user?->profile?->document_number }}
+            </dd>
+        </div>
+    @endif
+
+    @if ($user?->profile?->phone)
+        <div class="px-4 py-3 bg-gray-50 dark:bg-gray-900 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-6">
+            <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">
+                Teléfono
+            </dt>
+
+            <dd class="mt-1 text-sm text-gray-900 dark:text-gray-100 sm:mt-0 sm:col-span-3">
+                {{ $user?->profile?->phone }}
+            </dd>
+        </div>
+    @endif
+</dl>

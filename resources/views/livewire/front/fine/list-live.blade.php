@@ -29,13 +29,13 @@
         <div class="flex-1 flex justify-end items-center mt-4 md:mt-0">
             <div class="relative max-w-96 w-full">
                 <span class="absolute top-2.5">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search w-5 h-5 mx-3 text-gray-400 dark:text-gray-600" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" /><path d="M21 21l-6 -6" /></svg>
+                    <x-icons.search class="w-5 h-5 mx-3 text-gray-400 dark:text-gray-500" />
                 </span>
 
                 <x-input
                     class="pl-11 w-full"
                     type="search"
-                    placeholder="Buscar préstamo..."
+                    placeholder="Buscar multa..."
                     wire:model.live.debounce.500ms="search"
                 />
             </div>
@@ -51,7 +51,7 @@
                             <thead class="bg-gray-50 dark:bg-gray-800">
                                 <tr>
                                     <th scope="col" class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                        # Préstamo
+                                        Préstamo
                                     </th>
 
                                     <th scope="col" class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">

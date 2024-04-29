@@ -125,9 +125,13 @@ Route::group([
         ->middleware('can:create,App\Models\Loan')
         ->name('loans.create');
 
-    Route::get('loans/{loan}/edit/status', App\Livewire\Loan\EditStatusLive::class)
-        ->middleware('can:updateStatus,loan')
-        ->name('loans.edit.status');
+    Route::get('loans/{loan}', App\Livewire\Loan\ShowLive::class)
+        ->middleware('can:view,loan')
+        ->name('loans.show');
+
+    Route::get('fines', App\Livewire\Fine\ListLive::class)
+        ->middleware('can:viewAny,App\Models\Fine')
+        ->name('fines.index');
 });
 
 Route::group([

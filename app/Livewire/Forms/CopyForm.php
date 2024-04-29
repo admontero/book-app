@@ -7,7 +7,6 @@ use App\Models\Copy;
 use App\Models\Edition;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
-use Livewire\Attributes\Validate;
 use Livewire\Form;
 
 class CopyForm extends Form
@@ -38,7 +37,6 @@ class CopyForm extends Form
                 'exists:editions,id',
             ],
             'status' => [
-                'nullable',
                 Rule::enum(CopyStatusEnum::class),
             ],
             'is_loanable' => [

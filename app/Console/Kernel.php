@@ -14,7 +14,7 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')->hourly();
 
-        $schedule->command('app:loan-in-progress-check-command')->twiceDaily(8, 18);
+        $schedule->command('app:loan-in-progress-check-command')->everyMinute();
     }
 
     /**

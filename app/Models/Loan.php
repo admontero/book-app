@@ -66,4 +66,9 @@ class Loan extends Model
             },
         );
     }
+
+    public function isFined(): Bool
+    {
+        return $this->is_fineable && $this->is_overdue;
+    }
 }

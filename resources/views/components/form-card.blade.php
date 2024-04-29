@@ -1,9 +1,11 @@
-<div class="px-6 py-4 bg-white dark:bg-gray-800 rounded-md border border-gray-200 dark:border-gray-700 mt-4 lg:mt-0">
+<div class="bg-white dark:bg-gray-800 rounded-md border border-gray-200 dark:border-gray-700 mt-4 lg:mt-0">
     @if (isset($title))
         <div>
-            {{ $title }}
+            <div class="p-4">
+                {{ $title }}
+            </div>
 
-            <hr class="my-4 -mx-6 dark:border-gray-700">
+            <hr class="dark:border-gray-700">
         </div>
     @endif
 

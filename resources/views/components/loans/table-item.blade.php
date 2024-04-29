@@ -97,18 +97,6 @@
                             Opciones
                         </div>
 
-                        @can('updateStatus', $loan)
-                            <a
-                                class="flex w-full px-4 py-2 text-start text-sm leading-5 text-gray-700 dark:text-gray-300 hover:bg-gray-100
-                                    dark:hover:bg-gray-600 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-600 transition duration-150 ease-in-out"
-                                href="{{ route('back.loans.edit.status', $loan) }}"
-                                wire:navigate
-                            >
-                                <x-icons.refresh class="w-5 h-5 me-2" />
-
-                                Actualizar estado
-                            </a>
-                        @endcan
                     </x-slot>
                 </x-dropdown-floating>
             </div>
@@ -117,7 +105,7 @@
                 <a
                     class="p-2 rounded-md bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-600 hover:text-gray-900
                     dark:text-white dark:hover:text-gray-300 border border-gray-200 dark:border-gray-600 shadow"
-                    href="#"
+                    href="{{ route('back.loans.show', $loan) }}"
                     x-tooltip.raw="Ver"
                     wire:navigate
                 >

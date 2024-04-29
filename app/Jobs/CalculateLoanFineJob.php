@@ -2,13 +2,14 @@
 
 namespace App\Jobs;
 
-use App\Enums\FineStatusEnum;
+use App\Enums\LoanStatusEnum;
 use App\Models\Fine;
 use App\Models\Loan;
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\Attributes\WithoutRelations;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
@@ -20,6 +21,7 @@ class CalculateLoanFineJob implements ShouldQueue
      * Create a new job instance.
      */
     public function __construct(
+        #[WithoutRelations]
         public Loan $loan
     ) {}
 
@@ -28,7 +30,9 @@ class CalculateLoanFineJob implements ShouldQueue
      */
     public function handle(): void
     {
-        $days = Carbon::parse(today()->toDateString())->diffInDays($this->loan->limit_date);
+        if ($this->loan->status != LoanStatusEnum::EN_CURSO->value) return ;
+
+        $days = Carbon::parse($this->loan->devolution_date ?? today()->toDateString())->diffInDays($this->loan->limit_date);
 
         $total = $this->loan->fine_amount * $days;
 
@@ -38,7 +42,6 @@ class CalculateLoanFineJob implements ShouldQueue
             'user_id' => $this->loan->user_id,
             'days' => $days,
             'total' => $total,
-            'status' => FineStatusEnum::PENDIENTE->value,
         ]);
     }
 }

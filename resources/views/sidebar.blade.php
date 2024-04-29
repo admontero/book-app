@@ -46,6 +46,23 @@
                         </a>
                     @endcan
 
+                    @can('viewAny', App\Models\Fine::class)
+                        <a
+                            class="flex items-center px-3 py-2 text-gray-600 transform rounded-lg dark:text-gray-200 hover:bg-gray-100
+                                dark:hover:bg-gray-700 dark:hover:text-gray-200 hover:text-gray-700
+                                {{ request()->routeIs('back.fines.*') ? 'bg-gray-100 dark:bg-gray-700' : '' }}"
+                            x-data="{ tooltip: ! $store.sidebar.on ? 'Multas' : false }"
+                            x-init="$watch('$store.sidebar.on', value => tooltip = ! value ? 'Multas' : false )"
+                            x-tooltip.placement.right.delay.50="tooltip"
+                            href="{{ route('back.fines.index') }}"
+                            wire:navigate
+                        >
+                            <x-icons.fine class="w-5 h-5" />
+
+                            <span class="mx-2 text-sm font-medium" x-show="$store.sidebar.on">Multas</span>
+                        </a>
+                    @endcan
+
                     @can('viewAny', App\Models\User::class)
                         <a
                             class="flex items-center px-3 py-2 text-gray-600 transform rounded-lg dark:text-gray-200 hover:bg-gray-100

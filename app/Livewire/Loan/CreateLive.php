@@ -9,7 +9,6 @@ use App\Models\Copy;
 use App\Models\Loan;
 use App\Models\User;
 use App\Rules\CopyMustBeAvailable;
-use Carbon\Carbon;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Validator;
@@ -153,7 +152,7 @@ class CreateLive extends Component
 
             $this->reset(['copy_id', 'limit_date', 'is_fineable', 'fine_amount']);
 
-            $this->addError('copy_unavailable', $validator->errors()->first());
+            $this->dispatch('new-alert', message: $validator->errors()->first(), type: 'danger');
 
             return ;
         }

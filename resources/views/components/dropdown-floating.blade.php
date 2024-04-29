@@ -20,7 +20,7 @@
     </div>
 
     <div
-        class="absolute py-1 {{ $width }} bg-white dark:bg-gray-700 rounded-md shadow-md z-50 border border-gray-200 dark:border-gray-600"
+        class="absolute py-1 {{ $width }} bg-white dark:bg-gray-800 rounded-md shadow-md z-50 border border-gray-200 dark:border-gray-600"
         x-show="show"
         x-anchor.{{ $position }}.offset.5="$refs.trigger"
         x-transition:enter="transition ease-out duration-200"

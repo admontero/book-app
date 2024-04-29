@@ -1,4 +1,4 @@
-<div class="my-6 px-4">
+<div class="my-4 px-2 md:px-6">
     <div class="max-w-7xl mx-auto">
         <h2 class="text-xl font-medium text-gray-800 dark:text-white">Registro de Préstamos</h2>
 
@@ -82,9 +82,9 @@
             <div class="flex-1 mt-4 lg:mt-0">
                 <form wire:submit="save">
                     @if ($step == 1)
-                        <div class="px-6 py-4 bg-white dark:bg-gray-800 rounded-md border border-gray-200 dark:border-gray-700 mt-4 lg:mt-0">
+                        <div class="bg-white dark:bg-gray-800 rounded-md border border-gray-200 dark:border-gray-700 mt-4 lg:mt-0">
                             <div class="flex">
-                                <h3 class="text-sm md:text-lg text-gray-700 dark:text-white font-medium">
+                                <h3 class="p-4 text-sm md:text-lg text-gray-700 dark:text-white font-medium">
                                     1. Selecciona el lector
                                 </h3>
 
@@ -100,10 +100,10 @@
                                 @endif
                             </div>
 
-                            <hr class="my-4 -mx-6 dark:border-gray-700">
+                            <hr class="dark:border-gray-700">
 
                             @if (! $user_id)
-                                <div>
+                                <div class="px-4 py-2 my-4">
                                     <div class="relative w-full">
                                         <span class="absolute top-2.5">
                                             <x-icons.search class="w-5 h-5 mx-3 text-gray-400 dark:text-gray-600" />
@@ -154,9 +154,9 @@
                                 <x-loans.user-data :user="$this->userSelected" />
                             @endif
 
-                            <hr class="my-4 -mx-6 dark:border-gray-700">
+                            <hr class="dark:border-gray-700">
 
-                            <div class="flex justify-end">
+                            <div class="p-4 flex justify-end">
                                 <x-alternative-button
                                     wire:click="setStep(2)"
                                     :disabled="! $this->stepOneCompleted"
@@ -167,9 +167,9 @@
                             </div>
                         </div>
                     @elseif($step == 2)
-                        <div class="px-6 py-4 bg-white dark:bg-gray-800 rounded-md border border-gray-200 dark:border-gray-700 mt-4 lg:mt-0">
+                        <div class="bg-white dark:bg-gray-800 rounded-md border border-gray-200 dark:border-gray-700 mt-4 lg:mt-0">
                             <div class="flex">
-                                <h3 class="text-sm md:text-lg text-gray-700 dark:text-white font-medium">
+                                <h3 class="p-4 text-sm md:text-lg text-gray-700 dark:text-white font-medium">
                                     2. Selecciona el libro
                                 </h3>
 
@@ -185,16 +185,10 @@
                                 @endif
                             </div>
 
-                            <hr class="my-4 -mx-6 dark:border-gray-700">
-
-                            @error('copy_unavailable')
-                                <x-message-error>
-                                    {{ $message }}
-                                </x-message-error>
-                            @enderror
+                            <hr class="dark:border-gray-700">
 
                             @if (! $copy_id)
-                                <div>
+                                <div class="px-4 py-2 my-4">
                                     <div class="relative w-full">
                                         <span class="absolute top-2.5">
                                             <x-icons.search class="w-5 h-5 mx-3 text-gray-400 dark:text-gray-600" />
@@ -262,9 +256,9 @@
                                 <x-loans.copy-data :copy="$this->copySelected" />
                             @endif
 
-                            <hr class="my-4 -mx-6 dark:border-gray-700">
+                            <hr class="dark:border-gray-700">
 
-                            <div class="flex justify-between gap-4 mt-4">
+                            <div class="p-4 flex justify-between gap-4 mt-4">
                                 <x-alternative-button
                                     wire:click="setStep(1)"
                                 >
@@ -364,60 +358,72 @@
                             </div>
                         </div>
                     @elseif($step == 4)
-                        <div class="px-6 py-4 bg-white dark:bg-gray-800 rounded-md border border-gray-200 dark:border-gray-700 mt-4 lg:mt-0">
-                            <h3 class="text-sm md:text-lg text-gray-700 dark:text-white font-medium">
+                        <div class="bg-white dark:bg-gray-800 rounded-md border border-gray-200 dark:border-gray-700 mt-4 lg:mt-0">
+                            <h3 class="p-4 text-sm md:text-lg text-gray-700 dark:text-white font-medium">
                                 4. Resumen del préstamo y confirmación
                             </h3>
 
-                            <hr class="my-4 -mx-6 dark:border-gray-700">
+                            <hr class="dark:border-gray-700">
+
+                            <dl>
+                                <div class="px-4 py-3 bg-gray-50 dark:bg-gray-900 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-6">
+                                    <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">
+                                        Fecha de Inicio
+                                    </dt>
+
+                                    <dd class="mt-1 text-sm text-gray-900 dark:text-gray-100 sm:mt-0 sm:col-span-3">
+                                        {{ today()->format('d/m/Y') }}
+                                    </dd>
+                                </div>
+
+                                <div class="px-4 py-3 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-6">
+                                    <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">
+                                        Fecha Límite
+                                    </dt>
+
+                                    <dd class="mt-1 text-sm text-gray-900 dark:text-gray-100 sm:mt-0 sm:col-span-3">
+                                        {{ Carbon\Carbon::parse($this->limit_date)->format('d/m/Y') }}
+                                    </dd>
+                                </div>
+
+                                <div class="px-4 py-3 bg-gray-50 dark:bg-gray-900 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-6">
+                                    <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">
+                                        ¿Es Multable?
+                                    </dt>
+
+                                    <dd class="mt-1 text-sm text-gray-900 dark:text-gray-100 sm:mt-0 sm:col-span-3">
+                                        {{ $is_fineable ? 'SI' : 'NO' }}
+                                    </dd>
+                                </div>
+
+                                @if ($is_fineable)
+                                    <div class="px-4 py-3 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-6">
+                                        <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">
+                                            Monto de Multa (Diario)
+                                        </dt>
+
+                                        <dd class="mt-1 text-sm text-gray-900 dark:text-gray-100 sm:mt-0 sm:col-span-3">
+                                            $ {{ number_format($this->fine_amount, 0, ',', '.') }}
+                                        </dd>
+                                    </div>
+                                @endif
+                            </dl>
+
+                            <h4 class="px-4 py-3 text-gray-700 dark:text-gray-200 font-medium border-y border-gray-200 dark:border-gray-700">
+                                Datos del Lector
+                            </h4>
 
                             <x-loans.user-data :user="$this->userSelected" />
 
+                            <h4 class="px-4 py-3 text-gray-700 dark:text-gray-200 font-medium border-y border-gray-200 dark:border-gray-700">
+                                Datos de la Copia
+                            </h4>
+
                             <x-loans.copy-data :copy="$this->copySelected" />
 
-                            <div>
-                                <h4 class="text-sm md:text-base mb-2 text-gray-700 dark:text-gray-400">Información complementaria:</h4>
+                            <hr class="dark:border-gray-700">
 
-                                <ul class="text-sm md:text-base ms-4 text-gray-700 dark:text-gray-400 dark:divide-gray-600">
-                                    @if ($this->limit_date)
-                                        <li class="py-2 sm:flex sm:justify-between sm:gap-4">
-                                            <p class="font-medium sm:w-48">
-                                                Día Límite de Devolución
-                                            </p>
-
-                                            <p class="sm:flex-1 capitalize">
-                                                {{ $this->limit_date }}
-                                            </p>
-                                        </li>
-                                    @endif
-
-                                    <li class="py-2 sm:flex sm:justify-between sm:gap-4">
-                                        <p class="font-medium sm:w-48">
-                                            ¿Es Multable?
-                                        </p>
-
-                                        <p class="sm:flex-1 capitalize">
-                                            {{ $is_fineable ? 'SI' : 'NO' }}
-                                        </p>
-                                    </li>
-
-                                    @if ($is_fineable)
-                                        <li class="py-2 sm:flex sm:justify-between sm:gap-4">
-                                            <p class="font-medium sm:w-48">
-                                                Monto de Multa (Diario)
-                                            </p>
-
-                                            <p class="sm:flex-1 capitalize">
-                                                $ {{ number_format($this->fine_amount, 0, ',', '.') }}
-                                            </p>
-                                        </li>
-                                    @endif
-                                </ul>
-                            </div>
-
-                            <hr class="my-4 -mx-6 dark:border-gray-700">
-
-                            <div class="flex justify-between gap-4 mt-4">
+                            <div class="p-4 flex justify-between gap-4 mt-4">
                                 <x-alternative-button
                                     wire:click="setStep(3)"
                                 >

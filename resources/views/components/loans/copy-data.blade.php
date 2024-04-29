@@ -1,65 +1,61 @@
-<div>
-    <h4 class="text-sm md:text-base mb-2 text-gray-700 dark:text-gray-400">Información del libro seleccionado:</h4>
+<dl>
+    @if ($copy->edition?->book)
+        <div class="px-4 py-3 bg-gray-50 dark:bg-gray-900 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-6">
+            <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">
+                Título
+            </dt>
 
-    <ul class="text-sm md:text-base ms-4 text-gray-700 dark:text-gray-400 dark:divide-gray-600">
-        @if ($copy?->edition?->book?->title)
-            <li class="py-2 sm:flex sm:justify-between sm:gap-4">
-                <p class="font-medium sm:w-48">
-                    Título
-                </p>
+            <dd class="mt-1 text-sm text-gray-900 dark:text-gray-100 sm:mt-0 sm:col-span-3 first-letter:uppercase">
+                {{ $copy->edition?->book?->title }}
+            </dd>
+        </div>
+    @endif
 
-                <p class="sm:flex-1 first-letter:uppercase">
-                    {{ $copy?->edition?->book?->title }}
-                </p>
-            </li>
-        @endif
+    @if ($copy->identifier)
+        <div class="px-4 py-3 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-6">
+            <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">
+                ID
+            </dt>
 
-        @if ($copy?->identifier)
-            <li class="py-2 sm:flex sm:justify-between sm:gap-4">
-                <p class="font-medium sm:w-48">
-                    ID
-                </p>
+            <dd class="mt-1 text-sm text-gray-900 dark:text-gray-100 sm:mt-0 sm:col-span-3">
+                {{ $copy->identifier }}
+            </dd>
+        </div>
+    @endif
 
-                <p class="w-full sm:flex-1">
-                    {{ $copy?->identifier }}
-                </p>
-            </li>
-        @endif
+    @if ($copy->edition?->editorial_id)
+        <div class="px-4 py-3 bg-gray-50 dark:bg-gray-900 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-6">
+            <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">
+                Editorial
+            </dt>
 
-        @if ($copy?->edition?->editorial_id)
-            <li class="py-2 sm:flex sm:justify-between sm:gap-4">
-                <p class="font-medium sm:w-48">
-                    Editorial
-                </p>
+            <dd class="mt-1 text-sm text-gray-900 dark:text-gray-100 sm:mt-0 sm:col-span-3 capitalize">
+                {{ $copy->edition?->editorial->name }}
+            </dd>
+        </div>
+    @endif
 
-                <p class="w-full sm:flex-1 capitalize">
-                    {{ $copy?->edition?->editorial->name }}
-                </p>
-            </li>
-        @endif
+    @if ($copy->edition?->isbn13)
+        <div class="px-4 py-3 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-6">
+            <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">
+                ISBN13
+            </dt>
 
-        @if ($copy?->edition?->isbn13)
-            <li class="py-2 sm:flex sm:justify-between sm:gap-4">
-                <p class="font-medium sm:w-48">
-                    ISBN13
-                </p>
+            <dd class="mt-1 text-sm text-gray-900 dark:text-gray-100 sm:mt-0 sm:col-span-3">
+                {{ $copy->edition?->isbn13 }}
+            </dd>
+        </div>
+    @endif
 
-                <p class="w-full sm:flex-1 capitalize">
-                    {{ $copy?->edition?->isbn13 }}
-                </p>
-            </li>
-        @endif
+    @if ($copy->edition?->book?->author_id)
+        <div class="px-4 py-3 bg-gray-50 dark:bg-gray-900 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-6">
+            <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">
+                Autor
+            </dt>
 
-        @if ($copy?->edition?->book?->author_id)
-            <li class="py-2 sm:flex sm:justify-between sm:gap-4">
-                <p class="font-medium sm:w-48">
-                    Autor
-                </p>
-
-                <p class="w-full sm:flex-1 capitalize">
-                    {{ $copy?->edition?->book?->author?->name }}
-                </p>
-            </li>
-        @endif
-    </ul>
-</div>
+            <dd class="mt-1 text-sm text-gray-900 dark:text-gray-100 sm:mt-0 sm:col-span-3 capitalize">
+                {{ $copy->edition?->book?->author?->name }}
+            </dd>
+        </div>
+    @endif
+</dl>
