@@ -42,6 +42,8 @@ class CreateLive extends Component
     {
         $this->form->save();
 
+        $this->form->reset('book');
+
         $this->dispatch('new-alert', message: 'Libro creado con éxito', type: 'success');
 
         $this->redirect(route('back.books.index'), navigate: true);

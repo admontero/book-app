@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('title');
             $table->string('slug');
             $table->text('synopsis')->nullable();
-            $table->year('publication_year')->nullable();
+            $table->unsignedSmallInteger('publication_year')->nullable();
 
             $table->foreign('author_id')->references('id')->on('authors')->onDelete('cascade');
             $table->timestamps();

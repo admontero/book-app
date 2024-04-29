@@ -24,6 +24,8 @@ class CreateLive extends Component
     {
         $this->form->save();
 
+        $this->form->reset('edition');
+
         $this->dispatch('new-alert', message: 'Edición creada con éxito', type: 'success');
 
         $this->redirect(route('back.editions.index'), navigate: true);

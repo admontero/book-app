@@ -47,8 +47,10 @@ class EditionForm extends Form
             ],
             'year' => [
                 'nullable',
-                'date_format:Y',
-                'before_or_equal:' . now()->format('Y'),
+                'digits_between:0,4',
+                'integer',
+                'min:0',
+                'max:' . now()->year,
             ],
             'pages' => [
                 'nullable',
@@ -124,7 +126,7 @@ class EditionForm extends Form
         }
 
         $this->pages = is_numeric($this->pages) ? $this->pages : null;
-        $this->year = $this->year ? $this->year : null;
+        $this->year = $this->year ?: null;
 
         if ($this->edition) {
             $this->edition->update([

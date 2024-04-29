@@ -37,8 +37,10 @@ class BookForm extends Form
             ],
             'publication_year' => [
                 'nullable',
-                'date_format:Y',
-                'before_or_equal:' . now()->format('Y'),
+                'digits_between:0,4',
+                'integer',
+                'min:0',
+                'max:' . now()->year,
             ],
             'author_id' => [
                 'nullable',
@@ -125,7 +127,7 @@ class BookForm extends Form
     {
         $this->validate();
 
-        $this->publication_year = $this->publication_year ? Carbon::parse($this->publication_year)->format('Y') : null;
+        $this->publication_year = $this->publication_year ?: null;
         $this->synopsis = $this->synopsis ? $this->synopsis : null;
 
         if ($this->book) {

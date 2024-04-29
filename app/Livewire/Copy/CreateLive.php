@@ -24,6 +24,8 @@ class CreateLive extends Component
     {
         $this->form->save();
 
+        $this->form->reset('copy');
+
         $this->dispatch('new-alert', message: 'Copia creada con éxito', type: 'success');
 
         $this->redirect(route('back.copies.index'), navigate: true);

@@ -43,6 +43,8 @@ class CreateLive extends Component
 
         $this->form->save();
 
+        $this->form->reset('author');
+
         $this->dispatch('new-alert', message: 'Autor agregado con éxito', type: 'success');
 
         $this->redirect(route('back.authors.index'), navigate: true);
