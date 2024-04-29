@@ -96,6 +96,8 @@
         <x-table-empty title="Ninguna editorial encontrada" />
     @endif
 
-    {{ $this->editorials->links('vendor.livewire.custom') }}
+    <div class="mt-4">
+        {{ $this->editorials->links('vendor.livewire.custom') }}
+    </div>
 </section>
 

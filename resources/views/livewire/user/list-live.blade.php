@@ -135,5 +135,7 @@
         <x-table-empty title="Ningún usuario encontrado" />
     @endif
 
-    {{ $users->links('vendor.livewire.custom') }}
+    <div class="mt-4">
+        {{ $users->links('vendor.livewire.custom') }}
+    </div>
 </section>

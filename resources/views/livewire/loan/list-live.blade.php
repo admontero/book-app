@@ -117,5 +117,7 @@
         <x-table-empty title="Ningún préstamo encontrado" />
     @endif
 
-    {{ $loans->links('vendor.livewire.custom') }}
+    <div class="mt-4">
+        {{ $loans->links('vendor.livewire.custom') }}
+    </div>
 </section>

@@ -104,5 +104,7 @@
         <x-table-empty title="Ningún autor encontrado" />
     @endif
 
-    {{ $authors->links('vendor.livewire.custom') }}
+    <div class="mt-4">
+        {{ $authors->links('vendor.livewire.custom') }}
+    </div>
 </section>

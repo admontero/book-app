@@ -103,5 +103,7 @@
         <x-table-empty title="Ninguna multa encontrada" />
     @endif
 
-    {{ $fines->links('vendor.livewire.custom') }}
+    <div class="mt-4">
+        {{ $fines->links('vendor.livewire.custom') }}
+    </div>
 </section>

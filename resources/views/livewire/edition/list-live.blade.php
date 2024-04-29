@@ -108,5 +108,7 @@
         <x-table-empty title="Ninguna edición encontrada" />
     @endif
 
-    {{ $editions->links('vendor.livewire.custom') }}
+    <div class="mt-4">
+        {{ $editions->links('vendor.livewire.custom') }}
+    </div>
 </section>

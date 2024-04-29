@@ -81,8 +81,10 @@
             </div>
         </div>
     @else
-    <x-table-empty title="Ningún rol encontrado" />
+        <x-table-empty title="Ningún rol encontrado" />
     @endif
 
-    {{ $roles->links('vendor.livewire.custom') }}
+    <div class="mt-4">
+        {{ $roles->links('vendor.livewire.custom') }}
+    </div>
 </section>

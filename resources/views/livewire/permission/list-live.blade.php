@@ -84,6 +84,8 @@
         <x-table-empty title="Ningún permiso encontrado" />
     @endif
 
-    {{ $permissions->links('vendor.livewire.custom') }}
+    <div class="mt-4">
+        {{ $permissions->links('vendor.livewire.custom') }}
+    </div>
 </section>
 

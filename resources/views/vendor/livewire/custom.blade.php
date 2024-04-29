@@ -12,7 +12,7 @@ $scrollIntoViewJsSnippet = ($scrollTo !== false)
 
 <div>
     @if ($paginator->hasPages())
-        <div class="mt-6 sm:flex sm:items-center sm:justify-between">
+        <div class="sm:flex sm:items-center sm:justify-between">
             <div class="text-sm text-gray-500 dark:text-gray-400">
                 Página
                 <span class="font-medium text-gray-700 dark:text-gray-100">{{ $paginator->currentPage() }}</span>

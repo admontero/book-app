@@ -10,7 +10,15 @@
     </td>
 
     <td class="px-4 py-4 text-sm font-medium whitespace-nowrap">
-        <div class="font-medium text-gray-800 dark:text-white truncate first-letter:uppercase">{{ $fine->loan?->serial ?? '---' }}</div>
+        <div class="font-medium text-gray-800 dark:text-white truncate first-letter:uppercase">
+            <a
+                class="underline underline-offset-2 text-indigo-400 dark:text-indigo-300 font-medium"
+                href="{{ route('back.loans.show', $fine->loan_id) }}"
+                wire:navigate
+            >
+                {{ $fine->loan?->serial ?? '---' }}
+            </a>
+        </div>
     </td>
 
     <td class="px-4 py-4 text-sm whitespace-nowrap text-gray-700 dark:text-gray-400">

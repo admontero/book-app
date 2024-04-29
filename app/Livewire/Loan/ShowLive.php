@@ -51,8 +51,6 @@ class ShowLive extends Component
         $this->loan->refresh();
 
         $this->dispatch('new-alert', message: 'Estado del préstamo actualizado con éxito', type: 'success');
-
-        $this->dispatch('close-update-loan-status');
     }
 
     public function saveFine(): void
@@ -66,8 +64,6 @@ class ShowLive extends Component
         $this->loan->refresh();
 
         $this->dispatch('new-alert', message: 'Estado de la multa actualizado con éxito', type: 'success');
-
-        $this->dispatch('close-update-fine-status');
     }
 
     public function render(): View

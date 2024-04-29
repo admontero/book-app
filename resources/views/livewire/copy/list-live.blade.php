@@ -96,5 +96,7 @@
         <x-table-empty title="Ninguna copia encontrada" />
     @endif
 
-    {{ $copies->links('vendor.livewire.custom') }}
+    <div class="mt-4">
+        {{ $copies->links('vendor.livewire.custom') }}
+    </div>
 </section>

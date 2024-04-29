@@ -148,7 +148,9 @@
                                         @endif
                                     </div>
 
-                                    {{ $this->users->links('vendor.livewire.custom') }}
+                                    <div class="mt-4">
+                                        {{ $this->users->links('vendor.livewire.custom') }}
+                                    </div>
                                 </div>
                             @else
                                 <x-loans.user-data :user="$this->userSelected" />
@@ -250,7 +252,9 @@
                                         @endif
                                     </div>
 
-                                    {{ $this->copies->links('vendor.livewire.custom') }}
+                                    <div class="mt-4">
+                                        {{ $this->copies->links('vendor.livewire.custom') }}
+                                    </div>
                                 </div>
                             @else
                                 <x-loans.copy-data :copy="$this->copySelected" />
