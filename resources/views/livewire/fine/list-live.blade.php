@@ -16,43 +16,31 @@
     </div>
 
     <div class="mt-6 md:flex md:flex-wrap md:gap-4 md:items-center md:justify-between">
-        <div class="inline-flex flex-col sm:flex-row w-full sm:w-auto divide-y sm:divide-y-0 overflow-hidden bg-white border sm:divide-x rounded-lg rtl:flex-row-reverse
-            dark:border-gray-700 dark:divide-gray-700">
-            <button
-                class="px-5 py-2 text-xs font-medium text-gray-600 sm:text-sm dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-white
-                    hover:bg-gray-100 {{ count($this->statusesArray) == 0 ? 'bg-gray-100 dark:bg-gray-900' : 'bg-white' }}"
-                type="button"
+        <x-button-group>
+            <x-button-group-item
+                :selected="! count($this->statusesArray)"
                 wire:click="$set('statuses', '')"
             >
                 Ver todos
-            </button>
+            </x-button-group-item>
 
             @foreach (App\Enums\FineStatusEnum::options() as $value => $label)
-                <button
-                    class="px-5 py-2 text-xs font-medium text-gray-600 dark:bg-gray-800 sm:text-sm dark:hover:bg-gray-700
-                        dark:text-gray-300 hover:bg-gray-100 {{ in_array($value, $this->statusesArray) ? 'bg-gray-100 dark:bg-gray-900' : 'bg-white' }}"
-                    type="button"
+                <x-button-group-item
+                    :selected="in_array($value, $this->statusesArray)"
                     wire:click="setStatuses('{{ $value }}')"
                     wire:key="button-status-{{ $value }}"
                 >
                     {{ $label }}
-                </button>
+                </x-button-group-item>
             @endforeach
-        </div>
+        </x-button-group>
 
         <div class="flex-1 flex justify-end items-center mt-4 md:mt-0">
-            <div class="relative max-w-96 w-full">
-                <span class="absolute top-2.5">
-                    <x-icons.search class="w-5 h-5 mx-3 text-gray-400 dark:text-gray-500" />
-                </span>
-
-                <x-input
-                    class="pl-11 w-full"
-                    type="search"
-                    placeholder="Buscar multa..."
-                    wire:model.live.debounce.500ms="search"
-                />
-            </div>
+            <x-search-input
+                class="max-w-96 w-full"
+                placeholder="Buscar multa..."
+                wire:model.live.debounce.500ms="search"
+            />
         </div>
     </div>
 
@@ -100,7 +88,9 @@
             </div>
         </div>
     @else
-        <x-table-empty title="Ninguna multa encontrada" />
+        <x-table-empty title="Ningún multa encontrado" wire:key="fine-list-empty">
+            <x-alternative-button wire:click="$set('search', '')">Limpiar Buscador</x-alternative-button>
+        </x-table-empty>
     @endif
 
     <div class="mt-4">
