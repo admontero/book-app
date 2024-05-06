@@ -47,7 +47,7 @@
             }"
             wire:ignore
         >
-            <div class="w-full sm:w-48 text-xs">
+            <div class="w-full sm:w-48">
                 <div class="h-1.5 relative rounded-full overflow-hidden">
                     <div class="w-full h-full bg-blue-200 absolute"></div>
                     <div
@@ -68,22 +68,25 @@
                     </x-slot>
 
                     <x-slot name="content">
-                        <div class="px-3 pt-3">
+                        <div class="px-3 pt-3 mb-1">
                             <x-input class="w-full" type="search" x-model="search" x-ref="search" />
                         </div>
 
                         <div class="max-h-52 overflow-y-auto">
                             <template x-if="directPermissions.length">
                                 <div>
-                                    <p class="text-xs text-gray-400 px-3 mt-2 mb-1">
-                                        <span x-text="permissionsFiltered(directPermissions).length"></span>
-                                        permiso(s) directo(s)
-                                    </p>
+                                    <div class="sticky top-0 text-sm font-medium text-gray-600 dark:text-gray-300 px-3 py-2 bg-white
+                                        dark:bg-gray-800 border-b dark:border-gray-600"
+                                    >
+                                        Permisos Directos
+                                        (<span x-text="permissionsFiltered(directPermissions).length"></span>)
+                                    </div>
 
                                     <ul>
-                                        <template x-for="permission in permissionsFiltered(directPermissions)" :key="permission.id">
+                                        <template x-for="(permission, i) in permissionsFiltered(directPermissions)" :key="permission.id">
                                             <li
-                                                class="px-5 py-1.5 truncate text-gray-600 dark:text-gray-300 first-letter:uppercase"
+                                                class="px-5 py-2 truncate text-gray-500 dark:text-gray-400 first-letter:uppercase"
+                                                :class="i % 2 === 0 && 'bg-gray-50 dark:bg-gray-900'"
                                                 x-text="permission.name"
                                             ></li>
                                         </template>
@@ -99,15 +102,18 @@
 
                             <template x-if="indirectPermissions.length">
                                 <div>
-                                    <p class="text-xs text-gray-400 px-3 mt-2 mb-1">
-                                        <span x-text="permissionsFiltered(indirectPermissions).length"></span>
-                                        permiso(s) indirecto(s)
-                                    </p>
+                                    <div class="sticky top-0 text-sm font-medium text-gray-600 dark:text-gray-300 px-3 py-2 bg-white
+                                        dark:bg-gray-800 border-b dark:border-gray-600"
+                                    >
+                                        Permisos Indirectos
+                                        (<span x-text="permissionsFiltered(indirectPermissions).length"></span>)
+                                    </div>
 
                                     <ul>
-                                        <template x-for="permission in permissionsFiltered(indirectPermissions)" :key="permission.id">
+                                        <template x-for="(permission, i) in permissionsFiltered(indirectPermissions)" :key="permission.id">
                                             <li
-                                                class="px-5 py-1.5 truncate text-gray-600 dark:text-gray-300 first-letter:uppercase"
+                                                class="px-5 py-2 truncate text-gray-500 dark:text-gray-400 first-letter:uppercase"
+                                                :class="i % 2 === 0 && 'bg-gray-50 dark:bg-gray-900'"
                                                 x-text="permission.name"
                                             ></li>
                                         </template>

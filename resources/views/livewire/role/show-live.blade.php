@@ -5,14 +5,14 @@
         </div>
 
         <div class="lg:w-8/12 2xl:w-9/12 mt-4 lg:mt-0">
-            <div class="bg-white dark:bg-gray-800 rounded-md border border-gray-200 dark:border-gray-700">
+            <div class="bg-white dark:bg-gray-800 overflow-hidden rounded-md border border-gray-200 dark:border-gray-700">
                 <div class="px-4 py-3">
-                    <h2 class="text-lg capitalize dark:text-gray-200">{{ $this->totalUsers }} Usuarios</h2>
+                    <h2 class="text-lg capitalize dark:text-gray-200">Usuarios ({{ $this->totalUsers }})</h2>
                 </div>
 
                 <hr class="dark:border-gray-700">
 
-                <div class="relative w-full px-4 mt-4">
+                <div class="relative w-full px-4 my-4">
                     <span class="absolute top-2.5">
                         <x-icons.search class="w-5 h-5 mx-3 text-gray-400 dark:text-gray-600" />
                     </span>
@@ -25,10 +25,13 @@
                     />
                 </div>
 
+                <hr class="dark:border-gray-700">
+
                 @if ($this->totalUsers)
                     @forelse ($this->users as $user)
                         <div
-                            class="flex items-center gap-4 cursor-pointer text-gray-700 hover:bg-blue-100 dark:hover:bg-blue-900 px-4 py-2 my-2"
+                            class="flex items-center gap-4 cursor-pointer text-gray-700 hover:bg-blue-100 dark:hover:bg-blue-900 px-4 py-2
+                                {{ $loop->index % 2 === 0 ? 'bg-gray-50 dark:bg-gray-900' : '' }}"
                             @click="$el.querySelector('a').click()"
                             wire:key="user-{{ $user->id }}"
                         >
@@ -64,9 +67,9 @@
                 @endif
             </div>
 
-            <div class="max-w-md bg-white dark:bg-gray-800 rounded-md border border-gray-200 dark:border-gray-700 mt-4">
+            <div class="max-w-md bg-white dark:bg-gray-800 overflow-hidden rounded-md border border-gray-200 dark:border-gray-700 mt-4">
                 <div class="px-4 py-3">
-                    <h2 class="text-lg capitalize dark:text-gray-200">{{ $this->totalPermissions }} Permisos</h2>
+                    <h2 class="text-lg capitalize dark:text-gray-200">Permisos ({{ $this->totalPermissions }})</h2>
                 </div>
 
                 <hr class="dark:border-gray-700">
@@ -89,11 +92,11 @@
                 @if ($this->totalPermissions)
                     @forelse ($this->permissions as $permission)
                         <div
-                            class="px-4 py-2 border-b dark:border-gray-700"
-                            wire:key="user-{{ $user->id }}"
+                            class="px-4 py-2 {{ $loop->index % 2 === 0 ? 'bg-gray-50 dark:bg-gray-900' : '' }}"
+                            wire:key="permission-{{ $permission->id }}"
                         >
                             <div class="text-sm md:text-base text-gray-700 dark:text-gray-300">
-                                {{  App\Enums\PermissionEnum::options()[$permission->name] }}
+                                {{ App\Enums\PermissionEnum::options()[$permission->name] }}
                             </div>
                         </div>
                     @empty
@@ -112,7 +115,7 @@
                 @endif
 
                 @if ($this->permissions->hasPages())
-                    <div class="px-4 py-3">
+                    <div class="px-4 py-3 border-t dark:border-gray-700">
                         {{ $this->permissions->links('vendor.livewire.custom') }}
                     </div>
                 @endif

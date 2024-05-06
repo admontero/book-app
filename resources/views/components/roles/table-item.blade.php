@@ -63,21 +63,26 @@
                             </div>
 
                             <div class="max-h-52 overflow-y-auto">
-                                <template x-if="usersFiltered.length">
-                                    <p class="text-xs text-gray-400 px-3 mt-2 mb-1">
-                                        <span x-text="usersFiltered.length"></span>
-                                        usuario(s)
-                                    </p>
-                                </template>
+                                <div class="sticky top-0 text-sm font-medium text-gray-600 dark:text-gray-300 px-3 py-2 bg-white
+                                    dark:bg-gray-800 border-b dark:border-gray-600"
+                                >
+                                    Usuarios
+                                    (<span x-text="usersFiltered.length"></span>)
+                                </div>
 
                                 <ul>
-                                    <template x-for="user in usersFiltered" :key="user.id">
-                                        <li class="flex items-center px-5 py-1.5 overflow-x-hidden">
+                                    <template x-for="(user, i) in usersFiltered" :key="user.id">
+                                        <li
+                                            class="flex items-center px-5 py-1.5 overflow-x-hidden cursor-pointer text-gray-600 dark:text-gray-300
+                                                hover:text-blue-600 dark:hover:text-blue-400"
+                                            :class="i % 2 === 0 && 'bg-gray-50 dark:bg-gray-900'"
+                                            @click="$el.querySelector('a').click()"
+                                        >
                                             <a :href="'/back/users/' + user.id" wire:navigate>
                                                 <img class="w-7 h-7 rounded-full" :src="user.profile_photo_url" :alt="user.name" />
                                             </a>
 
-                                            <p x-text="user.name" class="ml-2 truncate text-gray-600 dark:text-gray-300"></p>
+                                            <p x-text="user.name" class="ml-2 truncate"></p>
                                         </li>
                                     </template>
 
@@ -109,7 +114,7 @@
                 },
             }"
         >
-            <div class="w-full sm:w-48 text-xs">
+            <div class="w-full sm:w-48">
                 <div class="h-1.5 relative rounded-full overflow-hidden">
                     <div class="w-full h-full bg-blue-200 absolute"></div>
                     <div
@@ -121,7 +126,7 @@
                 <x-dropdown-floating width="w-72" triggerClasses="text-center">
                     <x-slot name="trigger">
                         <button
-                            class="mt-1 underline underline-offset-2 text-indigo-400 dark:text-indigo-300 font-medium"
+                            class="mt-1 underline underline-offset-2 text-indigo-400 dark:text-indigo-300 text-xs font-medium"
                             x-init="$watch('show', value => $nextTick(() => { if (value) $refs.search.focus() }))"
                             @click="search = ''"
                         >
@@ -130,21 +135,25 @@
                     </x-slot>
 
                     <x-slot name="content">
-                        <div class="px-3 pt-3">
+                        <div class="px-3 pt-3 mb-1">
                             <x-input x-ref="search" class="w-full" type="search" x-model="search" />
                         </div>
 
                         <div class="max-h-52 overflow-y-auto">
-                            <template x-if="permissionsFiltered.length">
-                                <p class="text-xs text-gray-400 px-3 mt-2 mb-1">
-                                    <span x-text="permissionsFiltered.length"></span>
-                                    permiso(s)
-                                </p>
-                            </template>
+                            <div class="sticky top-0 text-sm font-medium text-gray-600 dark:text-gray-300 px-3 py-2 bg-white
+                                dark:bg-gray-800 border-b dark:border-gray-600"
+                            >
+                                Permisos
+                                (<span x-text="permissionsFiltered.length"></span>)
+                            </div>
 
                             <ul>
-                                <template x-for="permission in permissionsFiltered" :key="permission.id">
-                                    <li x-text="permission.name" class="px-5 py-1.5 truncate text-gray-600 dark:text-gray-300 first-letter:uppercase"></li>
+                                <template x-for="(permission, i) in permissionsFiltered" :key="permission.id">
+                                    <li
+                                        class="px-5 py-2 truncate text-gray-500 dark:text-gray-400 first-letter:uppercase"
+                                        :class="i % 2 === 0 && 'bg-gray-50 dark:bg-gray-900'"
+                                        x-text="permission.name"
+                                    ></li>
                                 </template>
 
                                 <template x-if="permissions.length && ! permissionsFiltered.length && search.length">

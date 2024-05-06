@@ -64,21 +64,27 @@
                 </x-slot>
 
                 <x-slot name="content">
-                    <div class="px-3 pt-3">
+                    <div class="px-3 pt-3 mb-1">
                         <x-input x-ref="search" class="w-full" type="search" x-model="search" />
                     </div>
 
                     <div class="max-h-52 overflow-y-auto">
                         <template x-if="genres.length">
                             <div>
-                                <p class="text-xs text-gray-400 px-3 mt-2 mb-1">
-                                    <span x-text="genresFiltered.length"></span>
-                                    género(s)
-                                </p>
+                                <div class="sticky top-0 text-sm font-medium text-gray-600 dark:text-gray-300 px-3 py-2 bg-white
+                                    dark:bg-gray-800 border-b dark:border-gray-600"
+                                >
+                                    Géneros
+                                    (<span x-text="genresFiltered.length"></span>)
+                                </div>
 
                                 <ul>
-                                    <template x-for="genre in genresFiltered" :key="genre.id">
-                                        <li x-text="genre.name" class="px-5 py-1.5 truncate text-gray-600 dark:text-gray-300 first-letter:uppercase"></li>
+                                    <template x-for="(genre, i) in genresFiltered" :key="genre.id">
+                                        <li
+                                            class="px-5 py-2 truncate text-gray-500 dark:text-gray-400 first-letter:uppercase"
+                                            :class="i % 2 === 0 && 'bg-gray-50 dark:bg-gray-900'"
+                                            x-text="genre.name"
+                                        ></li>
                                     </template>
                                 </ul>
 
@@ -89,6 +95,7 @@
                                 </template>
                             </div>
                         </template>
+
                         <template x-if="! genres.length">
                             <p class="text-gray-400 italic text-xs text-center py-3">
                                 No hay géneros asignados.
