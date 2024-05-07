@@ -55,6 +55,9 @@ class ListLive extends Component
         $fines = Fine::select('fines.id', 'fines.loan_id', 'fines.user_id', 'fines.days', 'fines.total', 'fines.status')
             ->join('loans', 'loans.id', '=', 'fines.loan_id')
             ->with('loan:id,copy_id,user_id,serial,start_date,limit_date,devolution_date,is_fineable,fine_amount,status')
+            ->when($this->statusesArray, function ($query) {
+                $query->whereIn('fines.status', $this->statusesArray);
+            })
             ->where(function ($query) {
                 $query->whereHas('loan', function ($query) {
                     $query->where('serial', 'like', '%' . $this->search . '%')
@@ -80,9 +83,6 @@ class ListLive extends Component
                     ELSE 4
                 END
             ")
-            ->when($this->statusesArray, function ($query) {
-                $query->whereIn('fines.status', $this->statusesArray);
-            })
             ->orderBy('loans.start_date', 'desc')
             ->orderBy('fines.id', 'desc')
             ->paginate(10);

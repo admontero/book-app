@@ -27,7 +27,24 @@
     </div>
 
     <div class="mt-6 md:flex md:flex-wrap md:gap-4 md:items-center md:justify-between">
-        <div></div>
+        <x-button-group>
+            <x-button-group-item
+                :selected="! count($this->statusesArray)"
+                wire:click="$set('statuses', '')"
+            >
+                Ver todos
+            </x-button-group-item>
+
+            @foreach (App\Enums\CopyStatusEnum::options() as $value => $label)
+                <x-button-group-item
+                    :selected="in_array($value, $this->statusesArray)"
+                    wire:click="setStatuses('{{ $value }}')"
+                    wire:key="button-status-{{ $value }}"
+                >
+                    {{ $label }}
+                </x-button-group-item>
+            @endforeach
+        </x-button-group>
 
         <div class="flex-1 flex justify-end items-center mt-4 md:mt-0">
             <x-search-input

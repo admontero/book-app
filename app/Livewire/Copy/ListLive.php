@@ -17,6 +17,9 @@ class ListLive extends Component
     #[Url(except: '')]
     public $search = '';
 
+    #[Url(except: '')]
+    public $statuses = '';
+
     public function mount(): void
     {
         $this->validateSorting(fields: ['id', 'books.title']);
@@ -25,6 +28,26 @@ class ListLive extends Component
     public function updatedSearch(): void
     {
         $this->resetPage();
+    }
+
+    public function setStatuses(string $name): void
+    {
+        $statusesFilterArray = array_filter(explode(',', $this->statuses));
+
+        if (in_array($name, $statusesFilterArray)) {
+            $statusesFilterArray = array_diff($statusesFilterArray, [$name]);
+        } else {
+            $statusesFilterArray[] = $name;
+        }
+
+        $this->statuses = implode(',', $statusesFilterArray);
+        $this->resetPage();
+    }
+
+    #[Computed]
+    public function statusesArray(): array
+    {
+        return array_filter(explode(',', $this->statuses));
     }
 
     #[Computed]
@@ -52,6 +75,9 @@ class ListLive extends Component
                 'edition.editorial:id,name',
                 'edition.book.author:id,firstname,lastname,pseudonym'
             ])
+            ->when($this->statusesArray, function ($query) {
+                $query->whereIn('copies.status', $this->statusesArray);
+            })
             ->where(function ($query) {
                 $query->where('copies.identifier', 'like', '%' . $this->search . '%')
                     ->orWhereHas('edition', function ($query) {
