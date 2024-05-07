@@ -15,7 +15,7 @@
         <li>
             <a
                 class="px-4 py-3 block w-full text-start text-sm leading-5 dark:text-gray-300 border-l-2 focus:outline-none
-                    @if(request()->routeIs('back.users.roles.assignment')) border-blue-600 @else border-transparent @endif
+                    @if($this->getName() == 'user.role-assignment-live') border-blue-600 @else border-transparent @endif
                 "
                 href="{{ route('back.users.roles.assignment', $user) }}"
                 wire:navigate
@@ -28,7 +28,7 @@
         <li>
             <a
                 class="px-4 py-3 block w-full text-start text-sm leading-5 dark:text-gray-300 border-l-2 focus:outline-none
-                    @if(request()->routeIs('back.users.permissions.assignment')) border-blue-600 @else border-transparent @endif
+                    @if($this->getName() == 'user.permission-assignment-live') border-blue-600 @else border-transparent @endif
                 "
                 href="{{ route('back.users.permissions.assignment', $user) }}"
                 wire:navigate

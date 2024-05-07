@@ -13,7 +13,7 @@
         <li>
             <a
                 class="px-4 py-3 block w-full text-start text-sm leading-5 dark:text-gray-300 border-l-2 focus:outline-none
-                    @if(request()->routeIs('back.roles.permissions.assignment')) border-blue-600 @else border-transparent @endif
+                    @if($this->getName() == 'role.permission-assignment-live') border-blue-600 @else border-transparent @endif
                 "
                 href="{{ route('back.roles.permissions.assignment', $role) }}"
                 wire:navigate
