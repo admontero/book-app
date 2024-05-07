@@ -1,6 +1,6 @@
 # BookApp
 
-BookApp es una plicación para la administración de inventario y préstamo de libros de una biblioteca. Incluye módulo de usuarios, roles, permisos, préstamos, multas, géneros, autores, libros, editoriales, ediciones y copias. Adicionalmente el sistema cuenta con dos entornos, uno para los lectores y el otro para los administradores/secretarios.
+BookApp es una aplicación para la administración de inventario y préstamo de libros de una biblioteca. Incluye módulo de usuarios, roles, permisos, préstamos, multas, géneros, autores, libros, editoriales, ediciones y copias. Adicionalmente el sistema cuenta con dos entornos, uno para los lectores y el otro para los administradores/secretarios.
 
 ## Requerimientos
 - PHP 8.1+
