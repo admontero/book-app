@@ -1,66 +1,78 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# BookApp
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+BookApp es una plicación para la administración de inventario y préstamo de libros de una biblioteca. Incluye módulo de usuarios, roles, permisos, préstamos, multas, géneros, autores, libros, editoriales, ediciones y copias. Adicionalmente el sistema cuenta con dos entornos, uno para los lectores y el otro para los administradores/secretarios.
 
-## About Laravel
+## Requerimientos
+- PHP 8.1+
+- MySQL 5.7+
+- Memcached Extension
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Instalación
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Clonar el repositorio
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+    git clone https://github.com/admontero/book-app.git
 
-## Learning Laravel
+Cambiar a la carpeta del repositorio
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+    cd book-app
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+Instalar las dependencias de PHP usando composer
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+    composer install
 
-## Laravel Sponsors
+Copia el archivo ejemplo de variables de entorno y haz las configuraciones requeridas en tu archivo .env
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+    cp .env.example .env
 
-### Premium Partners
+Genera una key para la aplicación
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+    php artisan key:generate
 
-## Contributing
+**NOTA:** Antes de ejecutar las migraciones asegurate de crear la base datos y que el nombre de esta coincida con el de la variable DB_DATABASE del archivo .env
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Ejecuta las migraciones de la base de datos
 
-## Code of Conduct
+    php artisan migrate
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Ejecuta todos los seeders configurados para la aplicación
 
-## Security Vulnerabilities
+    php artisan db:seed
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Instalar las dependencias de JavaScript usando npm
 
-## License
+    npm install
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Compila los paquetes en desarrollo
+
+    npm run dev
+
+Levanta el servidor de desarrollo
+
+    php artisan serve
+
+Ahora puedes acceder al servidor desde http://localhost:8000
+
+**NOTA:** Esta aplicación hace uso de Redis para la gestión de colas y Memcached para la gestión de la caché, por lo que deberás también levantar el servidor para estas.
+
+## Credenciales
+
+Utiliza estas credenciales para ingresar al sistema como administrador:
+
+**Email:** admin@test.com
+
+**Contraseña:** password
+
+## Dependencias
+
+- [cviebrock/eloquent-sluggable](https://github.com/cviebrock/eloquent-sluggable) - Para la generación automática de slugs en modelos Eloquent.
+- [laravel/jetstream](https://github.com/laravel/jetstream) - Provee de una estructura inicial para crear proyectos de laravel (autenticación, plantillas, etc).
+- [livewire/livewire](https://github.com/livewire/livewire) - Un framework full-stack para la creación de interfaces dinámicas.
+- [nnjeim/world](https://github.com/nnjeim/world) - Para proveer un listado de países, estados, ciudades, etc.
+- [predis/predis](https://github.com/predis/predis) - Para interactuar con Redis.
+- [spatie/laravel-permission](https://github.com/spatie/laravel-permission) - Para la gestión de roles y permisos.
+- [staudenmeir/eloquent-has-many-deep](https://github.com/staudenmeir/eloquent-has-many-deep) - Para la definición de relaciones Eloquent sin importar el nivel.
+
+## Autor
+
+[Andrés Montero](https://github.com/admontero)
