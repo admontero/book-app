@@ -78,9 +78,9 @@
                 </ul>
 
                 @if ($edition->book->synopsis)
-                    <div>
+                    <div wire:key="book-synopsis">
                         <div class="mt-4 space-y-2">
-                            <h4 class="text-xl font-medium text-gray-800 dark:text-gray-200">Sinopsis</h4>
+                            <h4 class="text-lg uppercase font-semibold text-gray-800 dark:text-gray-200">Sinopsis</h4>
 
                             <p class="text-gray-700 dark:text-gray-400">
                                 {{ $edition->book->synopsis }}
@@ -89,41 +89,57 @@
                     </div>
                 @endif
 
-                @if ($edition->book->author_id)
-                    <div x-data="{ expanded: false }">
-                        <div class="flex gap-4 mt-10" x-show="expanded" x-collapse.min.170px>
-                            <img
-                                class="w-32 h-32 rounded-lg object-cover"
-                                src="{{ $edition->book->author->photo_url }}"
-                                alt="foto de {{ $edition->book->author->name }}"
-                            />
-
-                            <div class="space-y-2" :class="expanded || 'bottom-overflow-fade'">
-                                <h5 class="text-lg font-medium text-gray-800 dark:text-gray-200 capitalize">
-                                    {{ $edition->book->author->name }}
-                                </h5>
-
-                                @if ($edition->book->author->biography)
-                                    <p>
-                                        {!! $edition->book->author->biography !!}
-                                    </p>
+                @if ($edition->book->pseudonyms->count())
+                    <div wire:key="author-pseudonyms">
+                        <div class="mt-4">
+                            <h4 class="text-lg uppercase font-semibold text-gray-800 dark:text-gray-200">
+                                @if ($edition->book->pseudonyms->count() > 1)
+                                    <span>Autores</span>
+                                @else
+                                    <span>Autor</span>
                                 @endif
-                            </div>
+                            </h4>
                         </div>
 
-                        <div class="flex gap-4 justify-between">
-                            <div class="w-32"></div>
+                        <div class="mt-4 space-y-10">
+                            @foreach ($edition->book->pseudonyms as $pseudonym)
+                                <div x-data="{ expanded: false }" wire:key="author-pseudonym-{{ $pseudonym->id }}">
+                                    <div class="flex gap-4" x-show="expanded" x-collapse.min.170px>
+                                        <img
+                                            class="w-32 h-32 rounded-lg object-cover"
+                                            src="{{ $pseudonym->author?->photo_url }}"
+                                            alt="foto de {{ $pseudonym->name }}"
+                                        />
 
-                            <div class="flex-1">
-                                @if ($edition->book->author->biography)
-                                    <button
-                                        class="underline underline-offset-2 text-sm font-medium text-blue-600 hover:underline dark:text-blue-500"
-                                        @click="expanded = ! expanded"
-                                    >
-                                        <span>Ver <span x-text="expanded ? 'menos' : 'más'"></span></span>
-                                    </button>
-                                @endif
-                            </div>
+                                        <div class="space-y-2" :class="expanded || 'bottom-overflow-fade'">
+                                            <h5 class="text-lg font-medium text-gray-800 dark:text-gray-200 capitalize">
+                                                {{ $pseudonym->name }}
+                                            </h5>
+
+                                            @if ($pseudonym->description)
+                                                <p>
+                                                    {!! $pseudonym->description !!}
+                                                </p>
+                                            @endif
+                                        </div>
+                                    </div>
+
+                                    <div class="flex gap-4 justify-between">
+                                        <div class="w-32"></div>
+
+                                        <div class="flex-1">
+                                            @if ($pseudonym->description)
+                                                <button
+                                                    class="underline underline-offset-2 text-sm font-medium text-blue-600 hover:underline dark:text-blue-500"
+                                                    @click="expanded = ! expanded"
+                                                >
+                                                    <span>Ver <span x-text="expanded ? 'menos' : 'más'"></span></span>
+                                                </button>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
                         </div>
                     </div>
                 @endif

@@ -61,6 +61,22 @@ Route::group([
         ->middleware('can:viewAny,App\Models\Genre')
         ->name('genres.index');
 
+    Route::get('pseudonyms', App\Livewire\Pseudonym\ListLive::class)
+        ->middleware('can:viewAny,App\Models\Pseudonym')
+        ->name('pseudonyms.index');
+
+    Route::get('pseudonyms/create', App\Livewire\Pseudonym\CreateLive::class)
+        ->middleware('can:create,App\Models\Pseudonym')
+        ->name('pseudonyms.create');
+
+    Route::get('pseudonyms/{pseudonym}', App\Livewire\Pseudonym\ShowLive::class)
+        ->middleware('can:view,pseudonym')
+        ->name('pseudonyms.show');
+
+    Route::get('pseudonyms/{pseudonym}/edit', App\Livewire\Pseudonym\EditLive::class)
+        ->middleware('can:update,pseudonym')
+        ->name('pseudonyms.edit');
+
     Route::get('authors', App\Livewire\Author\ListLive::class)
         ->middleware('can:viewAny,App\Models\Author')
         ->name('authors.index');

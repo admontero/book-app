@@ -6,32 +6,58 @@ use Livewire\Attributes\Url;
 
 trait HasSort
 {
-    #[Url(except: 'id')]
-    public $sortField = 'id';
+    #[Url]
+    public $sortColumn = null;
 
     #[Url]
-    public $sortDirection = 'desc';
+    public $sortDirection = 'asc';
 
-    public function validateSorting(array $fields = [])
+    public function mountHasSort(): void
     {
-        if (! in_array($this->sortField, $fields)) {
-            $this->reset('sortField');
-        }
+        if ($this->isInvalidSortColumn()) $this->reset('sortColumn');
 
-        if (! in_array($this->sortDirection, ['asc', 'desc'])) {
-            $this->reset('sortDirection');
-        }
+        if ($this->isInvalidSortDirection()) $this->reset('sortDirection');
     }
 
-    public function sortBy(string $field): void
+    public function isInvalidSortColumn(string $column = null): bool
     {
-        if ($this->sortField === $field) {
-            $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
-
-            return;
+        if (! in_array($column ?? $this->sortColumn, $this->sortableColumns ?? [])) {
+            return true;
         }
 
-        $this->sortField = $field;
+        return false;
+    }
+
+    public function isInvalidSortDirection(): bool
+    {
+        if (! in_array($this->sortDirection, ['asc', 'desc'])) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function sortBy(string $column): void
+    {
+        if ($this->isInvalidSortColumn($column)) {
+            $this->reset('sortColumn');
+
+            return ;
+        }
+
+        if ($this->isInvalidSortDirection()) {
+            $this->reset('sortDirection');
+
+            return ;
+        }
+
+        if ($this->sortColumn === $column) {
+            $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
+
+            return ;
+        }
+
+        $this->sortColumn = $column;
         $this->reset('sortDirection');
     }
 }

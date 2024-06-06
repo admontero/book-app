@@ -52,7 +52,7 @@
             </tbody>
         </x-table-container>
     @else
-        <x-table-empty title="Ningún multa encontrado" wire:key="fine-list-empty">
+        <x-table-empty title="Ninguna multa encontrada" wire:key="fine-list-empty">
             <x-alternative-button wire:click="$set('search', '')">Limpiar Buscador</x-alternative-button>
         </x-table-empty>
     @endif

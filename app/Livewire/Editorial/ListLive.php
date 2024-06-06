@@ -23,10 +23,7 @@ class ListLive extends Component
 
     public EditorialForm $form;
 
-    public function mount(): void
-    {
-        $this->validateSorting(fields: ['id', 'name', 'slug']);
-    }
+    public array $sortableColumns = ['name', 'slug'];
 
     public function updatedSearch(): void
     {
@@ -70,20 +67,17 @@ class ListLive extends Component
     }
 
     #[Computed]
-    public function editorials(): LengthAwarePaginator
-    {
-        return  Editorial::select('id', 'name', 'slug')
-            ->where(function ($query) {
-                $query->where('name', 'like', '%' . $this->search . '%')
-                    ->orWhere('slug', 'like', '%' . $this->search . '%');
-            })
-            ->orderBy($this->sortField, $this->sortDirection)
-            ->paginate(10);
-    }
-
-    #[Computed]
     public function editorialsCount(): int
     {
         return Editorial::count();
+    }
+
+    #[Computed]
+    public function editorials(): LengthAwarePaginator
+    {
+        return Editorial::select(['id', 'name', 'slug'])
+            ->search($this->search)
+            ->orderByColumn($this->sortColumn, $this->sortDirection)
+            ->paginate(10);
     }
 }

@@ -4,6 +4,8 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
+use App\Traits\OrderByColumnScope;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -21,6 +23,7 @@ class User extends Authenticatable
     use HasProfilePhoto;
     use HasRoles;
     use Notifiable;
+    use OrderByColumnScope;
     use TwoFactorAuthenticatable;
 
     /**
@@ -77,5 +80,20 @@ class User extends Authenticatable
     public function fines(): HasMany
     {
         return $this->hasMany(Fine::class);
+    }
+
+    public function scopeSearch(Builder $query, string $search): void
+    {
+        $query->where('users.name', 'like', '%' . $search . '%')
+            ->orWhere('users.email', 'like', '%' . $search . '%');
+    }
+
+    public function scopeInRoles(Builder $query, array $roles = []): void
+    {
+        $query->when($roles, function ($query) use ($roles) {
+            $query->whereHas('roles', function ($query) use ($roles) {
+                $query->whereIn('name', $roles);
+            });
+        });
     }
 }

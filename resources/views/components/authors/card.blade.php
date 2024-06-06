@@ -1,8 +1,8 @@
 <div class="bg-white dark:bg-gray-800 rounded-md border border-gray-200 dark:border-gray-700">
     <div class="p-4 space-y-4">
-        <img class="w-52 h-52 mx-auto rounded-full object-cover" src="{{ $author->photo_url }}" alt="foto de {{ $author->name }}" />
+        <img class="w-52 h-52 mx-auto rounded-full object-cover" src="{{ $author->photo_url }}" alt="foto de {{ $author->full_name }}" />
 
-        <h2 class="text-lg text-center capitalize dark:text-gray-200">{{ $author->name }}</h2>
+        <h2 class="text-lg text-center capitalize dark:text-gray-200">{{ $author->full_name }}</h2>
     </div>
 
     <hr class="dark:border-gray-700">

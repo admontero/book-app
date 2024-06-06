@@ -9,7 +9,7 @@
 
             <hr class="mx-4 dark:border-gray-700">
 
-            <livewire:front.filters.author-filter-live wire:model.change="filters.authors" />
+            <livewire:front.filters.pseudonym-filter-live wire:model.change="filters.pseudonyms" />
         </div>
     </div>
 

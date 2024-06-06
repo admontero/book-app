@@ -23,10 +23,7 @@ class ListLive extends Component
 
     public GenreForm $form;
 
-    public function mount(): void
-    {
-        $this->validateSorting(fields: ['id', 'name', 'slug']);
-    }
+    public array $sortableColumns = ['created_at', 'name', 'slug'];
 
     public function updatedSearch(): void
     {
@@ -70,20 +67,17 @@ class ListLive extends Component
     }
 
     #[Computed]
-    public function genres(): LengthAwarePaginator
-    {
-        return Genre::select('id', 'name', 'slug')
-            ->where(function ($query) {
-                $query->where('name', 'like', '%' . $this->search . '%')
-                    ->orWhere('slug', 'like', '%' . $this->search . '%');
-            })
-            ->orderBy($this->sortField, $this->sortDirection)
-            ->paginate(10);
-    }
-
-    #[Computed]
     public function genresCount(): int
     {
         return Genre::count();
+    }
+
+    #[Computed]
+    public function genres(): LengthAwarePaginator
+    {
+        return Genre::select(['id', 'name', 'slug'])
+            ->search($this->search)
+            ->orderbyColumn($this->sortColumn, $this->sortDirection)
+            ->paginate(10);
     }
 }

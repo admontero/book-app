@@ -2,13 +2,13 @@
 
 namespace App\Livewire\Role;
 
+use App\Models\Permission;
+use App\Models\Role;
 use App\Traits\HasSort;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Url;
 use Livewire\Component;
 use Livewire\WithPagination;
-use Spatie\Permission\Models\Permission;
-use Spatie\Permission\Models\Role;
 
 class ListLive extends Component
 {
@@ -18,10 +18,7 @@ class ListLive extends Component
     #[Url(except: '')]
     public $search = '';
 
-    public function mount()
-    {
-        $this->validateSorting(fields: ['id', 'name']);
-    }
+    public array $sortableColumns = ['name'];
 
     public function updatedSearch(): void
     {
@@ -42,11 +39,11 @@ class ListLive extends Component
 
     public function render()
     {
-        $roles = Role::select('id', 'name')
-            ->with('users:id,name,profile_photo_path', 'permissions:id,name')
-            ->withCount('users', 'permissions')
-            ->where('name', 'like', '%' . $this->search . '%')
-            ->orderBy($this->sortField, $this->sortDirection)
+        $roles = Role::select(['id', 'name'])
+            ->with(['users:id,name,profile_photo_path', 'permissions:id,name'])
+            ->withCount(['users', 'permissions'])
+            ->search($this->search)
+            ->orderByColumn($this->sortColumn, $this->sortDirection)
             ->paginate(10);
 
         return view('livewire.role.list-live', [

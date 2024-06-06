@@ -242,7 +242,7 @@ class CreateLive extends Component
     #[Computed]
     public function users(): LengthAwarePaginator
     {
-        return User::select('id', 'name', 'email', 'profile_photo_path')
+        return User::select(['id', 'name', 'email', 'profile_photo_path'])
             ->with([
                 'profile:id,user_id,document_type_id,document_number,phone',
                 'profile.document_type:id,name,abbreviation',
@@ -261,12 +261,12 @@ class CreateLive extends Component
     #[Computed]
     public function copySelected(): ?Copy
     {
-        return Copy::select('id', 'edition_id', 'identifier')
+        return Copy::select(['id', 'edition_id', 'identifier'])
             ->with([
                 'edition:id,slug,isbn13,pages,year,cover_path,editorial_id,book_id',
                 'edition.editorial:id,name,slug',
-                'edition.book:id,title,slug,author_id',
-                'edition.book.author:id,firstname,lastname,pseudonym,slug',
+                'edition.book:id,title,slug',
+                'edition.book.pseudonyms:id,name,slug',
                 'edition.book.genres:id,name,slug',
             ])
             ->find($this->copy_id);
@@ -283,29 +283,17 @@ class CreateLive extends Component
     #[Computed]
     public function copies(): LengthAwarePaginator
     {
-        return Copy::select('id', 'edition_id', 'identifier')
+        return Copy::select(['id', 'edition_id', 'identifier'])
             ->with([
                 'edition:id,slug,isbn13,pages,year,cover_path,editorial_id,book_id',
                 'edition.editorial:id,name,slug',
-                'edition.book:id,title,slug,author_id',
-                'edition.book.author:id,firstname,lastname,pseudonym,slug',
+                'edition.book:id,title,slug',
+                'edition.book.pseudonyms:id,name,slug',
                 'edition.book.genres:id,name,slug',
             ])
             ->where('is_loanable', 1)
             ->whereIn('status', [CopyStatusEnum::DISPONIBLE->value])
-            ->when($this->search, function ($query) {
-                $query->where('identifier', 'like', '%' . $this->search . '%')
-                    ->orWhereHas('edition', function ($query) {
-                        $query->where('isbn13', 'like', '%' . $this->search . '%')
-                            ->orWhereRelation('book', 'books.title', 'like', '%' . $this->search . '%')
-                            ->orWhereRelation('editorial', 'editorials.name', 'like', '%' . $this->search . '%')
-                            ->orWhereHas('book', function ($query) {
-                                $query->whereRelation('author', 'firstname', 'like', '%' . $this->search . '%')
-                                    ->orWhereRelation('author', 'lastname', 'like', '%' . $this->search . '%')
-                                    ->orWhereRelation('author', 'pseudonym', 'like', '%' . $this->search . '%');
-                            });
-                    });
-            })
+            ->search($this->search)
             ->latest('id')
             ->paginate(5, ['*'], 'copiesPage');
     }

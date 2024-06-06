@@ -18,9 +18,10 @@ class ShowLive extends Component
         $edition = Cache::tags(['edition-' . $this->slug])
             ->remember("{$this->getName()}-{$this->slug}", 3600, function() {
                 return Edition::with([
-                    'book:id,title,slug,synopsis,publication_year,author_id',
+                    'book:id,title,slug,synopsis,publication_year',
                     'book.genres:id,name,slug',
-                    'book.author:id,firstname,lastname,pseudonym,slug,biography,photo_path',
+                    'book.pseudonyms:id,author_id,name,description',
+                    'book.pseudonyms.author:id,first_name,middle_name,first_surname,second_surname,full_name,slug,photo_path',
                     'editorial:id,name,slug',
                 ])
                     ->where('slug', $this->slug)

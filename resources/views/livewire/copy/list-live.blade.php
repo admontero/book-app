@@ -59,7 +59,7 @@
         <x-table-container class="mt-4" wire:key="copy-list">
             <thead class="bg-gray-50 dark:bg-gray-800">
                 <tr>
-                    <x-table-header-cell value="Libro" sortableFor="books.title" :$sortField :$sortDirection />
+                    <x-table-header-cell value="Libro" sortableFor="books.title" :$sortColumn :$sortDirection />
 
                     <x-table-header-cell class="hidden lg:table-cell" value="Identificación" />
 

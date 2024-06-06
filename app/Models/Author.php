@@ -2,21 +2,26 @@
 
 namespace App\Models;
 
+use App\Traits\OrderByColumnScope;
 use Cviebrock\EloquentSluggable\Sluggable;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Support\Facades\Storage;
 use Nnjeim\World\Models\City;
 use Nnjeim\World\Models\Country;
 use Nnjeim\World\Models\State;
+use Staudenmeir\EloquentHasManyDeep\HasManyDeep;
+use Staudenmeir\EloquentHasManyDeep\HasRelationships;
 
 class Author extends Model
 {
     use HasFactory;
+    use HasRelationships;
+    use OrderByColumnScope;
     use Sluggable;
 
     protected $guarded = ['id'];
@@ -26,30 +31,23 @@ class Author extends Model
         'date_of_death' => 'date:Y-m-d',
     ];
 
-    protected static function booted(): void
-    {
-        static::saving(function (Author $author) {
-            $author->biography = add_classes_to_html_content($author->biography, 'text-gray-700 dark:text-gray-400');
-        });
-    }
-
     public function sluggable(): array
     {
         return [
             'slug' => [
-                'source' => 'name',
+                'source' => ['first_name', 'first_surname'],
             ]
         ];
     }
 
-    public function books(): HasMany
+    public function editions(): HasManyDeep
     {
-        return $this->hasMany(Book::class);
+        return $this->hasManyDeep(Edition::class, [Pseudonym::class, 'book_pseudonym', Book::class]);
     }
 
-    public function editions(): HasManyThrough
+    public function pseudonyms(): HasMany
     {
-        return $this->hasManyThrough(Edition::class, Book::class);
+        return $this->hasMany(Pseudonym::class);
     }
 
     public function country_birth(): BelongsTo
@@ -67,27 +65,39 @@ class Author extends Model
         return $this->belongsTo(City::class, 'city_birth_id');
     }
 
-    protected function firstname(): Attribute
+    protected function firstName(): Attribute
     {
-        return Attribute::set(fn (string $value) => mb_strtolower($value));
+        return Attribute::set(function (?string $value) {
+            if (! $value) return ;
+
+            return mb_strtolower($value);
+        });
     }
 
-    protected function lastname(): Attribute
+    protected function middleName(): Attribute
     {
-        return Attribute::set(fn (string $value) => mb_strtolower($value));
+        return Attribute::set(function (?string $value) {
+            if (! $value) return ;
+
+            return mb_strtolower($value);
+        });
     }
 
-    protected function pseudonym(): Attribute
+    protected function firstSurname(): Attribute
     {
-        return Attribute::set(fn (?string $value) => mb_strtolower($value));
+        return Attribute::set(function (?string $value) {
+            if (! $value) return ;
+
+            return mb_strtolower($value);
+        });
     }
 
-    protected function name(): Attribute
+    protected function secondSurname(): Attribute
     {
-        return Attribute::get(function() {
-            if (! empty($this->pseudonym)) return $this->pseudonym;
+        return Attribute::set(function (?string $value) {
+            if (! $value) return ;
 
-            return $this->firstname . ' ' . $this->lastname;
+            return mb_strtolower($value);
         });
     }
 
@@ -111,10 +121,11 @@ class Author extends Model
         );
     }
 
-    protected function age(): Attribute
+    public function scopeSearch(Builder $query, string $search): void
     {
-        return Attribute::make(
-            get: fn () => $this->date_of_birth->age . ' años',
-        );
+        $query->where('first_name', 'like', '%' . $search . '%')
+            ->orWhere('middle_name', 'like', '%' . $search . '%')
+            ->orWhere('first_surname', 'like', '%' . $search . '%')
+            ->orWhere('second_surname', 'like', '%' . $search . '%');
     }
 }

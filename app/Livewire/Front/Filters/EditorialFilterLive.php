@@ -2,7 +2,6 @@
 
 namespace App\Livewire\Front\Filters;
 
-use App\Enums\CopyStatusEnum;
 use App\Models\Editorial;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
@@ -37,7 +36,7 @@ class EditorialFilterLive extends Component
                     ->withCount(['editions' => function ($query) {
                         $query->has('enabledCopies');
                     }])
-                    ->where('name', 'like', '%' . $this->search . '%')
+                    ->search($this->search)
                     ->orderBy('name')
                     ->get();
             });

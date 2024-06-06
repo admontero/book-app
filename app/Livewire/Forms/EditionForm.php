@@ -3,8 +3,10 @@
 namespace App\Livewire\Forms;
 
 use App\Models\Book;
+use App\Models\BookPseudonym;
 use App\Models\Edition;
 use App\Models\Editorial;
+use App\Models\Pseudonym;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -86,14 +88,12 @@ class EditionForm extends Form
 
     public function loadBooks(): void
     {
-        $this->books = Book::select(
-                'books.id as value',
-                'books.title as label',
-                'books.author_id',
-                DB::raw('CONCAT_WS(" • ", IF(books.author_id, IF(authors.pseudonym, authors.pseudonym, CONCAT_WS(" ", authors.firstname, authors.lastname)), "desconocido"), books.publication_year) as description')
-            )
-            ->leftJoin('authors', 'books.author_id', '=', 'authors.id')
-            ->orderBy('books.title')
+        $this->books = Book::query()
+            ->leftJoin('book_pseudonym', 'books.id', '=', 'book_pseudonym.book_id')
+            ->leftJoin('pseudonyms', 'book_pseudonym.pseudonym_id', '=', 'pseudonyms.id')
+            ->select('books.id AS value', 'books.title AS label', DB::raw('GROUP_CONCAT(pseudonyms.name SEPARATOR ", ") AS description'))
+            ->groupBy('books.id', 'books.title')
+            ->orderBy('title')
             ->get()
             ->toArray();
     }

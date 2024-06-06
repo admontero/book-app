@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Arr;
 use Nnjeim\World\Models\City;
 use Nnjeim\World\Models\Country;
 use Nnjeim\World\Models\State;
@@ -29,29 +30,23 @@ class AuthorFactory extends Factory
             ? City::where('state_id', $state_birth_id)->inRandomOrder()->first()?->id
             : null;
 
-        $firstname = $this->faker->firstName;
+        $first_name = $this->faker->firstName;
 
-        $lastname = $this->faker->lastName;
+        $middle_name = Arr::random([$this->faker->firstName, null]);
 
-        $pseudonym = $firstname  . ' ' . $lastname;
+        $first_surname = $this->faker->lastName;
 
-        $biography = '';
-
-        $paragraphs = $this->faker->paragraphs(rand(4, 8));
-
-        foreach ($paragraphs as $paragraph) {
-            $biography .= "<p>{$paragraph}</p>";
-        }
+        $second_surname = Arr::random([$this->faker->lastName, null]);
 
         return [
-            'firstname' => $firstname,
-            'lastname' => $lastname,
-            'pseudonym' => $pseudonym,
+            'first_name' => $first_name,
+            'middle_name' => $middle_name,
+            'first_surname' => $first_surname,
+            'second_surname' => $second_surname,
             'date_of_birth' => $this->faker->dateTimeThisCentury('-18 years'),
             'country_birth_id' => $country_birth_id,
             'state_birth_id' => $state_birth_id,
             'city_birth_id' => $city_birth_id,
-            'biography' => $biography,
         ];
     }
 }

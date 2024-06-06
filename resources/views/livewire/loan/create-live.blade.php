@@ -231,7 +231,11 @@
 
                                                             <p class="capitalize">
                                                                 <span class="font-semibold">autor:</span>
-                                                                {{ $copy->edition?->book?->author?->name }}
+                                                                @if ($copy->edition?->book?->pseudonyms->count())
+                                                                   {{ $copy->edition?->book?->pseudonyms?->pluck('name')->join(', ') }}
+                                                                @else
+                                                                    <span class="italic">Anónimo</span>
+                                                                @endif
                                                             </p>
                                                         </div>
                                                     </div>

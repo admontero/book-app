@@ -17,10 +17,7 @@ class ListLive extends Component
     #[Url(except: '')]
     public $search = '';
 
-    public function mount(): void
-    {
-        $this->validateSorting(fields: ['id', 'books.title', 'editorial.name']);
-    }
+    public array $sortableColumns = ['books.title', 'editorials.name'];
 
     public function updatedSearch(): void
     {
@@ -35,16 +32,12 @@ class ListLive extends Component
 
     public function render()
     {
-        $editions = Edition::select('editions.id', 'editions.isbn13', 'editions.year', 'editions.book_id', 'editions.editorial_id')
+        $editions = Edition::select(['editions.id', 'editions.isbn13', 'editions.year', 'editions.book_id', 'editions.editorial_id'])
             ->leftJoin('books', 'editions.book_id', '=', 'books.id')
             ->leftJoin('editorials', 'editions.editorial_id', '=', 'editorials.id')
-            ->with('book:id,title', 'editorial:id,name,slug')
-            ->where(function ($query) {
-                $query->where('editions.isbn13', 'like', '%' . $this->search . '%')
-                    ->orWhereRelation('book', 'books.title', 'like', '%' . $this->search . '%')
-                    ->orWhereRelation('editorial', 'editorials.name', 'like', '%' . $this->search . '%');
-            })
-            ->orderBy($this->sortField, $this->sortDirection)
+            ->with(['book:id,title', 'editorial:id,name,slug'])
+            ->search($this->search)
+            ->orderByColumn($this->sortColumn, $this->sortDirection)
             ->paginate(10);
 
         return view('livewire.edition.list-live', [

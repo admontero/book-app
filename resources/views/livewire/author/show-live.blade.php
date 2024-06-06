@@ -51,11 +51,11 @@
                 </dl>
             </div>
 
-            @if ($author->biography)
+            {{-- @if ($author->biography)
                 <div class="px-4 py-3 bg-white dark:bg-gray-800 overflow-hidden rounded-md border border-gray-200 dark:border-gray-700 mt-4">
                     {!! $author->biography !!}
                 </div>
-            @endif
+            @endif --}}
         </div>
     </div>
 </div>

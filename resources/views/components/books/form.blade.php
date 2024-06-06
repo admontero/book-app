@@ -25,27 +25,29 @@
         </div>
 
         <div class="relative mt-4">
-            <x-label value="Autor" />
+            <x-label value="Autores" />
 
             <x-custom-select
                 containerClass="w-full lg:w-3/4"
                 :config="[
-                    'items' => 'form.authors',
-                    'value' => 'form.author_id',
+                    'items' => 'form.pseudonyms',
+                    'value' => 'form.pseudonym_ids',
                     'element' => 'author_list',
-                    'placeholder' => 'Selecciona un autor',
+                    'isMultiple' => true,
+                    'isCreatable' => false,
+                    'placeholder' => 'Selecciona uno o varios autores',
                     'empty' => 'No hay autores disponibles.'
                 ]"
                 :listeners="[
                     'update' => '
                         if (! $event.detail.value) return resetValue();
 
-                        $wire.form.author_id = $event.detail.value
+                        $wire.setPseudonym($event.detail.value)
                     ',
                 ]"
             />
 
-            <x-input-error for="form.author_id" />
+            <x-input-error for="form.pseudonym_ids" />
         </div>
 
         <div class="relative mt-4">

@@ -34,9 +34,9 @@
         <x-table-container class="mt-4" wire:key="genre-list">
             <thead class="bg-gray-50 dark:bg-gray-800">
                 <tr>
-                    <x-table-header-cell value="Nombre" sortableFor="name" :$sortField :$sortDirection />
+                    <x-table-header-cell value="Nombre" sortableFor="name" :$sortColumn :$sortDirection />
 
-                    <x-table-header-cell value="Slug" sortableFor="slug" :$sortField :$sortDirection />
+                    <x-table-header-cell value="Slug" sortableFor="slug" :$sortColumn :$sortDirection />
 
                     <th scope="col" class="relative px-4 py-3.5">
                         <span class="sr-only">Edit</span>
@@ -55,6 +55,8 @@
         </x-table-empty>
     @endif
 
-    {{ $this->genres->links('vendor.livewire.custom') }}
+    <div class="mt-4">
+        {{ $this->genres->links('vendor.livewire.custom') }}
+    </div>
 </section>
 

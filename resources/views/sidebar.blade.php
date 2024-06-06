@@ -143,6 +143,7 @@
                         auth()->user()->can('viewAny', App\Models\Edition::class) ||
                         auth()->user()->can('viewAny', App\Models\Editorial::class) ||
                         auth()->user()->can('viewAny', App\Models\Book::class) ||
+                        auth()->user()->can('viewAny', App\Models\Pseudonym::class) ||
                         auth()->user()->can('viewAny', App\Models\Author::class) ||
                         auth()->user()->can('viewAny', App\Models\Genre::class)
                     )
@@ -197,6 +198,23 @@
                             <x-icons.book class="w-5 h-5" />
 
                             <span class="mx-2 text-sm font-medium" x-show="$store.sidebar.on">Libros</span>
+                        </a>
+                    @endcan
+
+                    @can('viewAny', App\Models\Pseudonym::class)
+                        <a
+                            class="flex items-center px-3 py-2 text-gray-600 transform rounded-lg dark:text-gray-200 hover:bg-gray-100
+                                dark:hover:bg-gray-700 dark:hover:text-gray-200 hover:text-gray-700
+                                {{ request()->routeIs('back.pseudonyms.*') ? 'bg-gray-100 dark:bg-gray-700' : '' }}"
+                            x-data="{ tooltip: ! $store.sidebar.on ? 'Pseudónimos' : false }"
+                            x-init="$watch('$store.sidebar.on', value => tooltip = ! value ? 'Pseudónimos' : false )"
+                            x-tooltip.placement.right.delay.50="tooltip"
+                            href="{{ route('back.pseudonyms.index') }}"
+                            wire:navigate
+                        >
+                            <x-icons.pseudonym class="w-5 h-5" />
+
+                            <span class="mx-2 text-sm font-medium" x-show="$store.sidebar.on">Pseudónimos</span>
                         </a>
                     @endcan
 

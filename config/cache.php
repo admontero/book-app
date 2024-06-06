@@ -111,11 +111,11 @@ return [
     'tags' => [
         'front_dashboard_live' => [
             'name' => 'front_dashboard_live_editions',
-            'models' => ['author', 'book', 'copy', 'edition', 'editorial', 'genre'],
+            'models' => ['author', 'book', 'copy', 'edition', 'editorial', 'genre', 'pseudonym'],
         ],
-        'front_filters_authors_filter_live' => [
-            'name' => 'front_filters_authors_filter_live',
-            'models' => ['author', 'book', 'copy', 'edition'],
+        'front_filters_pseudonyms_filter_live' => [
+            'name' => 'front_filters_pseudonyms_filter_live',
+            'models' => ['author', 'book', 'copy', 'edition', 'pseudonym'],
         ],
         'front_filters_genres_filter_live' => [
             'name' => 'front_filters_genres_filter',

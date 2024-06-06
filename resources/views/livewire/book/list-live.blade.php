@@ -42,9 +42,9 @@
         <x-table-container class="mt-4" wire:key="book-list">
             <thead class="bg-gray-50 dark:bg-gray-800">
                 <tr>
-                    <x-table-header-cell value="Título" sortableFor="title" :$sortField :$sortDirection />
+                    <x-table-header-cell value="Título" sortableFor="title" :$sortColumn :$sortDirection />
 
-                    <x-table-header-cell class="hidden lg:table-cell" value="Autor" sortableFor="author_name" :$sortField :$sortDirection />
+                    <x-table-header-cell class="hidden lg:table-cell" value="Autores" />
 
                     <x-table-header-cell value="Géneros" />
 
@@ -65,5 +65,7 @@
         </x-table-empty>
     @endif
 
-    {{ $books->links('vendor.livewire.custom') }}
+    <div class="mt-4">
+        {{ $books->links('vendor.livewire.custom') }}
+    </div>
 </section>

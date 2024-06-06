@@ -10,20 +10,20 @@
             </dd>
             <dt class="sr-only lg:hidden">Autor</dt>
             <dd class="font-normal text-gray-600 dark:text-gray-400 truncate lg:hidden capitalize">
-                @if ($book->author_id)
-                    {{ $book->author->name }}
+                @if ($book->pseudonyms->count())
+                    {{ $book->pseudonyms->pluck('name')->join(', ') }}
                 @else
-                    <span class="italic text-xs">autor desconocido</span>
+                    <span class="italic text-xs">anónimo</span>
                 @endif
             </dd>
         </dl>
     </td>
 
     <td class="hidden lg:table-cell px-4 py-4 text-sm whitespace-nowrap text-gray-700 dark:text-gray-400 capitalize">
-        @if ($book->author_id)
-            {{ $book->author->name }}
+        @if ($book->pseudonyms->count())
+            <span>{{ $book->pseudonyms->pluck('name')->join(', ') }}</span>
         @else
-            <span class="italic text-xs">desconocido</span>
+            <span class="italic text-xs">anónimo</span>
         @endif
     </td>
 

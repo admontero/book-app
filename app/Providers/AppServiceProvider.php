@@ -11,6 +11,7 @@ use App\Models\Copy;
 use App\Models\Edition;
 use App\Models\Editorial;
 use App\Models\Genre;
+use App\Models\Pseudonym;
 use App\Models\User;
 use App\Observers\AuthorObserver;
 use App\Observers\BookObserver;
@@ -18,8 +19,10 @@ use App\Observers\CopyObserver;
 use App\Observers\EditionObserver;
 use App\Observers\EditorialObserver;
 use App\Observers\GenreObserver;
+use App\Observers\PseudonymObserver;
 use App\Policies\PermissionPolicy;
 use App\Policies\RolePolicy;
+use Illuminate\Auth\Access\Response;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
@@ -42,7 +45,9 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Gate::define('access-backoffice', function (User $user) {
-            return $user->hasAnyRole([RoleEnum::ADMIN->value, RoleEnum::SECRETARIO->value]);
+            return $user->hasAnyRole([RoleEnum::ADMIN->value, RoleEnum::SECRETARIO->value])
+                ? Response::allow()
+                : Response::denyAsNotFound();
         });
 
         Gate::define('access-frontoffice', function (User $user) {
@@ -54,6 +59,7 @@ class AppServiceProvider extends ServiceProvider
 
         Genre::observe(GenreObserver::class);
         Author::observe(AuthorObserver::class);
+        Pseudonym::observe(PseudonymObserver::class);
         Editorial::observe(EditorialObserver::class);
         Book::observe(BookObserver::class);
         Edition::observe(EditionObserver::class);

@@ -42,9 +42,9 @@
         <x-table-container class="mt-4" wire:key="edition-list">
             <thead class="bg-gray-50 dark:bg-gray-800">
                 <tr>
-                    <x-table-header-cell value="Libro" sortableFor="books.title" :$sortField :$sortDirection />
+                    <x-table-header-cell value="Libro" sortableFor="books.title" :$sortColumn :$sortDirection />
 
-                    <x-table-header-cell value="Editorial" sortableFor="editorials.name" :$sortField :$sortDirection />
+                    <x-table-header-cell value="Editorial" sortableFor="editorials.name" :$sortColumn :$sortDirection />
 
                     <x-table-header-cell value="ISBN13" />
 

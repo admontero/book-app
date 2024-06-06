@@ -4,7 +4,6 @@ namespace App\Livewire\Author;
 
 use App\Models\Author;
 use App\Traits\HasSort;
-use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Url;
@@ -21,10 +20,7 @@ class ListLive extends Component
 
     public ?Author $author = null;
 
-    public function mount(): void
-    {
-        $this->validateSorting(fields: ['id', 'name', 'countries.name']);
-    }
+    public array $sortableColumns = ['full_name', 'countries.name'];
 
     public function updatedSearch(): void
     {
@@ -39,23 +35,11 @@ class ListLive extends Component
 
     public function render(): View
     {
-        $authors = Author::select([
-                'authors.id',
-                'authors.firstname',
-                'authors.lastname',
-                'authors.pseudonym' ,
-                'authors.photo_path',
-                'authors.country_birth_id',
-                DB::raw('IF(authors.pseudonym, authors.pseudonym, CONCAT_WS(" ", authors.firstname, authors.lastname)) as name'),
-            ])
+        $authors = Author::select(['authors.id', 'authors.full_name', 'authors.photo_path', 'authors.country_birth_id'])
             ->leftJoin('countries', 'authors.country_birth_id', '=', 'countries.id')
-            ->with('country_birth:id,name,iso2')
-            ->where(function ($query) {
-                $query->where('authors.firstname', 'like', '%' . $this->search . '%')
-                        ->orWhere('authors.lastname', 'like', '%' . $this->search . '%')
-                        ->orWhere('authors.pseudonym', 'like', '%' . $this->search . '%');
-            })
-            ->orderBy($this->sortField, $this->sortDirection)
+            ->with(['country_birth:id,name,iso2'])
+            ->search($this->search)
+            ->orderByColumn($this->sortColumn, $this->sortDirection)
             ->paginate(10);
 
         return view('livewire.author.list-live', [

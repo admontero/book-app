@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use App\Traits\OrderByColumnScope;
 use Cviebrock\EloquentSluggable\Sluggable;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -14,6 +16,7 @@ class Genre extends Model
 {
     use HasFactory;
     use HasRelationships;
+    use OrderByColumnScope;
     use Sluggable;
 
     protected $guarded = ['id'];
@@ -49,5 +52,11 @@ class Genre extends Model
         return Attribute::make(
             set: fn (string $value) => mb_strtolower($value),
         );
+    }
+
+    public function scopeSearch(Builder $query, string $search): void
+    {
+        $query->where('name', 'like', '%' . $search . '%')
+            ->orWhere('slug', 'like', '%' . $search . '%');
     }
 }

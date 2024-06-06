@@ -18,6 +18,9 @@ enum PermissionEnum: string
     case VER_AUTORES = 'ver autores';
     case CREAR_AUTORES = 'crear autores';
     case EDITAR_AUTORES = 'editar autores';
+    case VER_PSEUDONIMOS = 'ver pseudonimos';
+    case CREAR_PSEUDONIMOS = 'crear pseudonimos';
+    case EDITAR_PSEUDONIMOS = 'editar pseudonimos';
     case VER_LIBROS = 'ver libros';
     case CREAR_LIBROS = 'crear libros';
     case EDITAR_LIBROS = 'editar libros';
@@ -54,6 +57,9 @@ enum PermissionEnum: string
             static::VER_AUTORES => 'Ver autores',
             static::CREAR_AUTORES => 'Crear autores',
             static::EDITAR_AUTORES => 'Editar autores',
+            static::VER_PSEUDONIMOS => 'Ver pseudonimos',
+            static::CREAR_PSEUDONIMOS => 'Crear pseudonimos',
+            static::EDITAR_PSEUDONIMOS => 'Editar pseudonimos',
             static::VER_LIBROS => 'Ver libros',
             static::CREAR_LIBROS => 'Crear libros',
             static::EDITAR_LIBROS => 'Editar libros',

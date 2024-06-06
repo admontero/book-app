@@ -20,6 +20,13 @@ class CreateLive extends Component
         $this->form->loadGenres();
     }
 
+    public function setPseudonym(int $id): void
+    {
+        $this->form->setPseudonym($id);
+
+        $this->dispatch('reset-search');
+    }
+
     public function setGenre(int $id): void
     {
         $this->form->setGenre($id);

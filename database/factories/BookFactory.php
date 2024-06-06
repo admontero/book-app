@@ -21,16 +21,6 @@ class BookFactory extends Factory
             'title' => $this->faker->words(rand(1, 3), true),
             'synopsis' => $this->faker->text(400),
             'publication_year' => $this->faker->year(),
-            'author_id' => Author::factory(),
         ];
-    }
-
-    public function existing(): Factory
-    {
-        return $this->state(function (array $attributes) {
-            return [
-                'author_id' => rand(1, 50),
-            ];
-        });
     }
 }

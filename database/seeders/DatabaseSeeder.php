@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             GenreSeeder::class,
             AuthorSeeder::class,
+            PseudonymSeeder::class,
             BookSeeder::class,
             EditorialSeeder::class,
             EditionSeeder::class,

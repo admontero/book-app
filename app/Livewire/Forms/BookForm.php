@@ -2,11 +2,9 @@
 
 namespace App\Livewire\Forms;
 
-use App\Models\Author;
 use App\Models\Book;
 use App\Models\Genre;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\DB;
+use App\Models\Pseudonym;
 use Livewire\Form;
 
 class BookForm extends Form
@@ -17,13 +15,13 @@ class BookForm extends Form
 
     public $publication_year;
 
-    public $author_id;
-
     public $synopsis;
+
+    public $pseudonym_ids = [];
 
     public $genre_ids = [];
 
-    public $authors = [];
+    public $pseudonyms = [];
 
     public $genres = [];
 
@@ -42,13 +40,14 @@ class BookForm extends Form
                 'min:0',
                 'max:' . now()->year,
             ],
-            'author_id' => [
-                'nullable',
-                'exists:authors,id',
-            ],
             'synopsis' => [
                 'nullable',
                 'max:800',
+            ],
+            'pseudonym_ids' => [
+                'nullable',
+                'array',
+                'exists:pseudonyms,id',
             ],
             'genre_ids' => [
                 'required',
@@ -64,7 +63,7 @@ class BookForm extends Form
         return [
             'title' => 'título',
             'publication_year' => 'año de publicación',
-            'author_id' => 'autor',
+            'pseudonym_ids' => 'autores',
             'genre_ids' => 'géneros',
             'synopsis' => 'sinopsis',
         ];
@@ -80,10 +79,7 @@ class BookForm extends Form
 
     public function loadAuthors(): void
     {
-        $this->authors = Author::select([
-            'id as value',
-            DB::raw('IF(pseudonym, pseudonym, CONCAT_WS(" ", firstname, lastname)) as label')
-        ])
+        $this->pseudonyms = Pseudonym::select(['id as value', 'name as label'])
             ->orderBy('label')
             ->get()
             ->toArray();
@@ -95,7 +91,23 @@ class BookForm extends Form
 
         $this->fill($book);
 
+        $this->pseudonym_ids = $book->pseudonyms->pluck('id')->toArray();
+
         $this->genre_ids = $book->genres->pluck('id')->toArray();
+    }
+
+    public function setPseudonym(int $id): void
+    {
+        if (! $id) return ;
+
+        if (in_array($id, $this->pseudonym_ids)) {
+            $this->pseudonym_ids = array_values(array_filter($this->pseudonym_ids, fn ($value) => $value !== $id));
+
+            return ;
+        }
+
+        $this->pseudonym_ids[] = $id;
+        $this->pseudonym_ids = array_values($this->pseudonym_ids);
     }
 
     public function setGenre(int $id): void
@@ -131,10 +143,12 @@ class BookForm extends Form
         $this->synopsis = $this->synopsis ? $this->synopsis : null;
 
         if ($this->book) {
-            $this->book->update($this->only(['title', 'publication_year', 'author_id', 'synopsis']));
+            $this->book->update($this->only(['title', 'publication_year', 'synopsis']));
         } else {
-            $this->book = Book::create($this->only(['title', 'publication_year', 'author_id', 'synopsis']));
+            $this->book = Book::create($this->only(['title', 'publication_year', 'synopsis']));
         }
+
+        $this->book->pseudonyms()->sync($this->pseudonym_ids);
 
         $this->book->genres()->sync($this->genre_ids);
     }

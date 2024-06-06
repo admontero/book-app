@@ -28,10 +28,7 @@ class ListLive extends Component
 
     public array $permissions = [];
 
-    public function mount(): void
-    {
-        $this->validateSorting(fields: ['id', 'name', 'email', 'roles.name']);
-    }
+    public array $sortableColumns = ['name', 'email', 'roles.name'];
 
     public function updatedSearch(): void
     {
@@ -78,23 +75,16 @@ class ListLive extends Component
 
     public function render(): View
     {
-        $users = tap(User::select('users.id', 'users.name', 'users.email')
+        $users = tap(User::select(['users.id', 'users.name', 'users.email'])
             ->leftJoin('model_has_roles', function ($join) {
                 $join->on('users.id', '=', 'model_has_roles.model_id')
                     ->where('model_has_roles.model_type', '=', 'App\Models\User');
             })
             ->leftJoin('roles', 'roles.id', '=', 'model_has_roles.role_id')
-            ->with('roles:id,name', 'permissions:id,name', 'roles.permissions:id,name')
-            ->when($this->rolesArray, function ($query) {
-                $query->whereHas('roles', function ($query) {
-                    $query->whereIn('name', $this->rolesArray);
-                });
-            })
-            ->where(function ($query) {
-                $query->where('users.name', 'like', '%' . $this->search . '%')
-                    ->orWhere('users.email', 'like', '%' . $this->search . '%');
-            })
-            ->orderBy($this->sortField, $this->sortDirection)
+            ->with(['roles:id,name', 'permissions:id,name', 'roles.permissions:id,name'])
+            ->search($this->search)
+            ->inRoles($this->rolesArray)
+            ->orderByColumn($this->sortColumn, $this->sortDirection)
             ->paginate(10))
             ->transform(function ($user) {
                 $user->permissions_count = count($user->permissions->merge($user->roles->flatMap(fn ($role) => $role->permissions)));

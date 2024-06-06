@@ -47,14 +47,24 @@
         </div>
     @endif
 
-    @if ($copy->edition?->book?->author_id)
+    @if ($copy->edition?->book?->pseudonyms->count())
+        <div class="px-4 py-3 bg-gray-50 dark:bg-gray-900 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-6">
+            <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">
+                Autores
+            </dt>
+
+            <dd class="mt-1 text-sm text-gray-900 dark:text-gray-100 sm:mt-0 sm:col-span-3 capitalize">
+                {{ $copy->edition?->book?->pseudonyms->pluck('name')->join(', ') }}
+            </dd>
+        </div>
+    @else
         <div class="px-4 py-3 bg-gray-50 dark:bg-gray-900 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-6">
             <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">
                 Autor
             </dt>
 
-            <dd class="mt-1 text-sm text-gray-900 dark:text-gray-100 sm:mt-0 sm:col-span-3 capitalize">
-                {{ $copy->edition?->book?->author?->name }}
+            <dd class="mt-1 text-sm italic text-gray-900 dark:text-gray-100 sm:mt-0 sm:col-span-3 capitalize">
+                Anónimo
             </dd>
         </div>
     @endif

@@ -22,7 +22,7 @@ class DashboardLive extends Component
         'search' => '',
         'genres' => [],
         'editorials' => [],
-        'authors' => [],
+        'pseudonyms' => [],
     ];
 
     public function updatedPerPage(): void
@@ -78,7 +78,8 @@ class DashboardLive extends Component
     {
         $editions = Cache::tags(config('cache.tags.front_dashboard_live.name'))
             ->remember($this->cacheKey(), 3600, function () {
-                return Edition::with('copies:id,edition_id,status', 'book:id,title,slug', 'book.genres:id,name,slug')
+                return Edition::select(['id', 'book_id', 'slug', 'cover_path'])
+                    ->with('copies:id,edition_id,status', 'book:id,title,slug', 'book.genres:id,name,slug')
                     ->has('enabledCopies')
                     ->filterBy($this->filters)
                     ->latest('id')

@@ -48,11 +48,11 @@
         <x-table-container class="mt-4" wire:key="user-list">
             <thead class="bg-gray-50 dark:bg-gray-800">
                 <tr>
-                    <x-table-header-cell value="Nombre" sortableFor="name" :$sortField :$sortDirection />
+                    <x-table-header-cell value="Nombre" sortableFor="name" :$sortColumn :$sortDirection />
 
-                    <x-table-header-cell class="hidden xl:table-cell" value="Email" sortableFor="email" :$sortField :$sortDirection />
+                    <x-table-header-cell class="hidden xl:table-cell" value="Email" sortableFor="email" :$sortColumn :$sortDirection />
 
-                    <x-table-header-cell class="hidden lg:table-cell" value="Rol" sortableFor="roles.name" :$sortField :$sortDirection />
+                    <x-table-header-cell class="hidden lg:table-cell" value="Rol" sortableFor="roles.name" :$sortColumn :$sortDirection />
 
                     <x-table-header-cell value="Permisos" />
 

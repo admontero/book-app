@@ -2,7 +2,6 @@
 
 namespace App\Livewire\Front\Fine;
 
-use App\Enums\FineStatusEnum;
 use App\Models\Fine;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Layout;
@@ -48,38 +47,13 @@ class ListLive extends Component
 
     public function render()
     {
-        $fines = Fine::select('fines.id', 'fines.loan_id', 'fines.user_id', 'fines.days', 'fines.total', 'fines.status')
+        $fines = Fine::select(['fines.id', 'fines.loan_id', 'fines.user_id', 'fines.days', 'fines.total', 'fines.status'])
             ->join('loans', 'loans.id', '=', 'fines.loan_id')
-            ->with('loan:id,copy_id,user_id,serial,start_date,limit_date,devolution_date,is_fineable,fine_amount,status')
+            ->with(['loan:id,copy_id,user_id,serial,start_date,limit_date,devolution_date,is_fineable,fine_amount,status'])
             ->where('fines.user_id', auth()->id())
-            ->where(function ($query) {
-                $query->whereHas('loan', function ($query) {
-                    $query->where('serial', 'like', '%' . $this->search . '%')
-                        ->orWhereHas('copy', function ($query) {
-                            $query->where('copies.identifier', 'like', '%' . $this->search . '%')
-                                ->orWhereHas('edition', function ($query) {
-                                    $query->whereRelation('book', 'books.title', 'like', '%' . $this->search . '%')
-                                        ->orWhereRelation('editorial', 'editorials.name', 'like', '%' . $this->search . '%')
-                                        ->orWhereHas('book', function ($query) {
-                                            $query->whereRelation('author', 'firstname', 'like', '%' . $this->search . '%')
-                                                ->orWhereRelation('author', 'lastname', 'like', '%' . $this->search . '%')
-                                                ->orWhereRelation('author', 'pseudonym', 'like', '%' . $this->search . '%');
-                                        });
-                                });
-                        });
-                });
-            })
-            ->orderByRaw("
-                CASE
-                    WHEN fines.status = '". FineStatusEnum::PENDIENTE->value ."' THEN 1
-                    WHEN fines.status = '". FineStatusEnum::PAGADA->value ."' THEN 2
-                    WHEN fines.status = '". FineStatusEnum::DESESTIMADA   ->value ."' THEN 3
-                    ELSE 4
-                END
-            ")
-            ->when($this->statusesArray, function ($query) {
-                $query->whereIn('fines.status', $this->statusesArray);
-            })
+            ->search($this->search)
+            ->inStatuses($this->statusesArray)
+            ->orderByStatus()
             ->orderBy('loans.start_date', 'desc')
             ->orderBy('fines.id', 'desc')
             ->paginate(10);

@@ -1,6 +1,12 @@
 <tr wire:key="loan-{{ $loan->id }}">
     <td class="px-4 py-4 text-sm font-medium whitespace-nowrap">
-        <div class="font-medium text-gray-800 dark:text-white truncate first-letter:uppercase">{{ $loan->serial}}</div>
+        <div class="font-medium text-gray-800 dark:text-white truncate first-letter:uppercase">
+            @if ($loan->serial)
+                {{ $loan->serial}}
+            @else
+                ---
+            @endif
+        </div>
     </td>
 
     <td class="px-4 py-4 text-sm font-medium whitespace-nowrap">
@@ -15,8 +21,8 @@
             </dd>
             <dt class="sr-only">Autor</dt>
             <dd class="font-normal text-gray-600 dark:text-gray-400 truncate capitalize">
-                @if ($loan->copy->edition?->book?->author_id)
-                    {{ $loan->copy->edition?->book?->author?->name }}
+                @if ($loan->copy->edition?->book?->pseudonyms->count())
+                    {{ $loan->copy->edition?->book?->pseudonyms->pluck('name')->join(', ') }}
                 @else
                     <span class="italic text-xs">autor desconocido</span>
                 @endif

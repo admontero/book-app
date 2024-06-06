@@ -4,7 +4,9 @@ namespace App\Models;
 
 use App\Enums\CopyStatusEnum;
 use App\Filters\FilterBuilder;
+use App\Traits\OrderByColumnScope;
 use Cviebrock\EloquentSluggable\Sluggable;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -15,6 +17,7 @@ use Illuminate\Support\Facades\Storage;
 class Edition extends Model
 {
     use HasFactory;
+    use OrderByColumnScope;
     use Sluggable;
 
     protected $guarded = ['id'];
@@ -58,12 +61,19 @@ class Edition extends Model
         });
     }
 
-    public function scopeFilterBy($query, $filters)
+    public function scopeFilterBy(Builder $query, array $filters = [])
     {
         $namespace = 'App\Filters\EditionFilters';
 
         $filter = new FilterBuilder($query, $filters, $namespace);
 
         return $filter->apply();
+    }
+
+    public function scopeSearch(Builder $query, string $search): void
+    {
+        $query->where('editions.isbn13', 'like', '%' . $search . '%')
+            ->orWhereRelation('book', 'books.title', 'like', '%' . $search . '%')
+            ->orWhereRelation('editorial', 'editorials.name', 'like', '%' . $search . '%');
     }
 }

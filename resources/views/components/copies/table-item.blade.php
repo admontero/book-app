@@ -10,8 +10,8 @@
             </dd>
             <dt class="sr-only">Autor</dt>
             <dd class="font-normal text-gray-600 dark:text-gray-400 truncate capitalize">
-                @if ($copy->edition?->book?->author_id)
-                    {{ $copy->edition?->book?->author?->name }}
+                @if ($copy->edition?->book?->pseudonyms->count())
+                    {{ $copy->edition?->book?->pseudonyms->pluck('name')->join(', ') }}
                 @else
                     <span class="italic text-xs">autor desconocido</span>
                 @endif

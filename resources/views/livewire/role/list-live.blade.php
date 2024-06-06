@@ -31,7 +31,7 @@
         <x-table-container class="mt-4" wire:key="role-list">
             <thead class="bg-gray-50 dark:bg-gray-800">
                 <tr>
-                    <x-table-header-cell value="Nombre" sortableFor="name" :$sortField :$sortDirection />
+                    <x-table-header-cell value="Nombre" sortableFor="name" :$sortColumn :$sortDirection />
 
                     <x-table-header-cell class="hidden lg:table-cell" value="Usuarios" />
 

@@ -1,38 +1,49 @@
 <div>
     <div class="px-4 py-3">
         <div>
-            <x-label value="Nombre" />
+            <x-label value="Primer Nombre" />
 
             <x-input
                 class="w-full lg:w-3/4 mt-1"
-                wire:model="form.firstname"
-                x-ref="firstname"
+                wire:model="form.first_name"
+                x-ref="first_name"
                 x-init="$focus.focus($el)"
             />
 
-            <x-input-error for="form.firstname" />
+            <x-input-error for="form.first_name" />
         </div>
 
         <div class="mt-4">
-            <x-label value="Apellido" />
+            <x-label value="Segundo Nombre (Opcional)" />
 
             <x-input
                 class="w-full lg:w-3/4 mt-1"
-                wire:model="form.lastname"
+                wire:model="form.middle_name"
             />
 
-            <x-input-error for="form.lastname" />
+            <x-input-error for="form.middle_name" />
         </div>
 
         <div class="mt-4">
-            <x-label value="Pseudónimo" />
+            <x-label value="Primer Apellido" />
 
             <x-input
                 class="w-full lg:w-3/4 mt-1"
-                wire:model="form.pseudonym"
+                wire:model="form.first_surname"
             />
 
-            <x-input-error for="form.pseudonym" />
+            <x-input-error for="form.first_surname" />
+        </div>
+
+        <div class="mt-4">
+            <x-label value="Segundo Apellido (Opcional)" />
+
+            <x-input
+                class="w-full lg:w-3/4 mt-1"
+                wire:model="form.second_surname"
+            />
+
+            <x-input-error for="form.second_surname" />
         </div>
 
         <div
@@ -210,16 +221,6 @@
 
             <x-input-error for="form.date_of_death" />
         </div>
-
-        <div class="mt-4">
-            <x-label value="Biografía" />
-
-            <div class="mt-1" wire:ignore>
-                <div id="biography"></div>
-            </div>
-
-            <x-input-error for="form.biography" />
-        </div>
     </div>
 
     <hr class="dark:border-gray-700">
@@ -238,32 +239,3 @@
         >Guardar</x-primary-button>
     </div>
 </div>
-
-@script
-    <script>
-        ClassicEditor
-            .create(document.querySelector('#biography'), {
-                toolbar: {
-                    items: [
-                        'undo', 'redo',
-                        '|', 'heading',
-                        '|', 'bold', 'italic',
-                        '|', 'link', 'blockQuote',
-                        '|', 'bulletedList', 'numberedList', 'outdent', 'indent'
-                    ],
-                    shouldNotGroupWhenFull: true
-                },
-            })
-            .then(editor => {
-
-                editor.setData($wire.form.biography ?? '')
-
-                editor.model.document.on('change:data', () => {
-                    $wire.form.biography = editor.getData();
-                })
-            })
-            .catch(error => {
-                console.error(error);
-            });
-    </script>
-@endscript

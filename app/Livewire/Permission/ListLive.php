@@ -3,14 +3,13 @@
 namespace App\Livewire\Permission;
 
 use App\Livewire\Forms\PermissionForm;
+use App\Models\Permission;
 use App\Traits\HasSort;
 use Illuminate\View\View;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Url;
 use Livewire\Component;
 use Livewire\WithPagination;
-use Spatie\Permission\Models\Permission;
-
 class ListLive extends Component
 {
     use HasSort;
@@ -23,10 +22,7 @@ class ListLive extends Component
 
     public PermissionForm $form;
 
-    public function mount(): void
-    {
-        $this->validateSorting(fields: ['id', 'name']);
-    }
+    public array $sortableColumns = ['name'];
 
     public function updatedSearch(): void
     {
@@ -58,11 +54,11 @@ class ListLive extends Component
 
     public function render(): View
     {
-        $permissions = Permission::select('id', 'name')
-            ->with('users:id,name,profile_photo_path', 'roles:id,name')
-            ->withCount('users', 'roles')
-            ->where('name', 'like', '%' . $this->search . '%')
-            ->orderBy($this->sortField, $this->sortDirection)
+        $permissions = Permission::select(['id', 'name'])
+            ->with(['users:id,name,profile_photo_path', 'roles:id,name'])
+            ->withCount(['users', 'roles'])
+            ->search($this->search)
+            ->orderByColumn($this->sortColumn, $this->sortDirection)
             ->paginate(10);
 
         return view('livewire.permission.list-live', [

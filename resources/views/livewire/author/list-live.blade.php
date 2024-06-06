@@ -42,9 +42,9 @@
         <x-table-container class="mt-4" wire:key="author-list">
             <thead class="bg-gray-50 dark:bg-gray-800">
                 <tr>
-                    <x-table-header-cell value="Nombre" sortableFor="name" :$sortField :$sortDirection />
+                    <x-table-header-cell value="Nombre" sortableFor="full_name" :$sortColumn :$sortDirection />
 
-                    <x-table-header-cell class="hidden lg:table-cell" value="País" sortableFor="countries.name" :$sortField :$sortDirection />
+                    <x-table-header-cell class="hidden lg:table-cell" value="País" sortableFor="countries.name" :$sortColumn :$sortDirection />
 
                     <th scope="col" class="relative px-4 py-3.5">
                         <span class="sr-only">Edit</span>

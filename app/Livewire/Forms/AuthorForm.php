@@ -15,11 +15,13 @@ class AuthorForm extends Form
 {
     public ?Author $author = null;
 
-    public $firstname;
+    public $first_name;
 
-    public $lastname;
+    public $middle_name;
 
-    public $pseudonym;
+    public $first_surname;
+
+    public $second_surname;
 
     public $photo;
 
@@ -39,20 +41,22 @@ class AuthorForm extends Form
 
     public $cities = [];
 
-    public $biography = null;
-
     public function rules(): array
     {
         return [
-            'firstname' => [
+            'first_name' => [
                 'required',
                 'max:60',
             ],
-            'lastname' => [
+            'middle_name' => [
+                'nullable',
+                'max:60',
+            ],
+            'first_surname' => [
                 'required',
                 'max:60',
             ],
-            'pseudonym' => [
+            'second_surname' => [
                 'nullable',
                 'max:60',
             ],
@@ -93,15 +97,15 @@ class AuthorForm extends Form
     public function validationAttributes(): array
     {
         return [
-            'firstname' => 'nombre',
-            'lastname' => 'apellido',
-            'pseudonym' => 'seudónimo',
+            'first_name' => 'primer nombre',
+            'middle_name' => 'segundo nombre',
+            'first_surname' => 'primer apellido',
+            'second_surname' => 'segundo apellido',
             'date_of_birth' => 'fecha de nacimiento',
             'country_birth_id' => 'país de nacimiento',
             'state_birth_id' => 'estado de nacimiento',
             'city_birth_id' => 'ciudad de nacimiento',
             'date_of_death' => 'fecha de defunción',
-            'biography' => 'biografía',
         ];
     }
 
@@ -215,37 +219,33 @@ class AuthorForm extends Form
 
         $this->date_of_death = $this->date_of_death ?: null;
 
-        $this->pseudonym = $this->pseudonym ?: null;
-
-        $this->biography = $this->biography ?: null;
-
         if ($this->author) {
             $this->author->update([
                 ...$this->only([
-                    'firstname',
-                    'lastname',
-                    'pseudonym',
+                    'first_name',
+                    'middle_name',
+                    'first_surname',
+                    'second_surname',
                     'date_of_birth',
                     'country_birth_id',
                     'state_birth_id',
                     'city_birth_id',
                     'date_of_death',
-                    'biography'
                 ]),
                 'photo_path' => isset($path) ? $path : $this->author->photo_path,
             ]);
         } else {
             Author::create([
                 ...$this->only([
-                    'firstname',
-                    'lastname',
-                    'pseudonym',
+                    'first_name',
+                    'middle_name',
+                    'first_surname',
+                    'second_surname',
                     'date_of_birth',
                     'country_birth_id',
                     'state_birth_id',
                     'city_birth_id',
                     'date_of_death',
-                    'biography'
                 ]),
                 'photo_path' => isset($path) ? $path : null,
             ]);

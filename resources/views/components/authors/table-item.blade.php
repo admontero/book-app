@@ -1,8 +1,8 @@
 <tr wire:key="author-{{ $author->id }}">
     <td class="flex items-center px-4 py-4 text-sm font-medium whitespace-nowrap">
-        <img class="object-cover w-10 h-10 rounded-full" src="{{ $author->photo_url }}" alt="foto de {{ $author->name }}">
+        <img class="object-cover w-10 h-10 rounded-full" src="{{ $author->photo_url }}" alt="foto de {{ $author->full_name }}">
         <div class="ml-2">
-            <h2 class="font-medium text-gray-800 dark:text-white truncate capitalize">{{ $author->name }}</h2>
+            <h2 class="font-medium text-gray-800 dark:text-white truncate capitalize">{{ $author->full_name }}</h2>
             @if ($author->country_birth_id)
                 <dl class="lg:hidden">
                     <dt class="sr-only">País</dt>
