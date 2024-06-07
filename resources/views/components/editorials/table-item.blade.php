@@ -29,8 +29,7 @@
                         <button
                             class="flex w-full px-4 py-2 text-start text-sm leading-5 text-gray-700 dark:text-gray-300 hover:bg-gray-100
                                 dark:hover:bg-gray-600 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-600 transition duration-150 ease-in-out"
-                            wire:click="setEditorial('{{ $editorial->id }}')"
-                            @click="$dispatch('set-edit-editorial-{{ $editorial->id }}'); show = false;"
+                            @click="$dispatch('show-modal-{{ $editorial->id }}'); show = false;"
                         >
                             <x-icons.edit class="w-5 h-5 me-2" />
                             Editar editorial
@@ -38,7 +37,11 @@
                     </x-slot>
                 </x-dropdown-floating>
 
-                <x-editorials.edit :$editorial />
+                <livewire:editorial.edit-live
+                    :id="$editorial->id"
+                    wire:key="edit-modal-{{ $editorial->id }}"
+                    @saved="$refresh"
+                />
             </div>
 
             <a

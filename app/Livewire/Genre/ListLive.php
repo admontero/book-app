@@ -19,28 +19,13 @@ class ListLive extends Component
     #[Url(except: '')]
     public string $search = '';
 
-    public ?Genre $genre = null;
-
     public GenreForm $form;
 
-    public array $sortableColumns = ['created_at', 'name', 'slug'];
+    public array $sortableColumns = ['name', 'slug'];
 
     public function updatedSearch(): void
     {
         $this->resetPage();
-    }
-
-    public function setGenre(string $id): void
-    {
-        $genre = $this->genres->firstWhere('id', $id);
-
-        if (! $genre) abort(404);
-
-        $this->genre = $genre;
-
-        $this->form->setGenre($genre);
-
-        $this->dispatch('show-edit-genre-' . $genre->id)->self();
     }
 
     public function save(): void
@@ -49,14 +34,6 @@ class ListLive extends Component
 
         $this->dispatch('close-create-genre');
         $this->dispatch('new-alert', message: 'Género agregado con éxito', type: 'success');
-    }
-
-    public function update(): void
-    {
-        $this->form->save();
-
-        $this->dispatch('genre-updated-' . $this->genre->id)->self();
-        $this->dispatch('new-alert', message: 'Género actualizado con éxito', type: 'success');
     }
 
     public function showDialog(): void

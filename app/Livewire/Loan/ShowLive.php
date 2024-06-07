@@ -31,7 +31,7 @@ class ShowLive extends Component
             'copy.edition',
             'copy.edition.editorial',
             'copy.edition.book',
-            'copy.edition.book.author',
+            'copy.edition.book.pseudonyms',
             'copy.edition.book.genres',
         ]);
 

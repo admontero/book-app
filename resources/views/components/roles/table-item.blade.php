@@ -177,7 +177,7 @@
 
     <td class="px-4 py-4 text-sm whitespace-nowrap">
         <div class="flex justify-center items-center gap-2">
-            <x-dropdown-floating position="left-start">
+            <x-dropdown-floating position="left-start" wire:ignore>
                 <x-slot name="trigger">
                     <button
                         class="p-2 rounded-md bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-600 hover:text-gray-900

@@ -18,7 +18,7 @@ class ListLive extends Component
     #[Url(except: '')]
     public $search = '';
 
-    public array $sortableColumns = ['created_at', 'title'];
+    public array $sortableColumns = ['title'];
 
     public function updatedSearch(): void
     {

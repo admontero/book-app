@@ -47,6 +47,6 @@ class Editorial extends Model
     public function scopeSearch(Builder $query, string $search): void
     {
         $query->where('name', 'like', '%' . $search . '%')
-            ->orWhere('slug', 'like', '%' . $this->search . '%');
+            ->orWhere('slug', 'like', '%' . $search . '%');
     }
 }

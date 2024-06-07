@@ -2,7 +2,6 @@
 
 namespace App\Livewire\Permission;
 
-use App\Livewire\Forms\PermissionForm;
 use App\Models\Permission;
 use App\Traits\HasSort;
 use Illuminate\View\View;
@@ -18,10 +17,6 @@ class ListLive extends Component
     #[Url(except: '')]
     public $search = '';
 
-    public ?Permission $permission = null;
-
-    public PermissionForm $form;
-
     public array $sortableColumns = ['name'];
 
     public function updatedSearch(): void
@@ -29,27 +24,10 @@ class ListLive extends Component
         $this->resetPage();
     }
 
-    public function setPermission(Permission $permission): void
-    {
-        $this->permission = $permission;
-
-        $this->form->setPermission($permission);
-
-        $this->dispatch('show-edit-permission-' . $permission->id)->self();
-    }
-
     #[Computed]
     public function permissionsCount(): int
     {
         return Permission::count();
-    }
-
-    public function save(): void
-    {
-        $this->form->save();
-
-        $this->dispatch('close-edit-permission-' . $this->permission->id)->self();
-        $this->dispatch('new-alert', message: 'Permiso actualizado con éxito', type: 'success');
     }
 
     public function render(): View

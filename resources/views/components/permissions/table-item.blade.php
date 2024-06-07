@@ -168,38 +168,41 @@
     </td>
 
     <td class="px-4 py-4 text-sm whitespace-nowrap">
-        <div class="flex gap-2 justify-center items-center" x-ref="permission{{ $permission->id }}">
-            <x-dropdown-floating position="left-start">
-                <x-slot name="trigger">
-                    <button
-                        class="p-2 rounded-md bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-600 hover:text-gray-900
-                        dark:text-white dark:hover:text-gray-300 border border-gray-200 dark:border-gray-600 shadow"
-                        x-tooltip.raw="Opciones"
-                    >
-                        <x-icons.dots-vertical class="w-5 h-5" />
-                    </button>
-                </x-slot>
+        <div class="flex gap-2 justify-center items-center">
+            <div x-ref="permission_{{ $permission->id }}">
+                <x-dropdown-floating position="left-start" wire:ignore>
+                    <x-slot name="trigger">
+                        <button
+                            class="p-2 rounded-md bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-600 hover:text-gray-900
+                            dark:text-white dark:hover:text-gray-300 border border-gray-200 dark:border-gray-600 shadow"
+                            x-tooltip.raw="Opciones"
+                        >
+                            <x-icons.dots-vertical class="w-5 h-5" />
+                        </button>
+                    </x-slot>
 
-                <x-slot name="content">
-                    <div class="block px-4 py-2 text-xs text-gray-400">
-                        Opciones
-                    </div>
+                    <x-slot name="content">
+                        <div class="block px-4 py-2 text-xs text-gray-400">
+                            Opciones
+                        </div>
 
-                    <button
-                        class="block w-full px-4 py-2 text-start text-sm leading-5 text-gray-700 dark:text-gray-300 hover:bg-gray-100
-                            dark:hover:bg-gray-600 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-600 transition duration-150 ease-in-out"
-                        @click="$dispatch('set-edit-permission-{{ $permission->id }}'); show = false;"
-                    >
-                        <svg
-                            class="icon icon-tabler icon-tabler-edit inline-flex w-5 h-5"
-                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /><path d="M16 5l3 3" />
-                        </svg>
-                        Editar descripción
-                    </button>
-                </x-slot>
-            </x-dropdown-floating>
+                        <button
+                            class="flex w-full px-4 py-2 text-start text-sm leading-5 text-gray-700 dark:text-gray-300 hover:bg-gray-100
+                                dark:hover:bg-gray-600 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-600 transition duration-150 ease-in-out"
+                            @click="$dispatch('show-modal-{{ $permission->id }}'); show = false;"
+                        >
+                            <x-icons.edit class="w-5 h-5 me-2" />
+                            Editar descripción
+                        </button>
+                    </x-slot>
+                </x-dropdown-floating>
 
-            <x-permissions.edit :$permission />
+                <livewire:permission.edit-live
+                    :id="$permission->id"
+                    wire:key="edit-modal-{{ $permission->id }}"
+                    @saved="$refresh"
+                />
+            </div>
 
             <a
                 class="p-2 rounded-md bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-600 hover:text-gray-900

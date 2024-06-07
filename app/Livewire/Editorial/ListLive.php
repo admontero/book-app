@@ -19,8 +19,6 @@ class ListLive extends Component
     #[Url(except: '')]
     public $search = '';
 
-    public ?Editorial $editorial = null;
-
     public EditorialForm $form;
 
     public array $sortableColumns = ['name', 'slug'];
@@ -30,33 +28,12 @@ class ListLive extends Component
         $this->resetPage();
     }
 
-    public function setEditorial(string $id): void
-    {
-        $editorial = $this->editorials->firstWhere('id', $id);
-
-        if (! $editorial) abort(404);
-
-        $this->editorial = $editorial;
-
-        $this->form->setEditorial($editorial);
-
-        $this->dispatch('show-edit-editorial-' . $editorial->id)->self();
-    }
-
     public function save(): void
     {
         $this->form->save();
 
         $this->dispatch('close-create-editorial');
         $this->dispatch('new-alert', message: 'Editorial agregada con éxito', type: 'success');
-    }
-
-    public function update(): void
-    {
-        $this->form->save();
-
-        $this->dispatch('editorial-updated-' . $this->editorial->id)->self();
-        $this->dispatch('new-alert', message: 'Editorial actualizada con éxito', type: 'success');
     }
 
     public function showDialog(): void

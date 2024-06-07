@@ -52,7 +52,7 @@
                 @endif
             </div>
 
-            <x-dropdown-floating width="w-72" position="bottom-start">
+            <x-dropdown-floating width="w-72" position="bottom-start" wire:ignore>
                 <x-slot name="trigger">
                     <button
                         class="mt-1 underline underline-offset-2 text-indigo-400 dark:text-indigo-300 text-xs font-medium"
@@ -109,7 +109,7 @@
 
     <td class="px-4 py-4 text-sm whitespace-nowrap">
         <div class="flex justify-center gap-2 items-center">
-            <x-dropdown-floating position="left-start">
+            <x-dropdown-floating position="left-start" wire:ignore>
                 <x-slot name="trigger">
                     <button
                         class="p-2 rounded-md bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-600 hover:text-gray-900

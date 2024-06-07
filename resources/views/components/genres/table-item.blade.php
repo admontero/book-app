@@ -29,8 +29,7 @@
                         <button
                             class="flex w-full px-4 py-2 text-start text-sm leading-5 text-gray-700 dark:text-gray-300 hover:bg-gray-100
                                 dark:hover:bg-gray-600 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-600 transition duration-150 ease-in-out"
-                            wire:click="setGenre('{{ $genre->id }}')"
-                            @click="$dispatch('set-edit-genre-{{ $genre->id }}'); show = false;"
+                            @click="$dispatch('show-modal-{{ $genre->id }}'); show = false;"
                         >
                             <x-icons.edit class="w-5 h-5 me-2" />
                             Editar género
@@ -38,7 +37,11 @@
                     </x-slot>
                 </x-dropdown-floating>
 
-                <x-genres.edit :$genre />
+                <livewire:genre.edit-live
+                    :id="$genre->id"
+                    wire:key="edit-modal-{{ $genre->id }}"
+                    @saved="$refresh"
+                />
             </div>
 
             <a
