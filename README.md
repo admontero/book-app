@@ -39,6 +39,10 @@ Ejecuta todos los seeders configurados para la aplicación
 
     php artisan db:seed
 
+Ejecuta el siguiente comando para generar el link simbólico de los archivos
+
+    php artisan storage:link
+
 Instalar las dependencias de JavaScript usando npm
 
     npm install
