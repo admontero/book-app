@@ -1,6 +1,8 @@
 <tr wire:key="pseudonym-{{ $pseudonym->id }}">
     <td class="flex items-center px-4 py-4 text-sm font-medium whitespace-nowrap">
-        {{ $pseudonym->name }}
+        <div class="text-gray-800 dark:text-white">
+            {{ $pseudonym->name }}
+        </div>
     </td>
 
     <td class="px-4 py-4 text-sm whitespace-nowrap text-gray-700 dark:text-gray-400">
