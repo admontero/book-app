@@ -1,4 +1,14 @@
 <section class="max-w-7xl px-4 mx-auto">
+    @if ($isLoading)
+        <div class="jetstream-modal fixed inset-0 overflow-y-auto px-4 py-6 sm:px-0 z-50">
+            <div class="absolute inset-0 bg-gray-500 dark:bg-gray-900 opacity-30"></div>
+
+            <div class="flex justify-center items-center h-full overflow-hidden">
+                <x-icons.loading class="w-12 h-12 animate-spin text-[#9BC503]" />
+            </div>
+        </div>
+    @endif
+
     <h2 class="text-xl font-medium text-gray-800 dark:text-white">Multas</h2>
 
     <div class="mt-6 md:flex md:flex-wrap md:gap-4 md:items-center md:justify-between">
@@ -30,7 +40,7 @@
         </div>
     </div>
 
-    @if ($fines->count())
+    @if ($this->fines->count())
         <x-table-container class="mt-4" wire:key="fine-list">
             <thead class="bg-gray-50 dark:bg-gray-800">
                 <tr>
@@ -43,10 +53,12 @@
                     <x-table-header-cell value="Total" />
 
                     <x-table-header-cell value="Estado" />
+
+                    <x-table-header-cell />
                 </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
-                @foreach ($fines as $fine)
+                @foreach ($this->fines as $fine)
                     <x-fines.front.table-item :$fine />
                 @endforeach
             </tbody>
@@ -58,6 +70,6 @@
     @endif
 
     <div class="mt-4">
-        {{ $fines->links() }}
+        {{ $this->fines->links() }}
     </div>
 </section>

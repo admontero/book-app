@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Fine extends Model
 {
@@ -22,6 +23,11 @@ class Fine extends Model
     public function loan(): BelongsTo
     {
         return $this->belongsTo(Loan::class, 'loan_id');
+    }
+
+    public function payments(): HasMany
+    {
+        return $this->hasMany(Payment::class);
     }
 
     public function scopeSearch(Builder $query, string $search): void

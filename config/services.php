@@ -31,4 +31,13 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'payu' => [
+        'checkout_url' => env('PAYU_CHECKOUT_URL'),
+        'api_login' => env('PAYU_API_LOGIN'),
+        'api_key' => env('PAYU_API_KEY'),
+        'public_key' => env('PAYU_PUBLIC_KEY'),
+        'merchant_id' => env('PAYU_MERCHANT_ID'),
+        'account_id' => env('PAYU_ACCOUNT_ID'),
+    ]
+
 ];

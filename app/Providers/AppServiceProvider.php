@@ -25,6 +25,7 @@ use App\Policies\RolePolicy;
 use Illuminate\Auth\Access\Response;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
@@ -44,6 +45,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        //if ($this->app->environment() != 'production') {
+        //    ! request()->header('x-forwarded-host') ?: request()->headers->set('host', request()->header('x-forwarded-host'));
+        //}
+
         Gate::define('access-backoffice', function (User $user) {
             return $user->hasAnyRole([RoleEnum::ADMIN->value, RoleEnum::SECRETARIO->value])
                 ? Response::allow()

@@ -3,8 +3,11 @@
 namespace App\Livewire\Front\Fine;
 
 use App\Models\Fine;
+use App\Services\Payments\PayUService;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Layout;
+use Livewire\Attributes\On;
 use Livewire\Attributes\Url;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -19,6 +22,14 @@ class ListLive extends Component
 
     #[Url(except: '')]
     public $statuses = '';
+
+    public $isLoading = false;
+
+    #[On('loading-pay-u-checkout')]
+    public function setLoadingAsTrue()
+    {
+        $this->isLoading = true;
+    }
 
     public function updatedSearch(): void
     {
@@ -45,11 +56,12 @@ class ListLive extends Component
         return array_filter(explode(',', $this->statuses));
     }
 
-    public function render()
+    #[Computed]
+    public function fines(): LengthAwarePaginator
     {
-        $fines = Fine::select(['fines.id', 'fines.loan_id', 'fines.user_id', 'fines.days', 'fines.total', 'fines.status'])
+        return Fine::select(['fines.id', 'fines.loan_id', 'fines.user_id', 'fines.days', 'fines.total', 'fines.status'])
             ->join('loans', 'loans.id', '=', 'fines.loan_id')
-            ->with(['loan:id,copy_id,user_id,serial,start_date,limit_date,devolution_date,is_fineable,fine_amount,status'])
+            ->with(['loan:id,copy_id,user_id,serial,start_date,limit_date,devolution_date,is_fineable,fine_amount,status', 'user:id,email'])
             ->where('fines.user_id', auth()->id())
             ->search($this->search)
             ->inStatuses($this->statusesArray)
@@ -57,9 +69,10 @@ class ListLive extends Component
             ->orderBy('loans.start_date', 'desc')
             ->orderBy('fines.id', 'desc')
             ->paginate(10);
+    }
 
-        return view('livewire.front.fine.list-live', [
-            'fines' => $fines,
-        ]);
+    public function render()
+    {
+        return view('livewire.front.fine.list-live');
     }
 }

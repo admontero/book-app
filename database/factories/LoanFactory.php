@@ -46,7 +46,7 @@ class LoanFactory extends Factory
      */
     public function definition(): array
     {
-        $start_date = $this->faker->dateTimeThisYear()->format('Y-m-d');
+        $start_date = $this->faker->dateTimeThisMonth()->format('Y-m-d');
 
         $limit_date = Carbon::parse($start_date)->addDays(rand(3, 6));
 

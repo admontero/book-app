@@ -34,7 +34,7 @@ class GenerateLoanSerialJob implements ShouldQueue
 
         $this->loan->serial_number = $nextSerial;
 
-        $serialFormatted = str_pad($this->loan->serial_number, get_digit_from_a_number($this->loan->serial_number) + 2, '0', STR_PAD_LEFT);
+        $serialFormatted = str_pad($this->loan->serial_number, get_total_digits_in_a_number($this->loan->serial_number) + 2, '0', STR_PAD_LEFT);
 
         $this->loan->serial = "PRE-{$serialFormatted}";
 

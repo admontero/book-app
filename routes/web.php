@@ -162,13 +162,18 @@ Route::group([
 
     Route::get('fines', App\Livewire\Front\Fine\ListLive::class)
         ->name('fines.index');
+
+    Route::get('fines/payments/response', [App\Http\Controllers\PayUController::class, 'handleResponse'])
+        ->name('fines.payments.response');
 });
 
 Route::get('/', App\Livewire\Front\DashboardLive::class)->name('front.dashboard');
 
 Route::get('/books/{slug}', App\Livewire\Front\Edition\ShowLive::class)->name('front.edition.show');
 
+Route::post('/payments/payu/confirmation', [App\Http\Controllers\PayUController::class, 'handleConfirmation'])
+    ->name('payments.payu.confirmation');
+
 Route::fallback(function () {
     return abort(404);
 });
-
